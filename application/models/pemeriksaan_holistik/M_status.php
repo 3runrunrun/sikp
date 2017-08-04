@@ -69,7 +69,7 @@ class M_status extends CI_Model
 
   public function get_data_pasien_terdaftar()
   {
-    $this->db->select('id_registrasi, hol_status.no_bpjs, pas_identitas.nama, tgl_periksa, spesialisasi, status');
+    $this->db->select('id_registrasi, hol_status.no_bpjs, pas_identitas.nama, tgl_periksa, poli, status');
     $this->db->from('hol_status');
     $this->db->join('pas_identitas', 'hol_status.no_bpjs = pas_identitas.no_bpjs');
     $this->db->join('poli_tenaga_medis', 'hol_status.nik_tenaga_medis = poli_tenaga_medis.nik_tenaga_medis');

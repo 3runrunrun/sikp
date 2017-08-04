@@ -53,11 +53,39 @@ class C_pengisian_diagnosis extends CI_Controller
     $this->parse_view('Formulir Pengisian Diagnosis', $css_framework, $page_content, $js_framework);
   }
 
+  public function edit($cek_darah = FALSE, $id_registrasi = NULL)
+  {
+    // INITIALIZING VAR
+    $template_data = array();
+    $view_data['id_registrasi'] = $id_registrasi;
+    $view_data['pasien_identitas'] = $this->M_status->show_detail_status_pasien($id_registrasi, 'hol_status.id_registrasi, hol_status.nik_tenaga_medis, hol_status.no_bpjs, hol_status.tgl_periksa, hol_status.alergi_obat, hol_status.alergi_makanan, hol_status.td, hol_status.rr, hol_status.nadi, hol_status.suhu, pas_identitas.nama, pas_identitas.jenis_kelamin, YEAR(NOW()) - YEAR(pas_identitas.tgl_lahir) AS umur, pas_identitas.pekerjaan_utama, pas_identitas.alamat');
+    $view_data['keluhan'] = $this->M_keluhan->show($id_registrasi);
+    $view_data['modul_penyakit'] = $this->M_penyakit->get_data();
+    $view_data['modul_faktor_risiko'] = $this->M_faktor_risiko->get_data();
+    $view_data['modul_faktor_pemicu'] = $this->M_faktor_pemicu->get_data();
+    $view_data['diagnosis_penyakit'] = $this->M_diagnosis_penyakit->show_by_registrasi($id_registrasi);
+    $view_data['faktor_risiko'] = $this->M_hol_faktor_risiko->show_by_registrasi($id_registrasi);
+    $view_data['faktor_pemicu'] = $this->M_hol_faktor_pemicu->show_by_registrasi($id_registrasi);
+
+    if ($cek_darah !== FALSE) {
+      $vars = $this->load->view('pengobatan_holistik/sukses_cek_darah', '', TRUE);
+      $template_data = array('cek_darah' => $vars);
+    } else {
+      $template_data = array('cek_darah' => null);
+    }
+    $template = $this->load->view('pengobatan_holistik/edit_pengisian_diagnosis', $view_data, TRUE);
+    $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
+    $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
+    $page_content = $this->parser->parse_string($template, $template_data, TRUE);
+
+    $this->parse_view('Formulir Pengisian Diagnosis', $css_framework, $page_content, $js_framework);
+  }
+
   public function store()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</li></ul></div>');
     if ($this->form_validation->run() == FALSE) {
-      $this->create($this->input->post('id_registrasi'));
+      $this->create(FALSE, $this->input->post('id_registrasi'));
     } else {
       // INITIALIZE VAR
       $input_var = $this->input->post();
@@ -120,9 +148,67 @@ class C_pengisian_diagnosis extends CI_Controller
         $this->parse_view('Sistem Informasi Kesehatan Andal', $css_framework, $page_content, $js_framework);
       } else {
         $this->db->trans_commit();
+        $url = base_url() . 'pengubahan-diagnosis/' . $data_diagnosis['id_registrasi'];
+        header("Location: $url");
+      }
+    }
+  }
+
+  public function store_rujukan()
+  {
+    $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</li></ul></div>');
+    if ($this->form_validation->run() == FALSE) {
+      $this->edit($this->input->post('id_registrasi'));
+    } else {
+      // INITIALIZE VAR
+      $data_rujukan = $this->input->post();
+      $data_rujukan['id_rujukan'] = $this->id_generator('RUJ');
+
+      // STORE DATA
+      $this->db->trans_begin();
+      $this->M_rujukan->store($data_rujukan);
+      if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        $template = $this->load->view('errors/error_db', '', TRUE);
+        $template_data = array('error_msg' => null);
+        $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
+        $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
+        $page_content = $this->parser->parse_string($template, $template_data, TRUE);
+        $this->parse_view('Sistem Informasi Kesehatan Andal', $css_framework, $page_content, $js_framework);
+      } else {
+        $this->db->trans_commit();
         $url = base_url() . 'daftar-pasien-terdaftar';
         header("Location: $url");
       }
     }
   }
+
+  public function store_cek_darah()
+  {
+    $this->form_validation->set_error_delimiters('<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;<small>', '</small></span>');
+    if ($this->form_validation->run() == FALSE) {
+      $this->edit(FALSE, $this->input->post('id_registrasi'));
+    } else {
+      // INITIALIZE VAR
+      $data_cek_darah = $this->input->post();
+      $data_cek_darah['no_surat_pengantar'] = $this->id_generator('CDR');
+
+      // STORE DATA
+      $this->db->trans_begin();
+      $this->M_cek_darah->store($data_cek_darah);
+      if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        $template = $this->load->view('errors/error_db', '', TRUE);
+        $template_data = array('error_msg' => null);
+        $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
+        $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
+        $page_content = $this->parser->parse_string($template, $template_data, TRUE);
+        $this->parse_view('Sistem Informasi Kesehatan Andal', $css_framework, $page_content, $js_framework);
+      } else {
+        $this->db->trans_commit();
+        $this->edit(TRUE, $data_cek_darah['id_registrasi']);
+      }
+    }
+  }
+
 }

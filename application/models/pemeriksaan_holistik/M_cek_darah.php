@@ -12,6 +12,13 @@ class M_cek_darah extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
+  public function store($data_cek_darah = array())
+  {
+    $sql = $this->db->set($data_cek_darah)->get_compiled_insert('hol_cek_darah');
+    $this->db->query($sql);
+    // echo $sql;
+  }
+
   public function tambah_cek_darah($data_cek_darah = array())
   {
     $nilai = array();

@@ -42,6 +42,14 @@ class C_daftar_pasien extends CI_Controller
     $view_data['id_registrasi'] = $id_registrasi;
     $view_data['pasien_identitas'] = $this->M_status->show_detail_status_pasien($id_registrasi, 'id_registrasi, hol_status.no_bpjs, hol_status.nik_tenaga_medis, pas_identitas.nama, pas_identitas.jenis_kelamin, YEAR(NOW()) - YEAR(pas_identitas.tgl_lahir) AS umur, pas_identitas.pekerjaan_utama, pas_identitas.alamat');
 
+    $status = $this->M_status->show($id_registrasi, 'status');
+
+    if ($status['data'][0]['status'] == 'diagnosis') {
+      $url = base_url() . 'daftar-pasien-terdaftar';
+      header("Location: $url");
+      exit();
+    }
+
     $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
     $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
     $page_content = $this->load->view('pengobatan_holistik/formulir_pengisian_anamnesis', $view_data, TRUE);
@@ -87,7 +95,9 @@ class C_daftar_pasien extends CI_Controller
 
     $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
     $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
-    $page_content = $this->load->view('pengobatan_holistik/edit_pengisian_diagnosis', $view_data, TRUE);
+    $template = $this->load->view('pengobatan_holistik/edit_pengisian_diagnosis', $view_data, TRUE);
+    $template_data = array('cek_darah' => null);
+    $page_content = $this->parser->parse_string($template, $template_data, TRUE);
 
     $this->parse_view('Formulir Pengisian Diagnosis', $css_framework, $page_content, $js_framework);
   }

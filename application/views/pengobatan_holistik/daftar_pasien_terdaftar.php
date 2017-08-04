@@ -1,7 +1,7 @@
 <section class="content-header">
         <h1>Pasien Terdaftar</h1>
         <ol class="breadcrumb">
-          <li><a href="<?php echo base_url(); ?>data-dasar-kesehatan"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
           <li class="active">Daftar Pasien Terdaftar</li>
         </ol>
       </section>
@@ -34,7 +34,7 @@
                       <td>{no_bpjs}</td>
                       <td>{nama}</td>
                       <td>{tgl_periksa}</td>
-                      <td>{spesialisasi}</td>
+                      <td>{poli}</td>
                       <td><span class="label label-primary">{status}</span></td>
                       <td>
                         <div class="form-group btn-group-vertical" style="width: 100% !important;">

@@ -3,8 +3,8 @@
           Formulir Pengisian Diagnosis
         </h1>
         <ol class="breadcrumb">
-          <li><a href="<?php echo base_url(); ?>data-dasar-kesehatan"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
-          <li>Daftar Pasien Terdaftar</li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar">Daftar Pasien Terdaftar</a></li>
           <li class="active">Formulir Pengisian Diagnosis</li>
         </ol>
       </section>
@@ -127,7 +127,7 @@
                     $no_bpjs = null;
                    ?>
                   <?php foreach ($keluhan['data'] as $key => $value): ?>
-                  <?php if ($key == '1'): ?>
+                  <?php if ($key == '0'): ?>
                   <input type="hidden" name="id_registrasi" value="<?php echo $value['id_registrasi']; echo set_value('id_registrasi'); ?>">
                   <input type="hidden" name="nik_tenaga_medis" value="<?php echo $value['nik_tenaga_medis']; echo set_value('nik_tenaga_medis'); ?>">
                   <input type="hidden" name="no_bpjs" value="<?php echo $value['no_bpjs']; echo set_value('no_bpjs'); ?>">

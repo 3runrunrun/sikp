@@ -3,7 +3,7 @@
           Data Dasar Kesehatan Keluarga
         </h1>
         <ol class="breadcrumb">
-          <li><a href="<?php echo base_url(); ?>data-dasar-kesehatan"><i class="fa fa-book"></i> Data Dasar Kesehatan Keluarga</a></li>
+          <li><a href="<?php echo base_url(); ?>lihat-data-dasar"><i class="fa fa-book"></i> Data Dasar Kesehatan Keluarga</a></li>
           <li class="active">Formulir Data Dasar Kesehatan Keluarga</li>
         </ol>
       </section>
@@ -29,7 +29,7 @@
                   </div>
                 </div>
 
-                <form action="http://localhost/sikp/index.php/simpan-pasien-baru" method="POST" class="form-horizontal">
+                <form action="http://localhost/sikp/index.php/simpan-pasien-baru" method="post" class="form-horizontal">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="input-kk-no-bpjs" class="col-sm-3 control-label">No. BPJS</label>

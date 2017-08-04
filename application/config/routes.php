@@ -59,6 +59,8 @@ $route['simpan-pengisian-anamnesis'] = 'C_pengisian_anamnesis/update_pengisian_a
 $route['pengisian-diagnosis/(:any)'] = 'C_daftar_pasien/create_pengisian_diagnosis/$1';
 $route['simpan-pengisian-diagnosis'] = 'C_pengisian_diagnosis/store';
 $route['pengubahan-diagnosis/(:any)'] = 'C_daftar_pasien/edit_pengisian_diagnosis/$1';
+$route['simpan-pengisian-rujukan'] = 'C_pengisian_diagnosis/store_rujukan';
+$route['simpan-pengantar-cek-darah'] = 'C_pengisian_diagnosis/store_cek_darah';
 
 $route['lihat-data-dasar'] = 'C_sidebar/show_data_dasar';
 $route['formulir-data-dasar'] = 'C_data_dasar/create';

@@ -1148,6 +1148,76 @@ $config = array(
         )
       ),
     ),
+  // PENGOBATAN HOLISTIK -- PENGISIAN RUJUKAN
+  'C_pengisian_diagnosis/store_rujukan' => array(
+    array(
+      'field' => 'id_registrasi',
+      'label' => 'ID Registrasi',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    array(
+      'field' => 'nik_tenaga_medis',
+      'label' => 'Tenaga Medis',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    array(
+      'field' => 'no_bpjs',
+      'label' => 'Nomor BPJS',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    array(
+      'field' => 'jenis_rujukan',
+      'label' => 'Jenis Rujukan',
+      'rules' => 'required|in_list[1,2,3]',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s',
+        'in_list' => 'Isi %s dengan data yang sudah disediakan'
+        )
+      ),
+    array(
+      'field' => 'rs',
+      'label' => 'Rumah Sakit atau Puskesmas Rujukan',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    ),
+  'C_pengisian_diagnosis/store_cek_darah' => array(
+    array(
+      'field' => 'id_registrasi',
+      'label' => 'ID Registrasi',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    array(
+      'field' => 'nik_tenaga_medis',
+      'label' => 'Tenaga Medis',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    array(
+      'field' => 'no_bpjs',
+      'label' => 'Nomor BPJS',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    ),
   );
 
 

@@ -3,7 +3,7 @@
           Formulir Pendaftaran Pengobatan Pasien
         </h1>
         <ol class="breadcrumb">
-          <li><a href="<?php echo base_url(); ?>data-dasar-kesehatan"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
           <li class="active">Formulir Pendaftaran Pengobatan Pasien</li>
         </ol>
       </section>
@@ -42,7 +42,7 @@
                       <select name="nik_tenaga_medis" id="tenaga-medis" class="form-control select2" style="width: 100%">
                         <option value="" selected>Pilih Poli</option>
                         <?php foreach ($tenaga_medis['data'] as $ar_tenaga_medis): ?>
-                        <option value="<?php echo $ar_tenaga_medis['nik_tenaga_medis']; ?>"><?php echo ucwords($ar_tenaga_medis['spesialisasi']); ?>&nbsp;(<?php echo ucwords($ar_tenaga_medis['nama']); ?>)</option>
+                        <option value="<?php echo $ar_tenaga_medis['nik_tenaga_medis']; ?>"><?php echo ucwords($ar_tenaga_medis['poli']); ?>&nbsp;(<?php echo ucwords($ar_tenaga_medis['nama']); ?>)</option>
                         <?php endforeach; ?>
                       </select>
                       <?php echo form_error('nik_tenaga_medis'); ?>

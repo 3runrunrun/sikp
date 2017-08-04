@@ -1,11 +1,11 @@
 <section class="content-header">
         <h1>
-          Formulir Pengisian Diagnosis
+          Formulir Pengubahan Diagnosis
         </h1>
         <ol class="breadcrumb">
-          <li><a href="<?php echo base_url(); ?>data-dasar-kesehatan"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
-          <li>Daftar Pasien Terdaftar</li>
-          <li class="active">Formulir Pengisian Diagnosis</li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
+          <li><a href="<?php echo base_url(); ?>daftar-pasien-terdaftar">Daftar Pasien Terdaftar</a></li>
+          <li class="active">Formulir Pengubahan Diagnosis</li>
         </ol>
       </section>
 
@@ -13,12 +13,13 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">
-              Formulir Pengisian Diagnosis
+              Formulir Pengubahan Diagnosis
             </h3>
           </div>
 
           <div class="box-body">
             <?php foreach ($pasien_identitas['data'] as $key => $value): ?>
+            {cek_darah}
             <div id="data-dasar" class="callout callout-info">
               <div class="row text-purple" style="margin-bottom: 10px !important">
                 <h4>
@@ -127,10 +128,10 @@
                     $no_bpjs = null;
                    ?>
                   <?php foreach ($keluhan['data'] as $key => $value): ?>
-                  <?php if ($key == '1'): ?>
-                  <input type="hidden" name="id_registrasi" value="<?php echo $value['id_registrasi']; echo set_value('id_registrasi'); ?>">
-                  <input type="hidden" name="nik_tenaga_medis" value="<?php echo $value['nik_tenaga_medis']; echo set_value('nik_tenaga_medis'); ?>">
-                  <input type="hidden" name="no_bpjs" value="<?php echo $value['no_bpjs']; echo set_value('no_bpjs'); ?>">
+                  <?php if ($key == '0'): ?>
+                  <input type="hidden" name="id_registrasi" value="<?php $id_registrasi = $value['id_registrasi']; echo $value['id_registrasi']; echo set_value('id_registrasi'); ?>">
+                  <input type="hidden" name="nik_tenaga_medis" value="<?php $nik_tenaga_medis = $value['nik_tenaga_medis']; echo $value['nik_tenaga_medis']; echo set_value('nik_tenaga_medis'); ?>">
+                  <input type="hidden" name="no_bpjs" value="<?php $no_bpjs = $value['no_bpjs']; echo $value['no_bpjs']; echo set_value('no_bpjs'); ?>">
                   <?php endif; ?>
                   <div class="row">
                     <div class="col-md-2">
@@ -239,8 +240,8 @@
                   <div id="pemicu-risiko-out"></div>
                   <!-- #/pemicu-risiko-out -->
                   <div id="tombol-tambah-faktor" class="row">
-                    <div class="col-md-12">
-                      <button type="button" id="add-faktor" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Tambah Faktor Risiko dan Faktor Pemicu Penyakit</button>
+                    <div class="col-md-6">
+                      <button type="button" id="add-faktor" class="btn btn-success" style="width: 100% !important;"><i class="fa fa-plus"></i>&nbsp;Tambah Faktor Risiko dan Faktor Pemicu Penyakit</button>
                     </div>
                   </div>
                 </div>
@@ -251,9 +252,77 @@
               </div>
               <!-- #/pemicu-risiko -->
             </form>
+            <div class="row" style="margin-bottom: 20px !important;">
+              <div class="col-md-6">
+                <button type="button" id="add-rujukan" class="btn btn-primary" style="width: 100% !important;"><i class="fa fa-plus"></i>&nbsp;Beri Rujukan</button>
+              </div>
+              <!-- /add-rujukan -->
+              <form role="form" action="<?php echo base_url() ?>simpan-pengantar-cek-darah" method="post">
+                <input type="hidden" name="id_registrasi" value="<?php echo $id_registrasi; ?>">
+                <input type="hidden" name="nik_tenaga_medis" value="<?php echo $nik_tenaga_medis; ?>">
+                <input type="hidden" name="no_bpjs" value="<?php echo $no_bpjs; ?>">
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-primary" style="width: 100% !important;"><i class="fa fa-plus"></i>&nbsp;Beri Pengantar</button>
+                  <?php echo form_error('id_registrasi'); ?>
+                  <?php echo form_error('nik_tenaga_medis'); ?>
+                  <?php echo form_error('no_bpjs'); ?>
+                </div>
+              </form>
+              <!-- /add-cek-darah -->
+            </div>
+            <!-- /tombol-rujukan-cek-darah -->
+            <div id="rujukan-cek-darah-out" class="row">
+              <div id="rujukan-out" class="col-md-6" style="display: none;">
+                <div class="box box-primary box-solid">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Pemberian Rujukan</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" onclick=""><i class="fa fa-times" onclick="$('#rujukan-out').hide()"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- ./box-header -->
+                  <form role="form" action="<?php echo base_url(); ?>simpan-pengisian-rujukan" method="post">
+                    <div class="box-body">
+                      <?php echo form_error('id_registrasi'); ?>
+                      <?php echo form_error('nik_tenaga_medis'); ?>
+                      <?php echo form_error('no_bpjs'); ?>
+                      <div class="form-group">
+                        <input type="hidden" name="id_registrasi" value="<?php echo $id_registrasi; ?>">
+                        <input type="hidden" name="nik_tenaga_medis" value="<?php echo $nik_tenaga_medis; ?>">
+                        <input type="hidden" name="no_bpjs" value="<?php echo $no_bpjs; ?>">
+                        <label for="jenis-rujukan" class="control-label">Jenis Rujukan</label>
+                        <select name="jenis_rujukan" id="jenis-rujukan" class="form-control">
+                          <option value="" selected disabled>Pilih Opsi</option>
+                          <option value="1">Rawat Inap</option>
+                          <option value="2">Rawat Jalan</option>
+                          <option value="3">UGD</option>
+                        </select>
+                        <?php echo form_error('jenis_rujukan', '<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;<small>', '</small></span>'); ?>
+                      </div>
+                      <!-- /jenis-rujukan -->
+                      <div class="form-group">
+                        <label for="lokasi-rujukan" class="control-label">Lokasi Rujukan</label>
+                        <input type="text" name="rs" id="lokasi-rujukan" class="form-control" value="<?php echo set_value('rs'); ?>">
+                        <span class="help-block"><small>Isi dengan nama Puskesmas atau Rumah Sakit Tujuan</small></span>
+                        <?php echo form_error('rs', '<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;<small>', '</small></span>'); ?>
+                      </div>
+                      <!-- /lokasi-rujukan -->
+                    </div>
+                    <!-- ./box-body -->
+                    <div class="box-footer">
+                      <button type="reset" class="btn btn-danger">Batal</button>
+                      <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+                    </div>
+                    <!-- ./box-footer -->
+                  </form>
+                </div>
+              </div>
+              <!-- /rujukan -->
+            </div>
+            <!-- /rujukan /cuci-darah -->
           </div>
           <!-- ./box-body -->
-          <div class="box-footer"></div>
-          <!-- ./box-footer -->
         </div>
       </section>

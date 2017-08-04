@@ -107,3 +107,4 @@
   <script src="<?php echo base_url(); ?>../style/myjs/add-anamnesis.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/read-modul-penyakit.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-faktor.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-rujukan.js"></script>

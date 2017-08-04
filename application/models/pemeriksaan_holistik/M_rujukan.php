@@ -12,14 +12,10 @@ class M_rujukan extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function tambah_rujukan($data_rujukan = array())
+  public function store($data_rujukan = array())
   {
-    $nilai = array();
-    $sql = 'INSERT INTO hol_rujukan (id_rujukan, id_registrasi, nik_tenaga_medis, no_bpjs, jenis_rujukan, rs) VALUES ?';
-    foreach ($data_rujukan as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
+    $sql = $this->db->set($data_rujukan)->get_compiled_insert('hol_rujukan');
+    $this->db->query($sql);
   }
 
   public function ubah_rujukan($data_rujukan_baru = array())
