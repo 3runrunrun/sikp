@@ -12,16 +12,11 @@ class M_keluhan extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function store($data_keluhan = array())
+  public function show_by_status_pasien($id_registrasi, $no_bpjs, $column = '*')
   {
-    $sql = $this->db->set($data_keluhan)->get_compiled_insert('hol_keluhan');
-    $this->db->query($sql);
-  }
-
-  public function show($id_registrasi, $column = '*')
-  {
-    $this->db->select($column);
     $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $this->db->where('hapus', '0');
     $result = $this->db->get('hol_keluhan');
     if ( ! $result) {
       $ret_val = array(
@@ -37,52 +32,36 @@ class M_keluhan extends CI_Model
     return $ret_val;
   }
 
-  public function ubah_anamnesis($key = array(), $data_anamnesis_baru = array())
+  public function store($data_keluhan = array())
   {
-    $nilai = array();
-    $sql = 'UPDATE hol_keluhan SET anamnesis = ?  WHERE id_keluhan = ? AND id_registrasi = ? AND nik_tenaga_medis = ? AND no_bpjs = ?';
-    foreach ($data_anamnesis_baru as $key => $value) {
-      array_push($nilai, $value);
-    }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
+    $sql = $this->db->set($data_keluhan)->get_compiled_insert('hol_keluhan');
+    $this->db->query($sql);
   }
 
-  public function ubah_kepemilikan_anamnesis($key = array(), $data_kepemilikan = array())
+  public function destroy_by_status_pasien($id_registrasi, $no_bpjs)
   {
-    $nilai = array();
-    $sql = 'UPDATE hol_keluhan SET no_bpjs = ?  WHERE id_keluhan = ? AND id_registrasi = ? AND nik_tenaga_medis = ?';
-    foreach ($data_kepemilikan as $key => $value) {
-      array_push($nilai, $value);
-    }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('hol_keluhan');
+    $this->db->query($sql);
   }
-
-  public function ubah_dokter($key = array(), $data_dokter = array())
+  
+  public function count_by_status_pasien($id_registrasi, $no_bpjs)
   {
-    $nilai = array();
-    $sql = 'UPDATE hol_keluhan SET nik_tenaga_medis = ?  WHERE id_keluhan = ? AND id_registrasi = ? AND no_bpjs = ?';
-    foreach ($data_dokter as $key => $value) {
-      array_push($nilai, $value);
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $result = $this->db->get('hol_keluhan');
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => array($result->num_rows())
+        );
     }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
-  }
-
-  public function hapus_anamnesis($data_anamnesis = array())
-  {
-    $nilai = array();
-    $sql = 'UPDATE hol_keluhan SET hapus \'1\' WHERE id_keluhan = ? AND id_registrasi = ? AND nik_tenaga_medis = ? AND no_bpjs = ?';
-    foreach ($data_anamnesis as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
+    return $ret_val;
   }
 }

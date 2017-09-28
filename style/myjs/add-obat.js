@@ -18,7 +18,7 @@ $(document).ready(function(){
   $('body').on('click', '#add-obat', function(){
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-4">' +
-          '<input type="text" name="jenis_obat[]" class="form-control" placeholder="Jenis obat">' +
+          '<input type="text" name="jenis_obat[]" class="form-control" placeholder="Jenis obat" required>' +
         '</div>' +
         '<div class="col-md-1">' +
           '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().remove()"><i class="fa fa-remove"></i></button>' +

@@ -25,7 +25,7 @@ $(document).ready(function(){
 
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
       '<div id="asma-anggota-keluarga" class="col-md-4">' +
-        '<select name="asma_no_bpjs[]" class="form-control select2-single">' +
+        '<select name="asma_no_bpjs[]" class="form-control select2-single" required>' +
           namelist +
         '</select>' +
       '</div>' +

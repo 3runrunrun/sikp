@@ -20,49 +20,16 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		$data_tabel['data'] = array();
 		// echo base_url();
-    date_default_timezone_set('Asia/Jakarta');
-		$mc = microtime();
-		$exmc = explode(' ', $mc);
-		echo $exmc[0] . '<br />';
-		echo substr($exmc[0], 5, 3);
+    $this->load->view('pengelolaan_obat/export/obat_keluar', $data_tabel);
 	}
 
-	public function tampil()
+	public function pdf_generator()
 	{
-		$this->M_keluhan->coba();
-	}
-
-	public function show_form_data_dasar()
-	{
-		$data = array(
-			'page_title' => 'Formulir Data Dasar Kesehatan Keluarga',
-			'css_framework' => $this->load->view('css_framework/head_form', '', TRUE), 
-			'page_header' => $this->load->view('headers/main_header', '', TRUE), 
-			'page_sidebar' => $this->load->view('sidebars/main_sidebar', '', TRUE), 
-			'page_content' => $this->load->view('contents/formulir_data_dasar', '', TRUE), 
-			'page_footer' => $this->load->view('footers/main_footer', '', TRUE), 
-			'js_framework' => $this->load->view('js_framework/js_datatables', '', TRUE),
-			);
-		$this->parser->parse('try_parser', $data);
-	}
-
-	public function tambah_pasien_baru()
-	{
-		$this->form_validation->set_error_delimiters('<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;', '</span>');
-		if ($this->form_validation->run() == FALSE) {
-			$data = array(
-				'page_title' => 'Formulir Data Dasar Kesehatan Keluarga',
-				'css_framework' => $this->load->view('css_framework/head_form', '', TRUE), 
-				'page_header' => $this->load->view('headers/main_header', '', TRUE), 
-				'page_sidebar' => $this->load->view('sidebars/main_sidebar', '', TRUE), 
-				'page_content' => $this->load->view('contents/formulir_data_dasar', '', TRUE), 
-				'page_footer' => $this->load->view('footers/main_footer', '', TRUE), 
-				'js_framework' => $this->load->view('js_framework/js_datatables', '', TRUE),
-				);
-			$this->parser->parse('try_parser', $data);
-		} else {
-			var_dump($this->input->post());
-		}
+		$this->load->library('pdf');
+  	$this->pdf->load_view('mypdf');
+  	$this->pdf->render();
+  	$this->pdf->stream("welcome.pdf");
 	}
 }

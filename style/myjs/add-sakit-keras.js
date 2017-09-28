@@ -18,10 +18,10 @@ $(document).ready(function(){
   $('body').on('click', '#add-sakit-keras', function(){
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-4">' +
-          '<input type="text" name="jenis_sakit_keras[]" class="form-control" placeholder="Sakit keras yang diderita">' +
+          '<input type="text" name="jenis_sakit_keras[]" class="form-control" placeholder="Sakit keras yang diderita" required>' +
         '</div>' +
         '<div class="col-md-2">' +
-          '<input type="number" name="tahun_sakit[]" class="form-control" min="1000" max="9999" placeholder="0">' +
+          '<input type="number" name="tahun_sakit[]" class="form-control" min="1000" max="9999" placeholder="0" required>' +
           '<span class="help-block"><small>Isi dengan tahun kejadian</small></span>' +
         '</div>' +
         '<div class="col-md-1">' +

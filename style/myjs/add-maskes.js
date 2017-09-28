@@ -24,12 +24,12 @@ $(document).ready(function(){
 
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-4">' +
-          '<select name="maskes_no_bpjs[]" class="form-control select2-single">' +
+          '<select name="maskes_no_bpjs[]" class="form-control select2-single" required>' +
             namelist +
           '</select>' +
         '</div>' +
         '<div class="col-md-7">' +
-          '<input type="text" name="masalah_kes[]" class="form-control" placeholder="Masalah kesehatan yang diderita">' +
+          '<input type="text" name="masalah_kes[]" class="form-control" placeholder="Masalah kesehatan yang diderita" required>' +
         '</div>' +
         '<div class="col-md-1">' +
           '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().remove()"><i class="fa fa-remove"></i></button>' +

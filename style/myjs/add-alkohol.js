@@ -4,7 +4,7 @@ $(document).ready(function(){
       $('#alkohol-out').children().remove();
       $('#alkohol-out').show();
       var btn = '<div class="col-md-4">' +
-          '<input type="number" name="durasi" class="form-control" min="0" max="999" placeholder="Lamanya konsumsi alkohol">' +
+          '<input type="number" name="durasi" class="form-control" min="0" max="999" placeholder="Lamanya konsumsi alkohol" required>' +
           '<span class="help-block"><small>Dalam tahun</small></span>' +
         '</div>';
       $('#alkohol-out').append(btn);

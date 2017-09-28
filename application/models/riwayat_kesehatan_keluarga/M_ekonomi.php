@@ -12,18 +12,36 @@ class M_ekonomi extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function store($data_ekonomi = array())
+  public function show($id_kk, $column = '*')
   {
-    $result = $this->db->insert('kk_ekonomi', $data_ekonomi);
+    $this->db->select($column);
+    $this->db->where('id_kk', $id_kk);
+    $result = $this->db->get('kk_ekonomi');
     if ( ! $result) {
       $ret_val = array(
-        'status' => 'error', 
+        'status' => 'error',
         'data' => $this->db->error()
         );
     } else {
-      $ret_val = array('status' => 'success');
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
     }
     return $ret_val;
+  }
+
+  public function store($data_ekonomi = array())
+  {
+    $sql = $this->db->set($data_ekonomi)->get_compiled_insert('kk_ekonomi');
+    $this->db->query($sql);
+  }
+
+  public function update($id_kk, $data_baru = array())
+  {
+    $this->db->where('id_kk', $id_kk);
+    $sql = $this->db->set($data_baru)->get_compiled_update('kk_ekonomi');
+    $this->db->query($sql);
   }
 
   public function ubah_data_ekonomi($key = array(), $data_ekonomi_baru = array())

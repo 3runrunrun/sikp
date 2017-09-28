@@ -1,28 +1,26 @@
-$(document).ready(function(){
-  var select = '.modul-penyakit';
-  var select_risiko = '.modul-faktor-risiko';
-  var select_pemicu = '.modul-faktor-pemicu';
-
-  var aid = '#read-';
+function get_modul_penyakit(selector) {
   var uri = 'http://localhost/sikp/mod_files/modul_penyakit/';
-  var uri_risiko = 'http://localhost/sikp/mod_files/modul_faktor_risiko/';
-  var uri_pemicu = 'http://localhost/sikp/mod_files/modul_faktor_pemicu/';
-  
-  $(select).change(function(){
-    var a = aid + $(this).attr('id');
-    var href = uri + $(this).find(':selected').val() + '.pdf';
-    $(a).attr('href', href);
-  });
+  var mod_name = $(selector).find(':selected').val() + '.pdf';
+  var selector_target = $(selector).siblings('.help-block').children('.read-modul-penyakit');
 
-  $(select_risiko).change(function(){
-    var href = uri_risiko + $(this).find(':selected').val() + '.pdf';
-    var a = $(this).parent().find('a');
-    $(a).attr('href', href);
-  });
+  $(selector_target).attr('href', uri + mod_name);
+  console.log(selector_target);
+}
 
-  $(select_pemicu).change(function(){
-    var href = uri_pemicu + $(this).find(':selected').val() + '.pdf';
-    var a = $(this).parent().find('a');
-    $(a).attr('href', href);
-  });
-});
+function get_modul_faktor_risiko(selector) {
+  var uri = 'http://localhost/sikp/mod_files/modul_faktor_risiko/';
+  var mod_name = $(selector).find(':selected').val() + '.pdf';
+  var selector_target = $(selector).siblings('.help-block').children('.read-modul-faktor-risiko');
+
+  $(selector_target).attr('href', uri + mod_name);
+  console.log(selector_target);
+}
+
+function get_modul_faktor_pemicu(selector) {
+  var uri = 'http://localhost/sikp/mod_files/modul_faktor_pemicu/';
+  var mod_name = $(selector).find(':selected').val() + '.pdf';
+  var selector_target = $(selector).siblings('.help-block').children('.read-modul-faktor-pemicu');
+
+  $(selector_target).attr('href', uri + mod_name);
+  console.log(selector_target);
+}

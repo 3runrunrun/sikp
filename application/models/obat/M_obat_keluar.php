@@ -12,9 +12,32 @@ class M_obat_keluar extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function tampil_obat_keluar($sort_by = NULL, $order = NULL)
+  public function get_data_obat($column)
   {
-    $this->db->order_by($sort_by, $order);
+    $this->db->select($column);
+    $this->db->from('poli_obat_keluar a');
+    $this->db->join('poli_obat b', 'a.id_obat = b.id_obat');
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_data($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->where('hapus', '0');
     $result = $this->db->get('poli_obat_keluar');
     if ( ! $result) {
       $ret_val = array(
@@ -30,48 +53,33 @@ class M_obat_keluar extends CI_Model
     return $ret_val;
   }
 
-  public function tambah_obat_keluar($data_obat_keluar = array())
+  public function get_data_by_range($from, $to)
   {
-    $result = $this->db->insert('poli_obat_keluar', $data_obat_keluar);
+    $sql = 'select a.id_obat_keluar, a.id_resep_obat, a.id_obat, b.nama, a.jumlah_keluar, b.satuan, a.tgl_keluar
+      from poli_obat_keluar a
+      join poli_obat b
+        on a.id_obat = b.id_obat
+      where a.hapus = \'0\'
+        and a.tgl_keluar between ? and ?';
+    $bind_param = array($from, $to);
+    $result = $this->db->query($sql, $bind_param);
     if ( ! $result) {
       $ret_val = array(
         'status' => 'error',
         'data' => $this->db->error()
         );
     } else {
-      $ret_val = array('status' => 'success');
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
     }
     return $ret_val;
   }
 
-  public function ubah_obat_keluar($key = array(), $data_obat_keluar_baru = array())
+  public function store($data = array())
   {
-    $this->db->where($key);
-    $result = $this->db->update('poli_obat_keluar', $data_obat_keluar_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_obat_keluar($data_obat_keluar = array())
-  {
-    $this->db->where($data_obat_keluar);
-    $this->db->set('hapus', '1');
-    $result = $this->db->update('poli_obat_keluar');
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
+    $sql = $this->db->set($data)->get_compiled_insert('poli_obat_keluar');
+    $this->db->query($sql);
   }
 }

@@ -12,70 +12,10 @@ class M_kk extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function get_data()
-  {
-    $this->db->where('hapus', '0');
-    $this->db->order_by($sort_by, $order);
-    $query = $this->db->get('pas_kk');
-    
-    if (! $query) {
-      $error = array(
-        'status' => 'error', 
-        'payload' => $this->db->error()
-        );
-      return $error;
-    } else {
-      $data = array(
-        'status' => 'success',
-        'payload' => $query->result_array()
-        );
-      return $data;
-    }
-  }
-
-  public function store($data_kk = array())
-  {
-    $nilai = array();
-    $sql = 'INSERT INTO pas_kk (id_kk, no_bpjs, no_telp) VALUES (?,?,?)';
-    foreach ($data_kk as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
-  }
-
-  public function ubah_kk($id_kk, $data_kk_baru = array())
-  {
-    $this->db->where('id_kk', $id_kk);
-    $result = $this->db->update('pas_kk', $data_kk_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_kk($data_kk = array())
-  {
-    $result = $this->db->delete('pas_kk', $data_pasien);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function show_like($col_name = array(), $dt_kk)
+  public function show($id_kk, $col_name = '*')
   {
     $this->db->select($col_name);
-    $this->db->like('id_kk', $dt_kk);
+    $this->db->where('id_kk', $id_kk);
     $result = $this->db->get('pas_kk');
     if ( ! $result) {
       $ret_val = array(
@@ -89,5 +29,199 @@ class M_kk extends CI_Model
         );
     }
     return $ret_val;
+  }
+
+  public function show_by_no_bpjs($no_bpjs, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $this->db->where('hapus', '0');
+    $result = $this->db->get('pas_kk');
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_data()
+  {
+    $this->db->where('hapus', '0');
+    $result = $this->db->get('pas_kk');
+    if (! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  /**
+   * join with pasien and many more
+   * @param  string $column [description]
+   * @return [type]         [description]
+   */
+  public function get_kk_pasien($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('pas_kk a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->join('(select * from kk_riwayat_kes_kel where kk_riwayat_kes_kel.hapus = \'0\' order by tgl_isi desc limit 1) c', 'a.no_bpjs = c.no_bpjs', 'left');
+    $this->db->join('(select * from kk_gejala_stres where kk_gejala_stres.hapus = \'0\' order by tgl_isi desc limit 1) d', 'a.id_kk = d.id_kk', 'left');
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    $result = $this->db->get();
+    if (! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  /**
+   * dipanggil di edit_perkawinan
+   * join with pas_identitas, kk_anggota_keluarga
+   * @param  string $value [description]
+   * @return [type]        [description]
+   */
+  public function get_data_kepala_keluarga($id_kk, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('pas_kk a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->join('kk_anggota_keluarga c', 'a.id_kk = c.id_kk');
+    $this->db->where('a.id_kk', $id_kk);
+    $this->db->where('c.hubungan_keluarga', '1');
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    $this->db->where('c.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  //////////////////////////////////////////
+  // MODULE DATA DASAR KESEHATAN - DETAIL //
+  //////////////////////////////////////////
+  public function get_tingkat_risiko_penyakit($id_kk)
+  {
+    $this->db->select('a.tingkat_risiko_penyakit');
+    $this->db->from('kk_riwayat_kes_kel a');
+    $this->db->where('a.id_kk', $id_kk);
+    $this->db->where('a.hapus', '0');
+    $this->db->order_by('a.tgl_isi', 'DESC');
+    $this->db->limit(1);
+    $result = $this->db->get();
+    if (! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_tingkat_stres($id_kk)
+  {
+    $this->db->select('a.tingkat_stres');
+    $this->db->from('kk_gejala_stres a');
+    $this->db->where('a.id_kk', $id_kk);
+    $this->db->where('a.hapus', '0');
+    $this->db->order_by('a.tgl_isi', 'DESC');
+    $this->db->limit(1);
+    $result = $this->db->get();
+    if (! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_dd_identitas($id_kk, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('pas_kk a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->join('pas_riwayat_pekerjaan c', 'a.no_bpjs = c.no_bpjs');
+    $this->db->join('sys_provinsi d', 'b.id_provinsi = d.id_provinsi');
+    $this->db->join('sys_kabupaten e', 'b.id_kabupaten = e.id_kabupaten');
+    $this->db->join('sys_kecamatan f', 'b.id_kecamatan = f.id_kecamatan');
+    $this->db->join('sys_kelurahan g', 'b.id_kelurahan = g.id_kelurahan');
+    $this->db->where('a.id_kk', $id_kk);
+    $this->db->where('c.pekerjaan_utama', '1');
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    // $this->db->where('c.hapus', '0');
+    $result = $this->db->get();
+    if (! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  // RUD
+
+  public function store($data = array())
+  {
+    $sql = $this->db->set($data)->get_compiled_insert('pas_kk');
+    $this->db->query($sql);
+  }
+
+  public function update($data_insert = array(), $data_update = array())
+  {
+    $str = $this->db->insert_string('pas_kk', $data_insert);
+    $on_update = ' ON DUPLICATE KEY UPDATE no_telp = ?';
+    $sql = $str . $on_update;
+    $this->db->query($sql, array($data_update['no_telp']));
   }
 }

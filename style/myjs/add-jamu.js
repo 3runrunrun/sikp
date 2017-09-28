@@ -20,10 +20,10 @@ $(document).ready(function(){
   $('body').on('click', '#add-jamu', function(){
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-4">' +
-          '<input type="text" name="jenis_jamu[]" class="form-control" placeholder="Jenis jamu yang dikonsumsi">' +
+          '<input type="text" name="jenis_jamu[]" class="form-control" placeholder="Jenis jamu yang dikonsumsi" required>' +
         '</div>' +
         '<div class="col-md-2">' +
-          '<input type="number" name="jamu_per_minggu[]" class="form-control" min="0" max="99" placeholder="0">' +
+          '<input type="number" name="jamu_per_minggu[]" class="form-control" min="0" max="99" placeholder="0" required>' +
           '<span class="help-block"><small>Jumlah konsumsi jamu (gelas per minggu)</small></span>' +
         '</div>' +
         '<div class="col-md-1">' +

@@ -12,16 +12,82 @@ class M_status extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function store($data_status = array())
+  public function get_data($column)
   {
-    $result = $this->db->insert('hol_status', $data_status);
+    $this->db->select($column);
+    $this->db->from('hol_status a');
+    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
+    $this->db->not_like('DATE_FORMAT(a.tgl_periksa, \'%d\')', date('d'));
+    $this->db->where('a.hapus', '0');
+    $this->db->order_by('a.tgl_periksa', 'desc');
+    $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(
-        'status' => 'error',
+        'status' => 'error', 
         'data' => $this->db->error()
         );
     } else {
-      $ret_val = array('status' => 'success');
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_data_harian($column = '*', $status = array('terdaftar'))
+  {
+    $this->db->select($column);
+    $this->db->from('hol_status a');
+    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
+    $this->db->like('DATE_FORMAT(a.tgl_periksa, \'%d\')', date('d'));
+    $this->db->where_in('a.status', $status);
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    // var_dump($view_data);
+    // die()
+    return $ret_val;
+  }
+
+  /**
+   * join with pas_identitas
+   * @param  [type] $no_bpjs [description]
+   * @param  [type] $column  [description]
+   * @return [type]          [description]
+   */
+  public function get_data_pasien($no_bpjs, $column)
+  {
+    $this->db->select($column);
+    $this->db->from('hol_status a');
+    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
+    $this->db->where('a.no_bpjs', $no_bpjs);
+    $this->db->where('a.hapus', '0');
+    $this->db->order_by('a.tgl_periksa', 'desc');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
     }
     return $ret_val;
   }
@@ -46,12 +112,15 @@ class M_status extends CI_Model
     return $ret_val;
   }
 
-  public function show_detail_status_pasien($id_registrasi, $column = '*')
+  public function show_pasien($id_registrasi, $no_bpjs, $column = '*')
   {
     $this->db->select($column);
-    $this->db->from('hol_status');
-    $this->db->join('pas_identitas', 'hol_status.no_bpjs = pas_identitas.no_bpjs');
-    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->from('hol_status a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->where('a.id_registrasi', $id_registrasi);
+    $this->db->where('a.no_bpjs', $no_bpjs);
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
     $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(
@@ -67,85 +136,44 @@ class M_status extends CI_Model
     return $ret_val;
   }
 
-  public function get_data_pasien_terdaftar()
+  public function store($data = array())
   {
-    $this->db->select('id_registrasi, hol_status.no_bpjs, pas_identitas.nama, tgl_periksa, poli, status');
-    $this->db->from('hol_status');
-    $this->db->join('pas_identitas', 'hol_status.no_bpjs = pas_identitas.no_bpjs');
-    $this->db->join('poli_tenaga_medis', 'hol_status.nik_tenaga_medis = poli_tenaga_medis.nik_tenaga_medis');
-    $this->db->where('hol_status.hapus', '0');
-    $result = $this->db->get();
+    $sql = $this->db->set($data)->get_compiled_insert('hol_status');
+    $this->db->query($sql);
+  }
+
+  public function update($id_registrasi, $no_bpjs, $data = array())
+  {
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $sql = $this->db->set($data)->get_compiled_update('hol_status');
+    $this->db->query($sql);
+  }
+
+  public function destroy($id_registrasi, $no_bpjs)
+  {
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('hol_status');
+    $this->db->query($sql);
+  }
+
+  public function count_by_status_pasien($id_registrasi, $no_bpjs)
+  {
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $result = $this->db->get('hol_status');
     if ( ! $result) {
       $ret_val = array(
-        'status' => 'error',
+        'status' => 'error', 
         'data' => $this->db->error()
         );
     } else {
       $ret_val = array(
-        'status' => 'success',
-        'data' => $result->result_array()
+        'status' => 'success', 
+        'data' => array($result->num_rows())
         );
     }
     return $ret_val;
-  }
-
-  public function update($id = array(), $data_status = array())
-  {
-    $sql = $this->db->set($data_status)->where($id)->get_compiled_update('hol_status');
-    $this->db->query($sql);
-  }
-
-  public function tambah_pemeriksaan_fisik($key = array(), $data_pemeriksaan_fisik = array())
-  {
-    $nilai = array();
-    $sql = 'UPDATE hol_status SET alergi_obat = ?, SET alergi_makanan = ?, SET td = ?, SET rr = ?, SET nadi = ?, SET suhu = ?  WHERE id_registrasi = ? AND nik_tenaga_medis = ? AND no_bpjs = ?';
-    foreach ($data_pemeriksaan_fisik as $key => $value) {
-      array_push($nilai, $value);
-    }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
-  }
-
-  public function ubah_pemeriksaan_fisik($key = array(), $data_pemeriksaan_fisik = array())
-  {
-    $this->ubah_pemeriksaan_fisik($key, $data_pemeriksaan_fisik);
-  }
-
-  public function ubah_kepemilikan_anamnese($key = array(), $data_kepemilikan = array())
-  {
-    $nilai = array();
-    $sql = 'UPDATE hol_status SET no_bpjs = ?  WHERE id_keluhan = ? AND id_registrasi = ? AND nik_tenaga_medis = ?';
-    foreach ($data_kepemilikan as $key => $value) {
-      array_push($nilai, $value);
-    }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
-  }
-
-  public function ubah_dokter($key = array(), $data_dokter = array())
-  {
-    $nilai = array();
-    $sql = 'UPDATE hol_status SET nik_tenaga_medis = ?  WHERE id_keluhan = ? AND id_registrasi = ? AND no_bpjs = ?';
-    foreach ($data_dokter as $key => $value) {
-      array_push($nilai, $value);
-    }
-    foreach ($key as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
-  }
-
-  public function hapus_data_status($data_status = array())
-  {
-    $nilai = array();
-    $sql = 'UPDATE hol_status SET hapus \'1\' WHERE id_registrasi = ? AND nik_tenaga_medis = ? AND no_bpjs = ?';
-    foreach ($data_status as $key => $value) {
-      array_push($nilai, $value);
-    }
-    $this->db->query($sql, $nilai);
   }
 }

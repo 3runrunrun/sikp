@@ -9,12 +9,12 @@ $(function(){
 
     var element = '<div class="row" style="margin-bottom:10px !important">' +
       '<div class="col-md-4">' +
-        '<select name="st_no_bpjs[]" class="form-control select2-single">' +
+        '<select name="st_no_bpjs[]" class="form-control select2-single" required>' +
           namelist +
         '</select>' +
       '</div>' +
       '<div class="col-md-7">' +
-        '<input type="text" name="st_jenis_penyakit[]" class="form-control" placeholder="penyakit atau kecelakaan yang pernah dialami">' +
+        '<input type="text" name="st_jenis_penyakit[]" class="form-control" placeholder="penyakit atau kecelakaan yang pernah dialami" required>' +
       '</div>' +
       '<div class="col-md-1">' +
         '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().remove()"><i class="fa fa-remove"></i></button>' +

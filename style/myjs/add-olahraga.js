@@ -18,14 +18,14 @@ $(document).ready(function(){
   $('body').on('click', '#add-olahraga', function(){
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-3">' +
-          '<input type="text" name="jenis_olahraga[]" class="form-control" placeholder="Jenis olahraga">' +
+          '<input type="text" name="jenis_olahraga[]" class="form-control" placeholder="Jenis olahraga" required>' +
         '</div>' +
         '<div class="col-md-2">' +
-          '<input type="number" name="jumlah_per_minggu[]" class="form-control" min="0" max="999" placeholder="0">' +
+          '<input type="number" name="jumlah_per_minggu[]" class="form-control" min="0" max="999" placeholder="0" required>' +
           '<span class="help-block"><small>Kali per minggu</small></span>' +
         '</div>' +
         '<div class="col-md-4">' +
-          '<select name="olahraga_keluarga[]" class="form-control">' +
+          '<select name="olahraga_keluarga[]" class="form-control" required>' +
             '<option selected disabled>Pilih opsi</option>' +
             '<option value="1">Ya</option>' +
             '<option value="0">Tidak</option>' +

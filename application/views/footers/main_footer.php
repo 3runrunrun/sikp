@@ -1,5 +1,4 @@
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.3.8
-      </div>
-      <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-      reserved.
+<div class="pull-right hidden-xs">
+  <b>Version</b> 1.2
+</div>
+<strong>Copyright &copy; 2016-2017 <a href="http://filkom.ub.ac.id">Information System Research Group</a>.</strong>

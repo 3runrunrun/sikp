@@ -4,7 +4,7 @@ $(document).ready(function(){
         '<div class="form-group">' +
           '<div class="col-md-6">' +
             '<label for="keluhan" class="control-label">Keluhan Pasien</label>' +
-            '<textarea name="keluhan[]" class="form-control"></textarea>' +
+            '<textarea name="keluhan[]" class="form-control" required></textarea>' +
           '</div>' +
           '<div class="col-md-1">' +
             '<label class="control-label" style="color: white !important">Tombol</label>' +

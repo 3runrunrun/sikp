@@ -18,18 +18,18 @@ $(document).ready(function(){
   $('body').on('click', '#add-kecelakaan-kerja', function(){
     var element = '<div class="row" style="margin-bottom: 10px !important">' +
         '<div class="col-md-4">' +
-          '<input type="text" name="jenis_kecelakaan_kerja[]" class="form-control" placeholder="Kecelakaan kerja yang dialami">' +
+          '<input type="text" name="jenis_kecelakaan_kerja[]" class="form-control" placeholder="Kecelakaan kerja yang dialami" required>' +
         '</div>' +
         '<div class="col-md-2">' +
-          '<input type="number" name="tahun_kejadian[]" class="form-control" min="1000" max="9999" placeholder="0">' +
+          '<input type="number" name="tahun_kejadian[]" class="form-control" min="1000" max="9999" placeholder="0" required>' +
           '<span class="help-block"><small>Isi dengan tahun kejadian</small></span>' +
         '</div>' +
         '<div class="col-md-3">' +
-          '<input type="text" name="jenis_kelainan[]" class="form-control" placeholder="Jenis kelainan yang dialami">' +
+          '<input type="text" name="jenis_kelainan[]" class="form-control" placeholder="Jenis kelainan yang dialami" required>' +
           '<span class="help-block"><small>Jika ada</small></span>' +
         '</div>' +
         '<div class="col-md-2">' +
-          '<input type="number" name="durasi_perawatan[]" class="form-control" min="0" max="999" placeholder="0">' +
+          '<input type="number" name="durasi_perawatan[]" class="form-control" min="0" max="999" placeholder="0" required>' +
           '<span class="help-block"><small>Dalam hari</small></span>' +
         '</div>' +
         '<div class="col-md-1">' +

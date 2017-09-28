@@ -12,14 +12,57 @@ class M_rujukan extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function store($data_rujukan = array())
+  public function show_by_status_pasien($id_registrasi, $no_bpjs, $column = '*')
   {
-    $sql = $this->db->set($data_rujukan)->get_compiled_insert('hol_rujukan');
+    $this->db->select($column);
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $this->db->where('hapus', '0');
+    $result = $this->db->get('hol_rujukan');
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function store($data = array())
+  {
+    $sql = $this->db->set($data)->get_compiled_insert('hol_rujukan');
     $this->db->query($sql);
   }
 
-  public function ubah_rujukan($data_rujukan_baru = array())
+  public function destroy_by_status_pasien($id_registrasi, $no_bpjs)
   {
-    $this->tambah_rujukan($data_rujukan_baru);
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('hol_rujukan');
+    $this->db->query($sql);
+  }
+
+  public function count_by_status_pasien($id_registrasi, $no_bpjs)
+  {
+    $this->db->where('id_registrasi', $id_registrasi);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $result = $this->db->get('hol_rujukan');
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => array($result->num_rows())
+        );
+    }
+    return $ret_val;
   }
 }

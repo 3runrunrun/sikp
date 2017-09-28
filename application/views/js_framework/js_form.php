@@ -86,8 +86,8 @@
     });
   </script>
   <!-- My Script -->
-  <script src="<?php echo base_url(); ?>../style/myjs/add-family.js"></script>
-  <script src="<?php echo base_url(); ?>../style/myjs/add-spouse.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-pasangan.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-anggota-keluarga.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-sumber-air.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-riw-1-bulan.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-riw-3-bulan.js"></script>
@@ -108,3 +108,12 @@
   <script src="<?php echo base_url(); ?>../style/myjs/read-modul-penyakit.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-faktor.js"></script>
   <script src="<?php echo base_url(); ?>../style/myjs/add-rujukan.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/get-stok-obat.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-obat-baru.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-obat-keluar.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-obat-masuk.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/filter-region.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-perkawinan-ke.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-riwayat-pekerjaan.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/add-diagnosis.js"></script>
+  <script src="<?php echo base_url(); ?>../style/myjs/get-latest-version.js"></script>

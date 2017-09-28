@@ -12,9 +12,11 @@ class M_obat extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function tampil_obat($sort_by = NULL, $order = NULL)
+  public function show($id_obat, $column = '*')
   {
-    $this->db->order_by($sort_by, $order);
+    $this->db->select($column);
+    $this->db->where('id_obat', $id_obat);
+    $this->db->where('hapus', '0');
     $result = $this->db->get('poli_obat');
     if ( ! $result) {
       $ret_val = array(
@@ -30,48 +32,54 @@ class M_obat extends CI_Model
     return $ret_val;
   }
 
-  public function tambah_obat($data_obat = array())
+  public function get_data($column = '*')
   {
-    $result = $this->db->insert('poli_obat', $data_obat);
+    $this->db->select($column);
+    $this->db->where('hapus', '0');
+    $result = $this->db->get('poli_obat');
     if ( ! $result) {
       $ret_val = array(
         'status' => 'error',
         'data' => $this->db->error()
         );
     } else {
-      $ret_val = array('status' => 'success');
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
     }
     return $ret_val;
   }
 
-  public function ubah_obat($key = array(), $data_obat_baru = array())
+  public function store($data = array())
   {
-    $this->db->where($key);
-    $result = $this->db->update('poli_obat', $data_obat_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
+    $sql = $this->db->set($data)->get_compiled_insert('poli_obat');
+    $this->db->query($sql);
   }
 
-  public function hapus_obat($data_obat = array())
+  public function update($id_obat, $data = array())
   {
-    $this->db->where($data_obat);
-    $this->db->set('hapus', '1');
-    $result = $this->db->update('poli_obat');
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
+    $this->db->where('id_obat', $id_obat);
+    $sql = $this->db->set($data)->get_compiled_update('poli_obat');
+    $this->db->query($sql);
+  }
+
+  public function update_persediaan($id_obat, $flag, $jumlah)
+  {
+    if ($flag == 'tambah') {
+      $this->db->set('jumlah', "jumlah + $jumlah", FALSE);
+    } elseif ($flag == 'kurang') {
+      $this->db->set('jumlah', "jumlah - $jumlah", FALSE);
     }
-    return $ret_val;
+    $this->db->where('id_obat', $id_obat);
+    $sql = $this->db->get_compiled_update('poli_obat');
+    $this->db->query($sql);
+  }
+  
+  public function destroy($id_obat)
+  {
+    $this->db->where('id_obat', $id_obat);
+    $sql = $this->db->set('hapus', '1')->get_compiled_update('poli_obat');
+    $this->db->query($sql);
   }
 }

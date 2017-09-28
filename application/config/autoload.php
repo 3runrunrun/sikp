@@ -60,12 +60,14 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array(
   'sikp_error_handling' => 'eh', // sikp library
+  'sikp_data_checker' => 'dc', // sikp library
   'database',
   'form_validation',
   'parser',
   'session',
   'unit_test',
-  'user_agent'
+  'user_agent',
+  'upload'
   );
 
 /*
@@ -155,13 +157,13 @@ $autoload['model'] = array(
   'modul_andal/M_penyakit',
   // OBAT
   'obat/M_obat',
+  'obat/M_obat_masuk',
   'obat/M_obat_keluar',
   // PASIEN
   'pasien/M_kk',
   'pasien/M_pasien_identitas',
   'pasien/M_riwayat_pekerjaan',
   // PEGAWAI
-  'pegawai/M_pegawai',
   'pegawai/M_staf_administrasi',
   'pegawai/M_tenaga_kefarmasian',
   'pegawai/M_tenaga_medis',
