@@ -16,9 +16,11 @@
         <div class="box-header">
           <h3 class="box-title">Daftar Data Dasar Kesehatan Keluarga</h3>
           <!-- /.box-title -->
+          <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-block btn-default bg-green" onclick="window.location.href='<?php echo base_url(); ?>formulir-data-dasar'"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data Baru</button>
           </div>
+          <?php endif; ?>
           <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
@@ -48,9 +50,13 @@
                 <td>{tingkat_stres}</td>
                 <td>
                   <div class="form-group btn-group">
+                    <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
                     <button type="button" class="btn btn-sm btn-success" onclick="window.location='<?php echo base_url();?>formulir-data-dasar/{id_kk}'"><i class="fa fa-plus"></i></button>
+                    <?php endif; ?>
                     <button type="button" class="btn btn-sm btn-primary" onclick="window.location='<?php echo base_url(); ?>detail-data-dasar/{id_kk}'"><i class="fa fa-eye"></i></button>
+                    <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
                     <button type="button" class="btn btn-sm btn-danger" onclick="window.location='<?php echo base_url(); ?>formulir-data-dasar/{id_kk}'"><i class="fa fa-trash-o"></i></button>
+                    <?php endif; ?>
                   </div>
                 </td>
               </tr>

@@ -30,7 +30,9 @@
             <h3 class="box-title">Identitas Pasien</h3>
             <div class="box-tools pull-right">
               {dd_identitas}
+              <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
               <button type="button" onclick="window.location='<?php echo base_url(); ?>edit-identitas-pasien/{id_kk}/{no_bpjs}'" class="btn btn-box-tool bg-yellow"><i class="fa fa-pencil"></i>&nbsp;Ubah Identitas Pasien</button>
+              <?php endif; ?>
               {/dd_identitas}
             </div>
           </div>
@@ -90,7 +92,9 @@
           <h3 class="box-title">Data Ekonomi Keluarga</h3>
           <div class="box-tools pull-right">
             {dd_ekonomi}
+            <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
             <button type="button" onclick="window.location='<?php echo base_url(); ?>edit-ekonomi/{id_kk}'" class="btn btn-box-tool bg-yellow"><i class="fa fa-pencil"></i>&nbsp;Ubah Data Ekonomi</button>
+            <?php endif; ?>
             {/dd_ekonomi}
           </div>
         </div>
@@ -136,8 +140,10 @@
           <div class="box-tools pull-right">
             {dd_kes_kel}
             <button type="button" onclick="window.location='<?php echo base_url(); ?>riwayat-data-dasar/{id_kk}'" class="btn btn-box-tool bg-blue"><i class="fa fa-eye"></i>&nbsp;Lihat Riwayat</button>
+            <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
             <button type="button" onclick="window.location='<?php echo base_url(); ?>add-riwayat-kes-kel/{id_kk}'" class="btn btn-box-tool bg-yellow"><i class="fa fa-pencil"></i>&nbsp;Perbarui</button>
             <button type="button" onclick="window.location='<?php echo base_url(); ?>destroy-riwayat-kes-kel/{id_kk}/{id_riwayat_kes_kel}'" class="btn btn-box-tool bg-red"><i class="fa fa-remove"></i>&nbsp;Hapus</button>
+            <?php endif; ?>
             {/dd_kes_kel}
           </div>
         </div>
@@ -195,7 +201,9 @@
           <h3 class="box-title">Data Perilaku Kesehatan</h3>
           <div class="box-tools pull-right">
             {dd_perilaku}
+            <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
             <button type="button" onclick="window.location='<?php echo base_url(); ?>destroy-perilaku/{id_kk}/{tgl_isi}/{id_riwayat_kes_kel}'" class="btn btn-box-tool bg-red"><i class="fa fa-trash"></i>&nbsp;&nbsp;Hapus Perilaku Kesehatan</button>
+            <?php endif; ?>
             {/dd_perilaku}
           </div>
         </div>
@@ -459,7 +467,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">Riwayat Perkawinan</h3>
           <div class="box-tools pull-right">
+            <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
             <button type="button" onclick="window.location='<?php echo base_url(); ?>edit-perkawinan/{id_kk}'" class="btn btn-box-tool bg-yellow"><i class="fa fa-pencil"></i>&nbsp;Ubah Data Perkawinan dan Anggota Keluarga</button>
+            <?php endif; ?>
           </div>
         </div>
         <!-- ./box-header -->
@@ -513,7 +523,9 @@
                 <th>Keterangan Hidup</th>
                 <th>Domisili Serumah</th>
                 <th>Hubungan Keluarga</th>
+                <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
                 <th>Opsi</th>
+                <?php endif; ?>
               </tr>
             </thead>
             <tbody>
@@ -526,12 +538,14 @@
                 <td>{hidup}</td>
                 <td>{domisili_serumah}</td>
                 <td>{hubungan_keluarga}</td>
+                <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
                 <td>
                   <div class="form-group btn-group">
                     <button type="button" class="btn btn-xs btn-warning" onclick="window.location='<?php echo base_url(); ?>edit-identitas-pasien/{id_kk}/{no_bpjs}'"><i class="fa fa-pencil"></i></button>
                     <button type="button" class="btn btn-xs btn-danger" onclick="window.location='<?php echo base_url(); ?>destroy-anggota-keluarga/{id_kk}/{no_bpjs}'"><i class="fa fa-trash-o"></i></button>
                   </div>
                 </td>
+                <?php endif; ?>
               </tr>
               {/dd_anggota_keluarga}
             </tbody>

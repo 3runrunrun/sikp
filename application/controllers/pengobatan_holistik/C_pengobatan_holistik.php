@@ -53,6 +53,13 @@ class C_pengobatan_holistik extends CI_Controller
             header("Location: $url");
           }
           break;
+          
+        case 'destroy-riwayat-pengobatan':
+          if ($this->session->userdata('tabel') == 'keperawatan') {
+            $url = base_url();
+            header("Location: $url");
+          }
+          break;
 
         case 'pasien-diagnosis-harian':
         case 'formulir-diagnosis':

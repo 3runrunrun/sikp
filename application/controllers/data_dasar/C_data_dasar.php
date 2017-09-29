@@ -34,9 +34,42 @@ class C_data_dasar extends CI_Controller
       $url = base_url();
       header("Location: $url");
     } else { 
-      if ($this->session->userdata('tabel') == 'kefarmasian') {
-        $url = base_url();
-        header("Location: $url");
+      switch ($urisegment) {
+        case 'edit-identitas-pasien':
+        case 'update-identitas-pasien':
+        case 'edit-ekonomi':
+        case 'add-ekonomi':
+        case 'add-perilaku':
+        case 'add-perilaku':
+        case 'add-riwayat-kes-kel':
+        case 'edit-perkawinan':
+        case 'update-perkawinan':
+        case 'update-anggota-keluarga':
+        case 'destroy-anggota-keluarga':
+        case 'destroy-perilaku':
+        case 'destroy-riwayat-kes-kel':
+        case 'destroy-gejala-stres':
+        case 'formulir-data-dasar':
+        case 'simpan-pasien-baru':
+        case 'simpan-riwayat-pekerjaan':
+        case 'simpan-data-perkawinan':
+        case 'simpan-anggota-keluarga':
+        case 'simpan-ekonomi':
+        case 'simpan-perilaku':
+        case 'simpan-riwayat-kes':
+        case 'simpan-gejala-stres':
+          if ($this->session->userdata('tabel') == 'keperawatan') {
+            $url = base_url();
+            header("Location: $url");
+          }
+          break;
+        
+        default:
+          if ($this->session->userdata('tabel') == 'kefarmasian') {
+            $url = base_url();
+            header("Location: $url");
+          }
+          break;
       }
     }
   }
@@ -270,13 +303,13 @@ class C_data_dasar extends CI_Controller
       if (empty($data_detail[$key])) {
         $data_detail[$key] = array();
         // set template data if riwayat_kes_kel is empty
-        if ($key == 'ekonomi') {
+        if ($key == 'ekonomi' && $this->session->userdata('tabel') != 'keperawatan') {
           $add_ekonomi = '<button class="btn btn-primary" onclick="window.location=\'' . base_url('add-ekonomi/') . $id . '\'" style="width: 100%;"><i class="fa fa-plus"></i>&nbsp;Tambah Riwayat Kesehatan Keluarga</button>';
         }
-        if ($key == 'riwayat_kes_kel') {
+        if ($key == 'riwayat_kes_kel' && $this->session->userdata('tabel') != 'keperawatan') {
           $add_kes_kel = '<button class="btn btn-primary" onclick="window.location=\'' . base_url('add-riwayat-kes-kel/') . $id . '\'" style="width: 100%;"><i class="fa fa-plus"></i>&nbsp;Tambah Riwayat Kesehatan Keluarga</button>';
         }
-        if ($key == 'perilaku') {
+        if ($key == 'perilaku' && $this->session->userdata('tabel') != 'keperawatan') {
           $add_perilaku = '<button class="btn btn-primary" onclick="window.location=\'' . base_url('add-perilaku/') . $id . '\'" style="width: 100%;"><i class="fa fa-plus"></i>&nbsp;Tambah Data Perilaku Kesehatan</button>';
         } 
       }

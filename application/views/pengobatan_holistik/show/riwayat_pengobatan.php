@@ -42,7 +42,9 @@
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
                     <button type="button" class="btn btn-primary" onclick="window.location='<?php echo base_url(); ?>detail-pengobatan/{id_registrasi}/{no_bpjs}'"><i class="fa fa-eye"></i></button>
-                    <button type="submit" class="btn btn-danger" onclick="window.location='<?php echo base_url(); ?>destroy-riwayat-pengobatan/{id_registrasi}/{no_bpjs}'"><i class="fa fa-remove"></i></button>
+                    <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
+                    <button type="button" class="btn btn-danger" onclick="window.location='<?php echo base_url(); ?>destroy-riwayat-pengobatan/{id_registrasi}/{no_bpjs}'"><i class="fa fa-remove"></i></button>
+                    <?php endif; ?>
                   </form>
                   </div>
                 </td>

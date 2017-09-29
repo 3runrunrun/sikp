@@ -12,14 +12,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>../style/plugins/iCheck/all.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>../style/plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>../style/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>../style/dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>../style/plugins/iCheck/all.css">
-
-
+  <script src="<?php echo base_url(); ?>../style/plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,8 +39,8 @@
       {alert_vars}
       <form action="<?php echo base_url(); ?>auth" method="post">
         <div class="form-group has-feedback">
-          <select name="uname" class="form-control">
-            <option value="" selected disabled>Pengguna</option>
+          <select name="uname" class="form-control select2">
+            <option value="" selected disabled>Nama Pegawai</option>
             {pengguna}
             <option value="{uname}">{nama}</option>
             {/pengguna}
@@ -49,14 +50,6 @@
           <input type="password" name="pwd" class="form-control" placeholder="Kata Sandi">
         </div>
         <div class="row">
-          <!-- <div class="col-xs-8">
-            <div class="checkbox icheck">
-              <label>
-                <input type="checkbox" name="remember_me">&nbsp;Ingat saya
-              </label>
-            </div>
-          </div> -->
-          <!-- /.col -->
           <div class="col-xs-4">
             <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
           </div>
@@ -72,6 +65,15 @@
   <script src="<?php echo base_url(); ?>../style/plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- Bootstrap 3.3.6 -->
   <script src="<?php echo base_url(); ?>../style/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Select2 -->
+  <script src="<?php echo base_url(); ?>../style/plugins/select2/select2.full.min.js"></script>
+  <!-- Advanced Form -->
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $(".select2").select2();
+    });
+  </script>
   <!-- Page script -->
   <!-- iCheck 1.0.1 -->
   <script src="<?php echo base_url(); ?>../style/plugins/iCheck/icheck.min.js"></script>
