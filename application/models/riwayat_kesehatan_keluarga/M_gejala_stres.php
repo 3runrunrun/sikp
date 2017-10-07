@@ -39,11 +39,11 @@ class M_gejala_stres extends CI_Model
     $this->db->query($sql);
   }
 
-  public function update($id_kk, $id_gejala_stres, $data_baru = array())
+  public function update($id_kk, $id_gejala_stres, $data = array())
   {
     $this->db->where('id_kk', $id_kk);
     $this->db->where('id_gejala_stres', $id_gejala_stres);
-    $sql = $this->db->set($data_baru)->get_compiled_update('kk_gejala_stres');
+    $sql = $this->db->set($data)->get_compiled_update('kk_gejala_stres');
     $this->db->query($sql);
   }
 

@@ -51,13 +51,6 @@ class C_modul_kesehatan extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
-  private function commit_trans($uri_param = NULL)
-  {
-    $this->db->trans_commit();
-    $url = base_url() . 'formulir-data-dasar/' . $uri_param;
-    header("Location: $url");
-  }
-
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -267,7 +260,7 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Modul Kesehatan', $css_framework, $page_content, $js_framework);
   }
 
-  public function replace_modul($data = array())
+  private function replace_modul($data = array())
   {
     // init var - local
     $ret_val = array();

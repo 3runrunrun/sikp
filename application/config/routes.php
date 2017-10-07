@@ -100,6 +100,7 @@ $route['formulir-pencatatan-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatata
 $route['simpan-pencatatan-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/store';
 $route['data-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data';
 $route['data-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data/$1';
+$route['delete-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/destroy/$1';
 
 $route['cetak-laporan-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/cetak_laporan_obat_keluar';
 

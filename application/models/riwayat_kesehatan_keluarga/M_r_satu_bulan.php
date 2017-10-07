@@ -51,9 +51,9 @@ class M_r_satu_bulan extends CI_Model
     return $ret_val;
   }
 
-  public function store($data_riwayat = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_riwayat)->get_compiled_insert('kk_riwayat_1bulan');
+    $sql = $this->db->set($data)->get_compiled_insert('kk_riwayat_1bulan');
     $this->db->query($sql);
   }
 
@@ -81,35 +81,6 @@ class M_r_satu_bulan extends CI_Model
         'status' => 'success',
         'data' => $result->result_array()
         );
-    }
-    return $ret_val;
-  }
-
-  public function ubah_riwayat($key = array(), $data_riwayat_baru = array())
-  {
-    $this->db->where($key);
-    $result = $this->db->update('kk_riwayat_1bulan', $data_riwayat_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_riwayat($data_riwayat = array())
-  {
-    $result = $this->db->delete('kk_riwayat_1bulan', $data_riwayat);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
     }
     return $ret_val;
   }

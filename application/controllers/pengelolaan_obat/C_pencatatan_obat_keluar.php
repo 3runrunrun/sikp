@@ -259,7 +259,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
       $data_obat_keluar = array();
       $input_var = $this->input->post();
 
-      var_dump($input_var);
+      // var_dump($input_var);
 
       // repopulating and storing data
       $this->db->trans_begin();
@@ -295,6 +295,10 @@ class C_pencatatan_obat_keluar extends CI_Controller
     $to = $this->input->post('sampai_tanggal');
     $view_data['laporan'] = $this->M_obat_keluar->get_data_by_range($from, $to);
 
+    // assign var - from and to
+    $data_tabel['from'] = $this->date_formatter($from, 'd-M-Y');
+    $data_tabel['to'] = $this->date_formatter($to, 'd-M-Y');
+
     // parsing error template
     foreach ($view_data as $key => $value) {
       if ($view_data[$key]['status'] == 'error') {
@@ -328,15 +332,34 @@ class C_pencatatan_obat_keluar extends CI_Controller
 
     // generating pdf file
     $this->load->library('pdf');
-    $this->pdf->set_paper('a4', 'portrait');
+    $this->pdf->set_paper('a4', 'landscape');
     $this->pdf->load_view('pengelolaan_obat/export/obat_keluar', $data_tabel);
     $this->pdf->render();
-    $status = $this->pdf->stream("laporan_obat_keluar.pdf");
-    if ($status !== TRUE) {
-      $url = base_url() . 'data-obat-keluar/gagal_laporan_obat_keluar';
+    $this->pdf->get_canvas()->page_text(16, 570, "Halaman: {PAGE_NUM} dari {PAGE_COUNT}", 'Arial', 10, array(0,0,0));
+    $this->pdf->stream("laporan_obat_keluar.pdf", array("Attachment" => 0));
+  }
+
+  public function destroy($id_obat_keluar)
+  {
+    // init var - view data
+    $view_data = $this->M_obat_keluar->show($id_obat_keluar, 'a.id_obat, a.jumlah_keluar');
+
+    // init var
+    $id_obat = $view_data['data']['0']['id_obat'];
+    $jumlah_keluar = $view_data['data']['0']['jumlah_keluar'];
+
+    // deleting data
+    $this->db->trans_begin();
+    $this->M_obat_keluar->destroy($id_obat_keluar);
+    $this->M_obat->update_persediaan($id_obat, strtolower('tambah'), $jumlah_keluar);
+    if ($this->db->trans_status() === FALSE) {
+      $this->db->trans_rollback();
+      $url = base_url() . 'data-obat-keluar/' . 'gagal_hapus_obat_keluar';
       header("Location: $url");
     } else {
-      $url = base_url() . 'data-obat-keluar/sukses_laporan_obat_keluar';
+      // $this->db->trans_rollback();
+      $this->db->trans_commit();
+      $url = base_url() . 'data-obat-keluar/' . 'sukses_hapus_obat_keluar';
       header("Location: $url");
     }
   }

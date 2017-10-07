@@ -29,48 +29,18 @@ class M_tenaga_medis extends CI_Model
     return $ret_val;
   }
 
-  public function tambah_tenaga_medis($data_tenaga_medis = array())
+  public function store($data = array())
   {
-    $result = $this->db->insert('poli_tenaga_medis', $data_tenaga_medis);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
+    # code...
   }
 
-  public function ubah_tenaga_medis($key = array(), $data_tenaga_medis_baru = array())
+  public function update($nik_tenaga_medis, $data = array())
   {
-    $this->db->where($key);
-    $result = $this->db->update('poli_tenaga_medis', $data_tenaga_medis_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
+    # code...
   }
 
-  public function hapus_tenaga_medis($data_tenaga_medis = array())
+  public function destroy($nik_tenaga_medis)
   {
-    $this->db->where($data_tenaga_medis);
-    $this->db->set('hapus', '1');
-    $result = $this->db->update('poli_tenaga_medis');
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error',
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
+    # code...
   }
 }

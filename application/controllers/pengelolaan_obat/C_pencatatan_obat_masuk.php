@@ -11,6 +11,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
   private $template_data = array();
   private $vars = NULL;
 
+  // init var - error template
+  private $err_template;
+  private $err_template_data = array();
+  private $err_vars = NULL;
+
   // init var - alert template
   private $alert_template;
   private $alert_template_data = array();
@@ -257,16 +262,6 @@ class C_pencatatan_obat_masuk extends CI_Controller
         header("Location: $url");
       }
     }
-  }
-
-  public function edit()
-  {
-    # code...
-  }
-
-  public function udpate()
-  {
-    # code...
   }
 
   public function destroy($id_obat_masuk)

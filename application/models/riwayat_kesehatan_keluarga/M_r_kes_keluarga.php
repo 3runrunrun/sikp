@@ -75,29 +75,6 @@ class M_r_kes_keluarga extends CI_Model
     return $ret_val;
   }
 
-  public function store($data = array())
-  {
-    $sql = $this->db->set($data)->get_compiled_insert('kk_riwayat_kes_kel');
-    $this->db->query($sql);
-  }
-
-  public function update($id_kk, $id_riwayat_kes_kel, $no_bpjs, $data_baru = array())
-  {
-    $this->db->where('id_kk', $id_kk);
-    $this->db->where('id_riwayat_kes_kel', $id_riwayat_kes_kel);
-    $this->db->where('no_bpjs', $no_bpjs);
-    $sql = $this->db->set($data_baru)->get_compiled_update('kk_riwayat_kes_kel');
-    $this->db->query($sql);
-  }
-
-  public function destroy($id_kk, $id_riwayat_kes_kel)
-  {
-    $this->db->where('id_kk', $id_kk);
-    $this->db->where('id_riwayat_kes_kel', $id_riwayat_kes_kel);
-    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('kk_riwayat_kes_kel');
-    $this->db->query($sql);
-  }
-
   public function count_merokok_by_kk($id_kk, $id_riwayat_kes_kel)
   {
     $condition = array('1', '2', '3');
@@ -122,5 +99,28 @@ class M_r_kes_keluarga extends CI_Model
     $this->db->group_by('id_riwayat_kes_kel');
     $result = $this->db->get('kk_riwayat_kes_kel');
     return $result->num_rows();
+  }
+
+  public function store($data = array())
+  {
+    $sql = $this->db->set($data)->get_compiled_insert('kk_riwayat_kes_kel');
+    $this->db->query($sql);
+  }
+
+  public function update($id_kk, $id_riwayat_kes_kel, $no_bpjs, $data = array())
+  {
+    $this->db->where('id_kk', $id_kk);
+    $this->db->where('id_riwayat_kes_kel', $id_riwayat_kes_kel);
+    $this->db->where('no_bpjs', $no_bpjs);
+    $sql = $this->db->set($data)->get_compiled_update('kk_riwayat_kes_kel');
+    $this->db->query($sql);
+  }
+
+  public function destroy($id_kk, $id_riwayat_kes_kel)
+  {
+    $this->db->where('id_kk', $id_kk);
+    $this->db->where('id_riwayat_kes_kel', $id_riwayat_kes_kel);
+    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('kk_riwayat_kes_kel');
+    $this->db->query($sql);
   }
 }

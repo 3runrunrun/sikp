@@ -51,13 +51,6 @@ class C_wilayah_administratif extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
-  private function commit_trans($uri_param = NULL)
-  {
-    $this->db->trans_commit();
-    $url = base_url() . 'formulir-data-dasar/' . $uri_param;
-    header("Location: $url");
-  }
-
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -598,7 +591,7 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
-  public function create_kelurahan()
+  public function create_kelurahan($alert_flag = NULL)
   {
     // init var - view data
     $view_data['provinsi'] = $this->M_provinsi->get_data();

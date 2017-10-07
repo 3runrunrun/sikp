@@ -12,9 +12,9 @@ class M_kk extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function show($id_kk, $col_name = '*')
+  public function show($id_kk, $column = '*')
   {
-    $this->db->select($col_name);
+    $this->db->select($column);
     $this->db->where('id_kk', $id_kk);
     $result = $this->db->get('pas_kk');
     if ( ! $result) {
@@ -210,7 +210,6 @@ class M_kk extends CI_Model
   }
 
   // RUD
-
   public function store($data = array())
   {
     $sql = $this->db->set($data)->get_compiled_insert('pas_kk');

@@ -133,7 +133,7 @@ class C_home extends CI_Controller
     $pengguna = array();
 
     // init var - view data
-    $view_data['pengguna'] = $this->M_staf_administrasi->get_user_by_pwd($uname, $pwd);
+    $view_data['pengguna'] = $this->M_admin->get_user_by_pwd($uname, $pwd);
 
     // check if any system error
     if ($view_data['pengguna']['status'] == 'error') {

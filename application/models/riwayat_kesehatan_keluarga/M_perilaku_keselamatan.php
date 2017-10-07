@@ -25,9 +25,9 @@ class M_perilaku_keselamatan extends CI_Model
     return $result->num_rows();
   }
 
-  public function store($data_perilaku = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_perilaku)->get_compiled_insert('kk_perilaku_keselamatan');
+    $sql = $this->db->set($data)->get_compiled_insert('kk_perilaku_keselamatan');
     $this->db->query($sql);
   }
 
@@ -37,34 +37,5 @@ class M_perilaku_keselamatan extends CI_Model
     $this->db->where('tgl_isi', $tgl_isi);
     $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('kk_perilaku_keselamatan');
     $this->db->query($sql);
-  }
-
-  public function ubah_perilaku_keselamatan($key = array(), $data_perilaku_baru = array())
-  {
-    $this->db->where($key);
-    $result = $this->db->update('kk_perilaku_keselamatan', $data_perilaku_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_perilaku_keselamatan($data_perilaku = array())
-  {
-    $result = $this->db->delete('kk_perilaku_keselamatan', $data_perilaku);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
   }
 }

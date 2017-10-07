@@ -110,57 +110,16 @@ class M_pasien_identitas extends CI_Model
     return $ret_val;
   }
 
-  public function store($data_pasien = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_pasien)->get_compiled_insert('pas_identitas');
+    $sql = $this->db->set($data)->get_compiled_insert('pas_identitas');
     $this->db->query($sql);
   }
 
-  public function update($no_bpjs, $data_baru)
+  public function update($no_bpjs, $data = array())
   {
     $this->db->where('no_bpjs', $no_bpjs);
-    $sql = $this->db->set($data_baru)->get_compiled_update('pas_identitas');
+    $sql = $this->db->set($data)->get_compiled_update('pas_identitas');
     $this->db->query($sql);
-  }
-
-  public function coba($ar = array())
-  {
-    $nilai = array();
-    $sql = 'INSERT INTO sys_user (password) VALUES ?';
-    foreach ($ar as $key => $value) {
-      array_push($nilai, $value);
-    }
-    print_r($nilai);
-    $this->db->query($sql, $nilai);
-    echo $this->db->last_query($sql, $nilai);
-  }
-
-  public function ubah_identitas_pasien($no_bpjs, $data_pasien_baru = array())
-  {
-    $this->db->where('no_bpjs', $no_bpjs);
-    $result = $this->db->update('pas_identitas', $data_pasien_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_identitas_pasien($data_pasien = array())
-  {
-    $result = $this->db->delete('pas_identitas', $data_pasien);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
   }
 }

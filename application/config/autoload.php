@@ -164,6 +164,7 @@ $autoload['model'] = array(
   'pasien/M_pasien_identitas',
   'pasien/M_riwayat_pekerjaan',
   // PEGAWAI
+  'pegawai/M_admin',
   'pegawai/M_staf_administrasi',
   'pegawai/M_tenaga_kefarmasian',
   'pegawai/M_tenaga_medis',

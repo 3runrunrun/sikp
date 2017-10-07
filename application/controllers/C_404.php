@@ -52,6 +52,4 @@ class C_404 extends CI_Controller
 
     $this->parse_view('404 Not Found', $css_framework, $page_content, $js_framework);
   }
-
-  
 }

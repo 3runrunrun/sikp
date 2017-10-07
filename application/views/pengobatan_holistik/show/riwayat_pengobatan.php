@@ -41,9 +41,9 @@
                 <td>{status}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-primary" onclick="window.location='<?php echo base_url(); ?>detail-pengobatan/{id_registrasi}/{no_bpjs}'"><i class="fa fa-eye"></i></button>
+                    <a href="<?php echo base_url(); ?>detail-pengobatan/{id_registrasi}/{no_bpjs}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                     <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
-                    <button type="button" class="btn btn-danger" onclick="window.location='<?php echo base_url(); ?>destroy-riwayat-pengobatan/{id_registrasi}/{no_bpjs}'"><i class="fa fa-remove"></i></button>
+                    <a href="<?php echo base_url(); ?>destroy-riwayat-pengobatan/{id_registrasi}/{no_bpjs}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
                     <?php endif; ?>
                   </form>
                   </div>

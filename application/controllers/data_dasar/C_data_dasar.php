@@ -35,6 +35,7 @@ class C_data_dasar extends CI_Controller
       header("Location: $url");
     } else { 
       switch ($urisegment) {
+        case 'formulir-data-dasar':
         case 'edit-identitas-pasien':
         case 'update-identitas-pasien':
         case 'edit-ekonomi':
@@ -49,7 +50,6 @@ class C_data_dasar extends CI_Controller
         case 'destroy-perilaku':
         case 'destroy-riwayat-kes-kel':
         case 'destroy-gejala-stres':
-        case 'formulir-data-dasar':
         case 'simpan-pasien-baru':
         case 'simpan-riwayat-pekerjaan':
         case 'simpan-data-perkawinan':
@@ -58,7 +58,7 @@ class C_data_dasar extends CI_Controller
         case 'simpan-perilaku':
         case 'simpan-riwayat-kes':
         case 'simpan-gejala-stres':
-          if ($this->session->userdata('tabel') == 'keperawatan') {
+          if ($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'kefarmasian') {
             $url = base_url();
             header("Location: $url");
           }
@@ -86,13 +86,6 @@ class C_data_dasar extends CI_Controller
       'js_framework' => $js_framework, 
       );
     $this->parser->parse('home', $data);
-  }
-
-  private function commit_trans($uri_param = NULL)
-  {
-    $this->db->trans_commit();
-    $url = base_url() . 'formulir-data-dasar/' . $uri_param;
-    header("Location: $url");
   }
 
   private function id_generator($prefix)
@@ -933,7 +926,7 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
-  public function replace_gejala_stres($data = array())
+  private function replace_gejala_stres($data = array())
   {
     // init var - return var
     $ret_val = array();
@@ -2096,7 +2089,6 @@ class C_data_dasar extends CI_Controller
   ///////////////////////
   // RIWAYAT KESEHATAN //
   ///////////////////////
-
   public function riwayat_kes_kel($id_kk, $id_riwayat_kes_kel, $data = array())
   {
     // init var
@@ -2512,7 +2504,6 @@ class C_data_dasar extends CI_Controller
   //////////////////////////////////////////////
   // MODULE PENGHITUNGAN TINGKAT STRES PASIEN //
   //////////////////////////////////////////////
-
   public function sum_skor_gejala_stres($id_kk, $id_gejala_stres)
   {
     // init var - local

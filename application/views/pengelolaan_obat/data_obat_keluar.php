@@ -82,7 +82,7 @@
                 <td>{tgl_keluar}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>delete-obat-keluar/{id_obat_keluar}'" style="width: 100% !important;"><i class="fa fa-remove"></i></button>
+                    <a href="<?php echo base_url(); ?>delete-obat-keluar/{id_obat_keluar}" class="btn btn-danger btn-sm" style="width: 100% !important;"><i class="fa fa-remove"></i></a>
                   </div>
                 </td>
               </tr>

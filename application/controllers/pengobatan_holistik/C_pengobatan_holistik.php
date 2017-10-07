@@ -383,7 +383,7 @@ class C_pengobatan_holistik extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;', '</span>');
     if ($this->form_validation->run() == FALSE) {
-      $this->create_anamnesis($id_registrasi, $no_bpjs, 'gagal_form_invalid');
+      $this->create_anamnesis($this->input->post('id_registrasi'), $this->input->post('no_bpjs'), 'gagal_form_invalid');
     } else {
       // init var - local
       $id_keluhan = $this->id_generator('KLH');
@@ -401,8 +401,6 @@ class C_pengobatan_holistik extends CI_Controller
       unset($status['no_bpjs']);
       unset($status['keluhan']);
       unset($status['nik_tenaga_medis']);
-
-      var_dump($anamnesis);
 
       // repopulating and storing data
       $this->db->trans_begin();
@@ -554,7 +552,7 @@ class C_pengobatan_holistik extends CI_Controller
       $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
     }
 
-    var_dump($data_tabel['modul_penyakit']);
+    // var_dump($data_tabel['modul_penyakit']);
 
     // parsing template
     $this->template = $this->load->view('pengobatan_holistik/formulir_pengisian_diagnosis', '',TRUE);
@@ -580,7 +578,7 @@ class C_pengobatan_holistik extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
     if ($this->form_validation->run() == FALSE) {
-      $this->create_diagnosis($id_registrasi, $no_bpjs, 'gagal_form_invalid');
+      $this->create_diagnosis($this->input->post('id_registrasi'), $this->input->post('no_bpjs'), 'gagal_form_invalid');
     } else {
       // init var - local
       $id_registrasi = $this->input->post('id_registrasi');
@@ -861,7 +859,7 @@ class C_pengobatan_holistik extends CI_Controller
     // var_dump($this->input->post());
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
     if ($this->form_validation->run() == FALSE) {
-      $this->create_intervensi($id_registrasi, $no_bpjs, 'gagal_form_invalid');
+      $this->create_intervensi($this->input->post('id_registrasi'), $this->input->post('no_bpjs'), 'gagal_form_invalid');
     } else {
       // init var - local
       $id_registrasi = $this->input->post('id_registrasi');
@@ -890,7 +888,7 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
-  public function save_resep_obat($data = array())
+  private function save_resep_obat($data = array())
   {
     // init var - local
     $data['id_resep_obat'] = $this->id_generator('RSP');
@@ -902,7 +900,7 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_resep_obat->store($data);
   }
 
-  public function save_rujukan($data = array())
+  private function save_rujukan($data = array())
   {
     // init var - local
     $data['id_rujukan'] = $this->id_generator('RJK');
@@ -914,7 +912,7 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_rujukan->store($data);
   }
 
-  public function save_pengantar_cek_darah($data = array())
+  private function save_pengantar_cek_darah($data = array())
   {
     // init var - local
     $data['no_surat_pengantar'] = $this->id_generator('DRH');
@@ -1350,9 +1348,6 @@ class C_pengobatan_holistik extends CI_Controller
         goto end;
       }
       $data_tabel[$key] = $view_data[$key]['data'];
-      if (empty($data_tabel[$key])) {
-        $data_tabel[$key] = array();
-      }
     }
 
     // storing data
@@ -1402,7 +1397,7 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
-  public function replace_detail_riwayat_pengobatan($data = array())
+  private function replace_detail_riwayat_pengobatan($data = array())
   {
     // init var - return var
     $ret_val = array();

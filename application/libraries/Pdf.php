@@ -38,6 +38,8 @@ class Pdf extends DOMPDF
   public function load_view($view, $data = array())
   {
     $html = $this->ci()->load->view($view, $data, TRUE);
-    $this->load_html($html);
+    // var_dump($html);
+    $this->load_html($html, 'UTF-8');
+    // var_dump($this->load_html($html, 'UTF-8'));
   }
 }

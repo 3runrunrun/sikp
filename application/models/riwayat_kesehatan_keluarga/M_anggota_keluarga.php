@@ -101,9 +101,9 @@ class M_anggota_keluarga extends CI_Model
     return $ret_val;
   }
 
-  public function store($data_anggota_keluarga = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_anggota_keluarga)->get_compiled_insert('kk_anggota_keluarga');
+    $sql = $this->db->set($data)->get_compiled_insert('kk_anggota_keluarga');
     $this->db->query($sql);
   }
 
@@ -154,6 +154,4 @@ class M_anggota_keluarga extends CI_Model
     }
     return $ret_val;
   }
-
-
 }

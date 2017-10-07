@@ -32,9 +32,9 @@ class M_keluhan extends CI_Model
     return $ret_val;
   }
 
-  public function store($data_keluhan = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_keluhan)->get_compiled_insert('hol_keluhan');
+    $sql = $this->db->set($data)->get_compiled_insert('hol_keluhan');
     $this->db->query($sql);
   }
 

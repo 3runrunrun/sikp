@@ -118,9 +118,9 @@ class M_data_perkawinan extends CI_Model
     return $ret_val;
   }
 
-  public function store($data_perkawinan = array())
+  public function store($data = array())
   {
-    $sql = $this->db->set($data_perkawinan)->get_compiled_insert('kk_data_perkawinan');
+    $sql = $this->db->set($data)->get_compiled_insert('kk_data_perkawinan');
     $this->db->query($sql);
   }
 
@@ -130,34 +130,5 @@ class M_data_perkawinan extends CI_Model
     $on_update = ' ON DUPLICATE KEY UPDATE perkawinan_ke = ?, umur_pasangan = ?, status_kawin = ?';
     $sql = $str . $on_update;
     $this->db->query($sql, array($data_update['perkawinan_ke'], $data_update['umur_pasangan'], $data_update['status_kawin']));
-  }
-
-  public function ubah_data_perkawinan($id_data_perkawinan, $data_perkawinan_baru = array())
-  {
-    $this->db->where('id_data_perkawinan', $id_data_perkawinan);
-    $result = $this->db->update('pas_data_perkawinan', $data_perkawinan_baru);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
-  }
-
-  public function hapus_data_perkawinan($data_perkawinan = array())
-  {
-    $result = $this->db->delete('pas_data_perkawinan', $data_perkawinan);
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array('status' => 'success');
-    }
-    return $ret_val;
   }
 }
