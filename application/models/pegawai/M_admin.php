@@ -23,8 +23,8 @@ class M_admin extends CI_Model
       select nik_staf_administrasi as nik, nama, uname, pwd, "poli_staf_administrasi" as tabel from poli_staf_administrasi
       UNION
       select "sys_admin" as nik, "sys_admin" as nama, uname, pwd, "sys_admin" as tabel from sys_admin) user
-      WHERE uname = ?
-        AND pwd = ?';
+      WHERE uname COLLATE latin1_general_cs = ? 
+        AND pwd COLLATE latin1_general_cs = ? ';
     $bind_param = array(
       $uname,
       $pwd
