@@ -230,7 +230,6 @@ class C_pencatatan_obat_masuk extends CI_Controller
     // init var - local var
     $data_obat = array();
     $data_masuk = array();
-    // var_dump($this->input->post());
 
     // validating form
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '<p><strong>Silahkan ulangi pengisian data</strong></p></div>');

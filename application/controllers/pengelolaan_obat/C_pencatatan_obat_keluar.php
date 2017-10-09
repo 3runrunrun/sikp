@@ -114,7 +114,6 @@ class C_pencatatan_obat_keluar extends CI_Controller
     }
 
     // parsing template
-    // $this->template = $this->load->view('pengelolaan_obat/export/obat_keluar', '', TRUE);
     $this->template = $this->load->view('pengelolaan_obat/data_obat_keluar', '', TRUE);
     $this->template_data = array(
       'err_vars' => $this->err_vars,

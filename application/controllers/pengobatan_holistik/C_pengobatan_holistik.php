@@ -1241,7 +1241,6 @@ class C_pengobatan_holistik extends CI_Controller
   public function detail_riwayat_pengobatan($id_registrasi, $no_bpjs)
   {
     // init var - local
-    $page_content = NULL;
     $resep_obat_vars = NULL;
     $rujukan_vars = NULL;
     $cek_darah_vars = NULL;

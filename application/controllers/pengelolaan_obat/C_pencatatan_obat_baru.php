@@ -102,6 +102,10 @@ class C_pencatatan_obat_baru extends CI_Controller
       $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
     }
 
+    if ($alert_flag !== NULL) {
+      $this->alert_vars = $this->load->view("alert_template/pengelolaan_obat/$alert_flag", '', TRUE);
+    }
+
     // parsing template
     $this->template = $this->load->view('pengelolaan_obat/data_obat', '', TRUE);
     $this->template_data = array(
@@ -184,7 +188,6 @@ class C_pencatatan_obat_baru extends CI_Controller
     if ($this->form_validation->run() == FALSE) {
       $this->create('gagal_form_invalid');
     } else {
-
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post('nama[]') as $key => $value) {
