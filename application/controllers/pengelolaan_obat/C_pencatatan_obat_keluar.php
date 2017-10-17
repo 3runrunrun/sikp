@@ -279,8 +279,8 @@ class C_pencatatan_obat_keluar extends CI_Controller
         $url = base_url() . 'formulir-pencatatan-obat-keluar/gagal_obat_keluar';
         header("Location: $url");
       } else {
-        // $this->db->trans_rollback();
-        $this->db->trans_commit();
+        $this->db->trans_rollback();
+        // $this->db->trans_commit();
         $url = base_url() . 'formulir-pencatatan-obat-keluar/sukses_obat_keluar';
         header("Location: $url");
       }

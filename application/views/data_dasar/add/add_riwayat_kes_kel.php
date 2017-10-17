@@ -786,4 +786,34 @@
   $(document).ready(function(){
     $('#psg-kepala-keluarga').hide();
   });
+
+  function titleCase(str) {
+    str = str.toLowerCase().split(' ');                // will split the string delimited by space into an array of words
+
+    for(var i = 0; i < str.length; i++){               // str.length holds the number of occurrences of the array...
+        str[i] = str[i].split('');                    // splits the array occurrence into an array of letters
+        str[i][0] = str[i][0].toUpperCase();          // converts the first occurrence of the array to uppercase
+        str[i] = str[i].join('');                     // converts the array of letters back into a word.
+    }
+    return str.join(' ');                              //  converts the array of words back to a sentence.
+  }
+
+  function get_ak(id_kk, ret_data){
+    var ak = $.ajax({
+      url: './../data_dasar/C_data_dasar/show_anggota_keluarga',
+      type: 'POST',
+      dataType: 'json',
+      data: {id_kk: id_kk},
+      success: function(data){
+        var ret_val = $.map(data['data'], function(index, value){
+          return '<option value="' + index.no_bpjs + '">' + titleCase(index.nama) + '</option>'; 
+        });
+        ret_data(ret_val);
+      }
+    });
+  }
+
+  function ret_data(ret_val){
+    return ret_val;
+  }
 </script>

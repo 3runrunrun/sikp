@@ -36,7 +36,7 @@ class M_status extends CI_Model
     return $ret_val;
   }
 
-  public function get_data_harian($column = '*', $status = array('terdaftar'))
+  public function get_data_harian($column = '*', $status = array('terdaftar'), $nik = NULL)
   {
     $this->db->select($column);
     $this->db->from('hol_status a');
@@ -45,6 +45,9 @@ class M_status extends CI_Model
     $this->db->like('DATE_FORMAT(a.tgl_periksa, \'%d\')', date('d'));
     $this->db->where_in('a.status', $status);
     $this->db->where('a.hapus', '0');
+    if ($nik !== NULL) {
+      $this->db->where('a.nik_tenaga_medis', $nik);
+    }
     $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(

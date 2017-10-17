@@ -166,6 +166,12 @@ class C_data_dasar extends CI_Controller
     echo json_encode($result);
   }
 
+  public function show_anggota_keluarga()
+  {
+    $result = $this->M_anggota_keluarga->get_data_by_kk($this->input->post('id_kk'), 'b.no_bpjs, b.nama');
+    echo json_encode($result);
+  }
+
   //////////////////////////////////
   // MODUL DATA DASAR - SHOW DATA //
   //////////////////////////////////
@@ -176,18 +182,23 @@ class C_data_dasar extends CI_Controller
     $page_content = NULL;
 
     // init var - view data
-    $view_data['kk'] = $this->M_kk->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, a.no_telp, tingkat_risiko_penyakit, tingkat_stres');
-
-    if ($view_data['kk']['status'] == 'error') {
-      $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
-      $this->err_template_data = array(
-        'alert_title' => 'Kegagalan Pemuatan Data',
-        'alert_msg' => 'Mohon maaf, proses pemuatan <strong>data dasar kesehatan keluarga</strong> gagal dilakukan.',
-        'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
-        );
-      $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
-    } else {
-      $data_tabel = $view_data['kk']['data'];
+    $view_data['newest_keskel'] = $this->M_r_kes_keluarga->get_data_newest_distinct('MAX(tgl_isi) as atglisi');
+    $view_data['newest_tk_stres'] = $this->M_gejala_stres->get_data_newest_distinct('MAX(tgl_isi) as btglisi');
+    $view_data['kk'] = $this->M_r_kes_keluarga->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, c.no_telp, a.tingkat_risiko_penyakit, a.tgl_isi, d.tingkat_stres, d.tgl_isi', $view_data['newest_keskel']['data'], $view_data['newest_tk_stres']['data']);
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>data dasar kesehatan keluarga</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      } else {
+        if ($key == 'kk') {
+          $data_tabel = $view_data[$key]['data'];
+        }         
+      }
     }
 
     // parsing template
@@ -243,7 +254,6 @@ class C_data_dasar extends CI_Controller
   ///////////////////////////////
   // MODUL DATA DASAR - DETAIL //
   ///////////////////////////////
-
   public function detail_data_dasar($alert_flag = NULL, $id_kk)
   {
     // init var - local var
@@ -256,7 +266,7 @@ class C_data_dasar extends CI_Controller
     // init var - view data
     $view_data['tingkat_risiko_penyakit'] = $this->M_kk->get_tingkat_risiko_penyakit($id_kk);
     $view_data['tingkat_stres'] = $this->M_kk->get_tingkat_stres($id_kk);
-    $view_data['identitas'] = $this->M_kk->get_dd_identitas($id_kk, 'a.id_kk, a.no_bpjs, b.nama, YEAR(CURRENT_DATE()) - YEAR(tgl_lahir) as umur, b.jenis_kelamin, b.kelas_bpjs, b.status_tagihan_bpjs, c.pekerjaan as pekerjaan_utama, b.hidup, b.agama, b.alamat, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan, g.nama as kelurahan');
+    $view_data['identitas'] = $this->M_kk->get_dd_identitas($id_kk, 'a.id_kk, a.no_bpjs, b.nama, YEAR(CURRENT_DATE()) - YEAR(tgl_lahir) as umur, b.jenis_kelamin, b.kelas_bpjs, b.status_tagihan_bpjs, b.hidup, b.agama, b.alamat, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan, g.nama as kelurahan, c.pekerjaan as pekerjaan_utama');
     $view_data['ekonomi'] = $this->M_ekonomi->show($id_kk);
     $view_data['riwayat_kes_kel'] = $this->M_r_kes_keluarga->get_data_latest_by_kk($id_kk, 'id_kk, id_riwayat_kes_kel, batuk, asma, merokok, jamu, alkohol, kopi, obat, m_dingin, peliharaan, olahraga');
     $view_data['perilaku'] = $this->M_perilaku_kesehatan->get_data_kes($id_kk, 'a.id_kk, a.id_perilaku_kes, a.layanan_balita, a.pemeliharaan_kes_kel, a.layanan_pengobatan_diri, a.jamkes_pri_kel, a.sumber_air, a.sumber_air_lain, a.mck_km, a.mck_wc, a.mck_cuci, a.spal, a.kasur_busa, a.kosmetik_obat_luar, a.tgl_isi, b.id_perilaku_keselamatan, b.pengguna_sepeda_motor, b.manula_sendirian, c.id_riwayat_kes_kel');
@@ -280,6 +290,8 @@ class C_data_dasar extends CI_Controller
       END AS status_kawin');
 
     // var_dump($view_data['perilaku']);
+    // var_dump($view_data['tingkat_risiko_penyakit']['data']);
+    // var_dump($view_data['tingkat_stres']['data']);
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -386,7 +398,11 @@ class C_data_dasar extends CI_Controller
       $value['jenis_kelamin'] = str_replace(array_keys($jenis_kelamin), $jenis_kelamin, $value['jenis_kelamin']);
       $value['kelas_bpjs'] = str_replace(array_keys($kelas_bpjs), $kelas_bpjs, $value['kelas_bpjs']);
       $value['status_tagihan_bpjs'] = str_replace(array_keys($status_tagihan_bpjs), $status_tagihan_bpjs, $value['status_tagihan_bpjs']);
-      $value['pekerjaan_utama'] = ucwords($value['pekerjaan_utama']);
+      if ($value['pekerjaan_utama'] != NULL) {
+        $value['pekerjaan_utama'] = ucwords($value['pekerjaan_utama']);
+      } else {
+        $value['pekerjaan_utama'] = '<span class="badge bg-blue">N/A</span>';
+      }
       $value['hidup'] = str_replace(array_keys($hidup), $hidup, $value['hidup']);
       $value['agama'] = ucwords($value['agama']);
       $value['alamat'] = ucwords($value['alamat']);
@@ -1350,7 +1366,6 @@ class C_data_dasar extends CI_Controller
   ///////////////////////////////
   // MODUL DATA DASAR - DELETE //
   ///////////////////////////////
-
   public function destroy_anggota_keluarga($id_kk, $no_bpjs)
   {
     // storing data
@@ -1429,7 +1444,6 @@ class C_data_dasar extends CI_Controller
       header("Location: $url");
     }
   }
-
   ///////////////////////////////////////////////
   // MODUL DATA DASAR - INDIVIDUAL INPUT / ADD //
   ///////////////////////////////////////////////
@@ -1562,7 +1576,6 @@ class C_data_dasar extends CI_Controller
   //////////////////////////////
   // MODUL DATA DASAR - INPUT //
   //////////////////////////////
-
   public function create($alert_flag = NULL, $id_kk = NULL)
   {
     // init - view data
@@ -2489,7 +2502,7 @@ class C_data_dasar extends CI_Controller
     $pk = $this->get_percentage_pk($id_kk, $id_riwayat_kes_kel);
     $frk = $this->get_percentage_frk($id_kk, $id_riwayat_kes_kel);
 
-    $k = (($anggota_sakit / $anggota_keluarga) * 1) * 40;
+    $k = (($anggota_sakit / ($anggota_keluarga * 3)) * 1) * 40;
     $tingkat_risiko_penyakit = $k + $pk + $frk;
 
     return $tingkat_risiko_penyakit;

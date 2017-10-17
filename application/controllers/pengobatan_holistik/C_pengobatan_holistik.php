@@ -1152,7 +1152,7 @@ class C_pengobatan_holistik extends CI_Controller
     $page_content = NULL;
 
     // init var - view data
-    $view_data['diagnosis_harian'] = $this->M_status->get_data_harian('a.id_registrasi, a.nik_tenaga_medis, a.no_bpjs, c.nama, a.tgl_periksa, b.poli, a.status', array('terdaftar', 'anamnesis', 'diagnosis', 'intervensi'));
+    $view_data['diagnosis_harian'] = $this->M_status->get_data_harian('a.id_registrasi, a.nik_tenaga_medis, a.no_bpjs, c.nama, a.tgl_periksa, b.poli, a.status', array('terdaftar', 'anamnesis', 'diagnosis', 'intervensi'), $this->session->userdata('nik'));
 
     // parsing error template
     foreach ($view_data as $key => $value) {

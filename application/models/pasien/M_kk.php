@@ -70,35 +70,6 @@ class M_kk extends CI_Model
   }
 
   /**
-   * join with pasien and many more
-   * @param  string $column [description]
-   * @return [type]         [description]
-   */
-  public function get_kk_pasien($column = '*')
-  {
-    $this->db->select($column);
-    $this->db->from('pas_kk a');
-    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
-    $this->db->join('(select * from kk_riwayat_kes_kel where kk_riwayat_kes_kel.hapus = \'0\' order by tgl_isi desc limit 1) c', 'a.no_bpjs = c.no_bpjs', 'left');
-    $this->db->join('(select * from kk_gejala_stres where kk_gejala_stres.hapus = \'0\' order by tgl_isi desc limit 1) d', 'a.id_kk = d.id_kk', 'left');
-    $this->db->where('a.hapus', '0');
-    $this->db->where('b.hapus', '0');
-    $result = $this->db->get();
-    if (! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array(
-        'status' => 'success',
-        'data' => $result->result_array()
-        );
-    }
-    return $ret_val;
-  }
-
-  /**
    * dipanggil di edit_perkawinan
    * join with pas_identitas, kk_anggota_keluarga
    * @param  string $value [description]
@@ -184,16 +155,15 @@ class M_kk extends CI_Model
     $this->db->select($column);
     $this->db->from('pas_kk a');
     $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
-    $this->db->join('pas_riwayat_pekerjaan c', 'a.no_bpjs = c.no_bpjs');
     $this->db->join('sys_provinsi d', 'b.id_provinsi = d.id_provinsi');
     $this->db->join('sys_kabupaten e', 'b.id_kabupaten = e.id_kabupaten');
     $this->db->join('sys_kecamatan f', 'b.id_kecamatan = f.id_kecamatan');
     $this->db->join('sys_kelurahan g', 'b.id_kelurahan = g.id_kelurahan');
+    $this->db->join('(select * from pas_riwayat_pekerjaan where pekerjaan_utama = \'1\') c', 'a.no_bpjs = c.no_bpjs', 'left');
     $this->db->where('a.id_kk', $id_kk);
-    $this->db->where('c.pekerjaan_utama', '1');
+    // $this->db->where('c.pekerjaan_utama', '1');
     $this->db->where('a.hapus', '0');
     $this->db->where('b.hapus', '0');
-    // $this->db->where('c.hapus', '0');
     $result = $this->db->get();
     if (! $result) {
       $ret_val = array(

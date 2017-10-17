@@ -6,67 +6,267 @@ $(function(){
       return '<option value="' + no_bpjs + '">' + nama + '</option>';
     }).get();
 
-    var lines = '<div class="row">' +
-      '<div class="col-md-2">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Pasangan</label>' +
-          '<select name="psg_no_bpjs[]" class="form-control select2-single" required>' +
-            namelist +
-          '</select>' +
+    var hubkelkk = $('#hubkelkk').find(':selected');
+    var lines;
+
+    if (hubkelkk.val() === '1') {
+      lines = '<div class="row">' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Pasangan</label>' +
+            '<select name="psg_no_bpjs[]" class="form-control select2-single" required>' +
+              namelist +
+            '</select>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-2">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Hubungan Keluarga</label>' +
-          '<select name="psg_hubungan_keluarga[]" class="form-control" required>' +
-            '<option value="" selected disabled>Pilih Opsi</option>' +
-            '<option value="2">Istri</option>' +
-          '</select>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Hubungan Keluarga</label>' +
+            '<input type="hidden" name="psg_hubungan_keluarga[]" class="kk-input-pasangan" value="2">' +
+            '<select class="form-control kk-pasangan" required disabled>' +
+              '<option value="" disabled>Pilih Opsi</option>' +
+              '<option value="1" disabled>Suami</option>' +
+              '<option value="2" selected disabled>Istri</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-2">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Domisili Serumah</label>' +
-          '<select name="psg_domisili_serumah[]" class="form-control" required>' +
-            '<option value="" selected disabled>Pilih Opsi</option>' +
-            '<option value="1">Ya</option>' +
-            '<option value="2">Tidak</option>' +
-            '<option value="3">Kadang-Kadang</option>' +
-          '</select>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Domisili Serumah</label>' +
+            '<select name="psg_domisili_serumah[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Ya</option>' +
+              '<option value="2">Tidak</option>' +
+              '<option value="3">Kadang-Kadang</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-2">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Status Perkawinan</label>' +
-          '<select name="psg_status_kawin[]" class="form-control" required>' +
-            '<option value="" selected disabled>Pilih Opsi</option>' +
-            '<option value="1">Menikah</option>' +
-            '<option value="0">Cerai</option>' +
-          '</select>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Status Perkawinan</label>' +
+            '<select name="psg_status_kawin[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Menikah</option>' +
+              '<option value="0">Cerai</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-2">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Perkawinan ke-</label>' +
-          '<input type="number" name="psg_perkawinan_ke[]" class="form-control perkawinan-ke" min="1" onkeyup="set_perkawinan_ke_min(this)" onchange="set_perkawinan_ke_min(this)" required>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Perkawinan ke-</label>' +
+            '<input type="number" name="psg_perkawinan_ke[]" class="form-control perkawinan-ke" min="1" onkeyup="set_perkawinan_ke_min(this)" onchange="set_perkawinan_ke_min(this)" required>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-1">' +
-        '<div class="form-group">' +
-          '<label class="control-label">Umur</label>' +
-          '<input type="number" name="psg_umur_pasangan[]" class="form-control" min="16" required>' +
-          '<span class="help-block"><small>Ketika menikah</small></span>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Umur</label>' +
+            '<input type="number" name="psg_umur_pasangan[]" class="form-control" min="16" required>' +
+            '<span class="help-block"><small>Ketika menikah</small></span>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<div class="col-md-1">' +
-        '<div class="form-group">' +
-          '<label class="control-label" style="color: white !important;">Hapus</label>' +
-          '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove()">' +
-            '<i class="fa fa-times"></i>' +
-          '</button>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label" style="color: white !important;">Hapus</label>' +
+            '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove()">' +
+              '<i class="fa fa-times"></i>' +
+            '</button>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-    '</div>';
+      '</div>';
+    }
+    if (hubkelkk.val() === '2') {
+      lines = '<div class="row">' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Pasangan</label>' +
+            '<select name="psg_no_bpjs[]" class="form-control select2-single" required>' +
+              namelist +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Hubungan Keluarga</label>' +
+            '<input type="hidden" name="psg_hubungan_keluarga[]" class="kk-input-pasangan" value="1">' +
+            '<select class="form-control kk-pasangan" required disabled>' +
+              '<option value="" disabled>Pilih Opsi</option>' +
+              '<option value="1" selected disabled>Suami</option>' +
+              '<option value="2" disabled>Istri</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Domisili Serumah</label>' +
+            '<select name="psg_domisili_serumah[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Ya</option>' +
+              '<option value="2">Tidak</option>' +
+              '<option value="3">Kadang-Kadang</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Status Perkawinan</label>' +
+            '<select name="psg_status_kawin[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Menikah</option>' +
+              '<option value="0">Cerai</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Perkawinan ke-</label>' +
+            '<input type="number" name="psg_perkawinan_ke[]" class="form-control perkawinan-ke" min="1" onkeyup="set_perkawinan_ke_min(this)" onchange="set_perkawinan_ke_min(this)" required>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Umur</label>' +
+            '<input type="number" name="psg_umur_pasangan[]" class="form-control" min="16" required>' +
+            '<span class="help-block"><small>Ketika menikah</small></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label" style="color: white !important;">Hapus</label>' +
+            '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove()">' +
+              '<i class="fa fa-times"></i>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+    if (hubkelkk.val() === '') {
+      lines = '<div class="row">' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Pasangan</label>' +
+            '<select name="psg_no_bpjs[]" class="form-control select2-single" required>' +
+              namelist +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Hubungan Keluarga</label>' +
+            '<input type="hidden" name="psg_hubungan_keluarga[]" class="kk-input-pasangan">' +
+            '<select class="form-control kk-pasangan" required disabled>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1" disabled>Suami</option>' +
+              '<option value="2" disabled>Istri</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Domisili Serumah</label>' +
+            '<select name="psg_domisili_serumah[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Ya</option>' +
+              '<option value="2">Tidak</option>' +
+              '<option value="3">Kadang-Kadang</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Status Perkawinan</label>' +
+            '<select name="psg_status_kawin[]" class="form-control" required>' +
+              '<option value="" selected disabled>Pilih Opsi</option>' +
+              '<option value="1">Menikah</option>' +
+              '<option value="0">Cerai</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-2">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Perkawinan ke-</label>' +
+            '<input type="number" name="psg_perkawinan_ke[]" class="form-control perkawinan-ke" min="1" onkeyup="set_perkawinan_ke_min(this)" onchange="set_perkawinan_ke_min(this)" required>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Umur</label>' +
+            '<input type="number" name="psg_umur_pasangan[]" class="form-control" min="16" required>' +
+            '<span class="help-block"><small>Ketika menikah</small></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1">' +
+          '<div class="form-group">' +
+            '<label class="control-label" style="color: white !important;">Hapus</label>' +
+            '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove()">' +
+              '<i class="fa fa-times"></i>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // lines = '<div class="row">' +
+    //   '<div class="col-md-2">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Pasangan</label>' +
+    //       '<select name="psg_no_bpjs[]" class="form-control select2-single" required>' +
+    //         namelist +
+    //       '</select>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-2">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Hubungan Keluarga</label>' +
+    //       '<select name="psg_hubungan_keluarga[]" class="form-control kk-pasangan" required readonly>' +
+    //         '<option value="" selected disabled>Pilih Opsi</option>' +
+    //         '<option value="1" disabled>Suami</option>' +
+    //         '<option value="2" disabled>Istri</option>' +
+    //       '</select>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-2">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Domisili Serumah</label>' +
+    //       '<select name="psg_domisili_serumah[]" class="form-control" required>' +
+    //         '<option value="" selected disabled>Pilih Opsi</option>' +
+    //         '<option value="1">Ya</option>' +
+    //         '<option value="2">Tidak</option>' +
+    //         '<option value="3">Kadang-Kadang</option>' +
+    //       '</select>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-2">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Status Perkawinan</label>' +
+    //       '<select name="psg_status_kawin[]" class="form-control" required>' +
+    //         '<option value="" selected disabled>Pilih Opsi</option>' +
+    //         '<option value="1">Menikah</option>' +
+    //         '<option value="0">Cerai</option>' +
+    //       '</select>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-2">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Perkawinan ke-</label>' +
+    //       '<input type="number" name="psg_perkawinan_ke[]" class="form-control perkawinan-ke" min="1" onkeyup="set_perkawinan_ke_min(this)" onchange="set_perkawinan_ke_min(this)" required>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-1">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label">Umur</label>' +
+    //       '<input type="number" name="psg_umur_pasangan[]" class="form-control" min="16" required>' +
+    //       '<span class="help-block"><small>Ketika menikah</small></span>' +
+    //     '</div>' +
+    //   '</div>' +
+    //   '<div class="col-md-1">' +
+    //     '<div class="form-group">' +
+    //       '<label class="control-label" style="color: white !important;">Hapus</label>' +
+    //       '<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove()">' +
+    //         '<i class="fa fa-times"></i>' +
+    //       '</button>' +
+    //     '</div>' +
+    //   '</div>' +
+    // '</div>';
     $('#pasangan-out').append(lines);
     $(".select2-single").select2();
 
@@ -81,8 +281,8 @@ function set_perkawinan_ke_min(selector){
   var selector_target_prev = $(selector).parent().parent().parent().prev().children().children().find('.perkawinan-ke');
   var selector_target_next = $(selector).parent().parent().parent().next().children().children().find('.perkawinan-ke');
 
-  console.log($(selector_target_prev).val());
-  console.log($(selector_target_prev).attr('min'));
+  // console.log($(selector_target_prev).val());
+  // console.log($(selector_target_prev).attr('min'));
 
   if (selector_target_prev.length != 0) {
     var prev_min_val = parseInt($(selector_target_prev).attr('min'));
@@ -115,7 +315,7 @@ function get_perkawinan_terakhir(selector) {
   console.log(target);
 
   $.ajax({
-    url: './data_dasar/C_data_dasar/show_perkawinan_terakhir',
+    url: './../data_dasar/C_data_dasar/show_perkawinan_terakhir',
     type: 'post',
     dataType: 'json',
     data: {no_bpjs: no_bpjs},

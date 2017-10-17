@@ -33,6 +33,26 @@ class M_gejala_stres extends CI_Model
     return $ret_val;
   }
 
+  public function get_data_newest_distinct($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->where('hapus', '0');
+    $this->db->group_by('id_kk');    
+    $result = $this->db->get('kk_gejala_stres');
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
   public function store($data = array())
   {
     $sql = $this->db->set($data)->get_compiled_insert('kk_gejala_stres');

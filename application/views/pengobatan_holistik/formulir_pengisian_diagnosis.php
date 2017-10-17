@@ -124,9 +124,7 @@
             <?php echo form_error('nik_tenaga_medis'); ?>
             <?php echo form_error('no_bpjs'); ?>
             <?php echo form_error('penyakit[]'); ?>
-            <?php echo form_error('id_mod_penyakit[]'); ?>
             <?php echo form_error('terapi[]'); ?>
-            <?php echo form_error('lokasi_intervensi[]'); ?>
             {status}
             <input type="hidden" name="id_registrasi" value="{id_registrasi}">
             <input type="hidden" name="nik_tenaga_medis" value="{nik_tenaga_medis}">
@@ -191,10 +189,6 @@
             <h3 class="box-title">Faktor Risiko dan Faktor Pemicu Penyakit</h3>
           </div>
           <div class="box-body">
-            <?php echo form_error('faktor_risiko[]'); ?>
-            <?php echo form_error('faktor_pemicu[]'); ?>
-            <?php echo form_error('id_mod_faktor_risiko[]'); ?>
-            <?php echo form_error('id_mod_faktor_pemicu[]') ?>
             <?php echo form_error('faktor_risiko[]'); ?>
             <?php echo form_error('id_mod_faktor_risiko[]'); ?>
             <?php echo form_error('faktor_pemicu[]'); ?>

@@ -377,9 +377,10 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Hubungan Keluarga</label>
-                    <select name="psg_hubungan_keluarga[]" class="form-control" required>
-                      <option value="" selected>Pilih Hubungan Keluarga</option>
+                    <select id="hubkelkk" name="psg_hubungan_keluarga[]" class="form-control" onchange="set_kk_pasangan(this)" required>
+                      <option value="" selected disabled>Pilih Hubungan Keluarga</option>
                       <option value="1">Suami</option>
+                      <option value="2">Istri</option>
                     </select>
                     <?php echo form_error('psg_hubungan_keluarga[]', '<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;', '</span>'); ?>
                   </div>
@@ -1609,5 +1610,49 @@
     if ( ! isNaN(mlb)) {
       var target = $('[name=luas_bangunan]').attr('max', mlb);
     }
+  }
+
+  function set_kk_pasangan(selector) {
+    var hubkelkk = $(selector).find(':selected');
+    if ( ! isNaN($('.kk-input-pasangan').val()) || $('.kk-input-pasangan').val() === '') {
+      if (hubkelkk.val() === '1') {
+        $('.kk-input-pasangan').val(2);
+        $('.kk-pasangan').val('2').attr('selected', true);
+      }
+      if (hubkelkk.val() === '2') {
+        $('.kk-input-pasangan').val(1);
+        $('.kk-pasangan').val('1').attr('selected', true);
+      }
+    }
+  }
+
+  function titleCase(str) {
+    str = str.toLowerCase().split(' ');                // will split the string delimited by space into an array of words
+
+    for(var i = 0; i < str.length; i++){               // str.length holds the number of occurrences of the array...
+        str[i] = str[i].split('');                    // splits the array occurrence into an array of letters
+        str[i][0] = str[i][0].toUpperCase();          // converts the first occurrence of the array to uppercase
+        str[i] = str[i].join('');                     // converts the array of letters back into a word.
+    }
+    return str.join(' ');                              //  converts the array of words back to a sentence.
+  }
+
+  function get_ak(id_kk, ret_data){
+    var ak = $.ajax({
+      url: './../../data_dasar/C_data_dasar/show_anggota_keluarga',
+      type: 'POST',
+      dataType: 'json',
+      data: {id_kk: id_kk},
+      success: function(data){
+        var ret_val = $.map(data['data'], function(index, value){
+          return '<option value="' + index.no_bpjs + '">' + titleCase(index.nama) + '</option>'; 
+        });
+        ret_data(ret_val);
+      }
+    });
+  }
+
+  function ret_data(ret_val){
+    return ret_val;
   }
 </script>

@@ -21,6 +21,36 @@ class M_anggota_keluarga extends CI_Model
   }
 
   /**
+   * dipanggil di ajax untuk formulir data dasar
+   * join with identitas
+   * @param  [type] $id_kk  [description]
+   * @param  string $column [description]
+   * @return [type]         [description]
+   */
+  public function get_data_by_kk($id_kk, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('kk_anggota_keluarga a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->where('a.id_kk', $id_kk);
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  /**
    * dipanggil di edit_perkawinan
    * join with identitas
    * @param  [type] $id_kk  [description]

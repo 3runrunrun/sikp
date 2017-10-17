@@ -4,7 +4,7 @@ function get_harga(selector){
   console.log(input_target);
 
   $.ajax({
-    url: 'pengelolaan_obat/C_pencatatan_obat_keluar/show_sisa_obat',
+    url: './../pengelolaan_obat/C_pencatatan_obat_keluar/show_sisa_obat',
     type: 'post',
     dataType: 'json',
     data: {id_obat: id_obat},

@@ -16,7 +16,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama Pasien',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh berisi karakter alfabet dan spasi',
@@ -146,7 +146,7 @@ $config = array(
     array(
       'field' => 'rp_pekerjaan[]',
       'label' => 'Pekerjaan',
-      'rules' => 'required|regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
@@ -155,7 +155,7 @@ $config = array(
     array(
       'field' => 'rp_divisi[]',
       'label' => 'Divisi',
-      'rules' => 'regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
         ),
@@ -163,7 +163,7 @@ $config = array(
     array(
       'field' => 'rp_sub_divisi[]',
       'label' => 'Sub Divisi',
-      'rules' => 'regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
         ),
@@ -171,7 +171,7 @@ $config = array(
     array(
       'field' => 'rp_jenis_aktivitas[]',
       'label' => 'Jenis Aktivitas',
-      'rules' => 'required|regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
@@ -239,7 +239,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama Pasien',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh berisi karakter alfabet dan spasi',
@@ -369,7 +369,7 @@ $config = array(
     array(
       'field' => 'rp_pekerjaan[]',
       'label' => 'Pekerjaan',
-      'rules' => 'required|regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
@@ -378,7 +378,7 @@ $config = array(
     array(
       'field' => 'rp_divisi[]',
       'label' => 'Divisi',
-      'rules' => 'regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
         ),
@@ -386,7 +386,7 @@ $config = array(
     array(
       'field' => 'rp_sub_divisi[]',
       'label' => 'Sub Divisi',
-      'rules' => 'regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
         ),
@@ -394,7 +394,7 @@ $config = array(
     array(
       'field' => 'rp_jenis_aktivitas[]',
       'label' => 'Jenis Aktivitas',
-      'rules' => 'required|regex_match[/([\-A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh diisi karakter alfabet dan spasi',
@@ -675,7 +675,7 @@ $config = array(
     array(
       'field' => 'sumber_air_lain',
       'label' => 'Jenis sumber air lain',
-      'rules' => 'regex_match[/([A-Za-z ])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan data yang benar'
         )
@@ -766,7 +766,7 @@ $config = array(
     array(
       'field' => 'sb_jenis_penyakit[]',
       'label' => 'Jenis Penyakit',
-      'rules' => 'regex_match[/([A-Za-z ,])/]',
+      'rules' => 'regex_match[/((?:\b[^\d\W]+\b))/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan benar',
         )
@@ -782,7 +782,7 @@ $config = array(
     array(
       'field' => 'tb_jenis_penyakit[]',
       'label' => 'Jenis Penyakit',
-      'rules' => 'regex_match[/([A-Za-z ,])/]',
+      'rules' => 'regex_match[/((?:\b[^\d\W]+\b))/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan benar',
         )
@@ -798,7 +798,7 @@ $config = array(
     array(
       'field' => 'st_jenis_penyakit[]',
       'label' => 'Jenis Penyakit',
-      'rules' => 'regex_match[/([A-Za-z ,])/]',
+      'rules' => 'regex_match[/((?:\b[^\d\W]+\b))/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan benar',
         )
@@ -857,7 +857,7 @@ $config = array(
     array(
       'field' => 'masalah_kes[]',
       'label' => 'Riwayat Masalah Kesehatan',
-      'rules' => 'regex_match[/([A-Za-z ,])/]',
+      'rules' => 'regex_match[/((?:\b[^\d\W]+\b))/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan benar',
         )
@@ -1065,7 +1065,7 @@ $config = array(
     array(
       'field' => 'jenis_obat[]',
       'label' => 'Jenis obat yang dikonsumsi',
-      'rules' => 'regex_match[/([A-Za-z ,])/]',
+      'rules' => 'regex_match[/((?:\b[^\d\W]+\b))/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan benar',
         )
@@ -1285,7 +1285,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama Pasien',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya boleh berisi karakter alfabet dan spasi',
@@ -1680,7 +1680,7 @@ $config = array(
     array(
       'field' => 'alergi_obat',
       'label' => 'Alergi Obat',
-      'rules' => 'required|regex_match[/([A-Za-z -])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => 'Isi %s dengan benar',
@@ -1689,7 +1689,7 @@ $config = array(
     array(
       'field' => 'alergi_makanan',
       'label' => 'Alergi Makanan',
-      'rules' => 'required|regex_match[/([A-Za-z -])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => 'Isi %s dengan benar',
@@ -1698,7 +1698,7 @@ $config = array(
     array(
       'field' => 'keluhan[]',
       'label' => 'Keluhan Pasien',
-      'rules' => 'required|regex_match[/([A-Za-z -])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya bisa diisi dengan alfabet dan karakter "-"',
@@ -1710,7 +1710,7 @@ $config = array(
     array(
       'field' => 'penyakit[]',
       'label' => 'Penyakit',
-      'rules' => 'required|regex_match[/([A-Za-z ])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan alfabet dan spasi'
@@ -1727,7 +1727,7 @@ $config = array(
     array(
       'field' => 'terapi[]',
       'label' => 'Terapi',
-      'rules' => 'required|regex_match[/([A-Za-z ])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan alfabet dan spasi'
@@ -1769,7 +1769,7 @@ $config = array(
     array(
       'field' => 'faktor_risiko[]',
       'label' => 'Faktor Risiko Penyakit',
-      'rules' => 'required|regex_match[/([A-Za-z ])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan alfabet dan spasi'
@@ -1778,7 +1778,7 @@ $config = array(
     array(
       'field' => 'faktor_pemicu[]',
       'label' => 'Faktor Pemicu Penyakit',
-      'rules' => 'required|regex_match[/([A-Za-z ])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan alfabet dan spasi'
@@ -1838,7 +1838,7 @@ $config = array(
     array(
       'field' => 'rs',
       'label' => 'Rumah Sakit atau Puskesmas Rujukan',
-      'rules' => 'regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'regex_match' => 'Isi %s dengan data yang benar'
         )
@@ -1850,7 +1850,7 @@ $config = array(
     array(
       'field' => 'nama[]',
       'label' => 'Nama obat',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -1938,7 +1938,7 @@ $config = array(
     array(
       'field' => 'nama[]',
       'label' => 'Nama Provinsi',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -1958,7 +1958,7 @@ $config = array(
     array(
       'field' => 'nama[]',
       'label' => 'Nama Kabupaten',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -1986,7 +1986,7 @@ $config = array(
     array(
       'field' => 'nama[]',
       'label' => 'Nama Kecamatan',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -2022,7 +2022,7 @@ $config = array(
     array(
       'field' => 'nama[]',
       'label' => 'Nama Kelurahan',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -2035,7 +2035,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama modul',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -2064,7 +2064,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama modul',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
@@ -2093,7 +2093,7 @@ $config = array(
     array(
       'field' => 'nama',
       'label' => 'Nama modul',
-      'rules' => 'required|regex_match[/([A-Za-z\s][^\d])/]',
+      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => '%s hanya dapat diisi dengan karakter alfabet dan spasi',
