@@ -37,6 +37,14 @@ class C_pencatatan_obat_keluar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-142
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content, $js_framework)
   {
     $data = array(
@@ -51,6 +59,12 @@ class C_pencatatan_obat_keluar extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-143
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -58,6 +72,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     return $formatted_date;
   }
 
+  /**
+   * SIKP-PF-144
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -73,6 +92,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     header("Location: $url");
   }
 
+  /**
+   * SIKP-PF-145
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function get_data($alert_flag = NULL)
   {
     // init var - view data
@@ -129,6 +153,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     $this->parse_view('Laporan Obat Keluar', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-146
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_get_data($data = array())
   {
     // init var - local
@@ -150,7 +179,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     return $ret_val;
   }
 
-  // return json array for ajax purpose
+  /**
+   * SIKP-PF-147
+   * return json array for ajax purpose
+   * @return [type] [description]
+   */
   public function show_sisa_obat()
   {
     // INITIALIZE VAR
@@ -159,6 +192,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     echo json_encode($result);
   }
 
+  /**
+   * SIKP-PF-148
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create($alert_flag = NULL)
   {
     // init var - view data
@@ -215,6 +253,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     $this->parse_view('Formulir Pencatatan Obat Keluar', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-149
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   public function replace_resep($data = array())
   {
     // init var - local
@@ -228,6 +271,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-150
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   public function replace_obat($data = array())
   {
     // init var - local
@@ -248,6 +296,10 @@ class C_pencatatan_obat_keluar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-151
+   * @return [type] [description]
+   */
   public function store()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '<p><small><strong>Silahkan ulangi pengisian data</strong></small></p></div>');
@@ -287,6 +339,10 @@ class C_pencatatan_obat_keluar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-152
+   * @return [type] [description]
+   */
   public function cetak_laporan_obat_keluar()
   {
     // init var - local
@@ -338,6 +394,11 @@ class C_pencatatan_obat_keluar extends CI_Controller
     $this->pdf->stream("laporan_obat_keluar.pdf", array("Attachment" => 0));
   }
 
+  /**
+   * SIKP-PF-153
+   * @param  [type] $id_obat_keluar [description]
+   * @return [type]                 [description]
+   */
   public function destroy($id_obat_keluar)
   {
     // init var - view data

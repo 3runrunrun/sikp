@@ -83,6 +83,14 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-80
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content, $js_framework)
   {
     $data = array(
@@ -97,6 +105,11 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-81
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -106,6 +119,12 @@ class C_pengobatan_holistik extends CI_Controller
     return $id;
   }
 
+  /**
+   * SIKP-PF-82
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -118,7 +137,14 @@ class C_pengobatan_holistik extends CI_Controller
     # TEST YOUR CODE HERE
   }
 
-  // PENDAFTARAN PENGOBATAN HOLISTIK
+  /////////////////////////////////////
+  // PENDAFTARAN PENGOBATAN HOLISTIK //
+  /////////////////////////////////////
+  /**
+   * SIKP-PF-83
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_pasien($data = array())
   {
     // init var - return var
@@ -133,6 +159,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-84
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_dokter($data = array())
   {
     // init var - return var
@@ -148,6 +179,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-85
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_pasien_harian($data = array())
   {
     // init var - return var
@@ -187,6 +223,13 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-86
+   * @param  [type] $alert_flag    [description]
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @return [type]                [description]
+   */
   public function create($alert_flag = NULL, $id_registrasi = NULL, $no_bpjs = NULL)
   {
     // init var - local
@@ -261,6 +304,10 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-87
+   * @return [type] [description]
+   */
   public function store_pendaftaran_pengobatan()
   {
     $this->form_validation->set_error_delimiters('<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;', '</span>');
@@ -296,7 +343,14 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
-  // PENGISIAN ANAMNESIS
+  /////////////////////////
+  // PENGISIAN ANAMNESIS //
+  /////////////////////////
+  /**
+   * SIKP-PF-88
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_anamnesis($data = array())
   {
     // init var - return var
@@ -318,6 +372,13 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
   
+  /**
+   * SIKP-PF-89
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @param  [type] $alert_flag    [description]
+   * @return [type]                [description]
+   */
   public function create_anamnesis($id_registrasi = NULL, $no_bpjs = NULL, $alert_flag = NULL)
   {
     // init var - local
@@ -379,6 +440,10 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Formulir Pengisian Anamnesis', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-90
+   * @return [type] [description]
+   */
   public function store_anamnesis()
   {
     $this->form_validation->set_error_delimiters('<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;', '</span>');
@@ -425,6 +490,12 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-91
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @return [type]                [description]
+   */
   public function destroy_anamnesis($id_registrasi, $no_bpjs)
   {
     // init var - local
@@ -454,7 +525,14 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
-  // PENGISIAN DIAGNOSIS
+  /////////////////////////
+  // PENGISIAN DIAGNOSIS //
+  /////////////////////////
+  /**
+   * SIKP-PF-92
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_diagnosis_status($data = array())
   {
     // init var - return var
@@ -477,6 +555,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-93
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_diagnosis_anamnesis($data = array())
   {
     // init var - return var
@@ -490,6 +573,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-94
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_diagnosis_modul($data = array())
   {
     // init var - return var
@@ -503,6 +591,14 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-95
+   * SIKP-PF-122
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @param  [type] $alert_flag    [description]
+   * @return [type]                [description]
+   */
   public function create_diagnosis($id_registrasi = NULL, $no_bpjs = NULL, $alert_flag = NULL)
   {
     // init var - local
@@ -574,6 +670,10 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Formulir Pengisian Diagnosis', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-96
+   * @return [type] [description]
+   */
   public function store_diagnosis()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -603,6 +703,11 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-97
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_diagnosis($data = array())
   {
     // init var - local
@@ -629,6 +734,11 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-98
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_faktor_risiko($data = array())
   {
     // init var - local
@@ -652,6 +762,11 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-99
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_faktor_pemicu($data = array())
   {
     // init var - local
@@ -675,6 +790,12 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-100
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @return [type]                [description]
+   */
   public function destroy_diagnosis($id_registrasi, $no_bpjs)
   {
     // init var - local
@@ -730,7 +851,14 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
-  // PENGISIAN INTERVENSI
+  //////////////////////////
+  // PENGISIAN INTERVENSI //
+  //////////////////////////
+  /**
+   * SIKP-PF-101
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_intervensi_diagnosis($data = array())
   {
     // init var - return var
@@ -755,6 +883,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-102
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_intervensi_faktor_risiko($data = array())
   {
     // init var - return var
@@ -769,6 +902,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-103
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_create_intervensi_faktor_pemicu($data = array())
   {
     // init var - return var
@@ -783,6 +921,13 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-104
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @param  [type] $alert_flag    [description]
+   * @return [type]                [description]
+   */
   public function create_intervensi($id_registrasi = NULL, $no_bpjs = NULL, $alert_flag = NULL)
   {
     // init var - local
@@ -854,6 +999,10 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Formulir Pengisian Diagnosis', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-105
+   * @return [type] [description]
+   */
   public function store_intervensi()
   {
     // var_dump($this->input->post());
@@ -888,6 +1037,11 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-106
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_resep_obat($data = array())
   {
     // init var - local
@@ -900,6 +1054,11 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_resep_obat->store($data);
   }
 
+  /**
+   * SIKP-PF-107
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_rujukan($data = array())
   {
     // init var - local
@@ -912,6 +1071,11 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_rujukan->store($data);
   }
 
+  /**
+   * SIKP-PF-108
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function save_pengantar_cek_darah($data = array())
   {
     // init var - local
@@ -924,7 +1088,14 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_cek_darah->store($data);
   }
 
-  // DATA PENGOBATAN HARIAN
+  ////////////////////////////
+  // DATA PENGOBATAN HARIAN //
+  ////////////////////////////
+  /**
+   * SIKP-PF-109
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_terdaftar_harian($data = array())
   {
     // init var - return var
@@ -961,6 +1132,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-110
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_terdaftar_harian($alert_flag = NULL)
   {
     // init var - local
@@ -1007,6 +1183,11 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-111
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_anamnesis_harian($data = array())
   {
     // init var - return var
@@ -1051,6 +1232,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-112
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_anamnesis_harian($alert_flag = NULL)
   {
     // init var - local
@@ -1097,6 +1283,11 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-113
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_diagnosis_harian($data = array())
   {
     // init var - return var
@@ -1145,6 +1336,11 @@ class C_pengobatan_holistik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-114
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_diagnosis_harian($alert_flag = NULL)
   {
     // init var - local
@@ -1191,7 +1387,14 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
   }
 
-  // DATA PENGOBATAN - RIWAYAT
+  ///////////////////////////////
+  // DATA PENGOBATAN - RIWAYAT //
+  ///////////////////////////////
+  /**
+   * SIKP-PF-115
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_riwayat_pengobatan($alert_flag = NULL)
   {
     // init var - local
@@ -1238,6 +1441,12 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-116
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @return [type]                [description]
+   */
   public function detail_riwayat_pengobatan($id_registrasi, $no_bpjs)
   {
     // init var - local
@@ -1327,6 +1536,12 @@ class C_pengobatan_holistik extends CI_Controller
     $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-117
+   * @param  [type] $id_registrasi [description]
+   * @param  [type] $no_bpjs       [description]
+   * @return [type]                [description]
+   */
   public function destroy_riwayat_pengobatan($id_registrasi, $no_bpjs)
   {
     // init var - view data
@@ -1396,6 +1611,11 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-118
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_detail_riwayat_pengobatan($data = array())
   {
     // init var - return var

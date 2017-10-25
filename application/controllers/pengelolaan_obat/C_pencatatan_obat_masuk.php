@@ -37,6 +37,14 @@ class C_pencatatan_obat_masuk extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-133
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content, $js_framework)
   {
     $data = array(
@@ -51,6 +59,12 @@ class C_pencatatan_obat_masuk extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-134
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -58,6 +72,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     return $formatted_date;
   }
 
+  /**
+   * SIKP-PF-135
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -73,6 +92,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     header("Location: $url");
   }
 
+  /**
+   * SIKP-PF-136
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function get_data($alert_flag = NULL)
   {
     // init var - view data
@@ -129,6 +153,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     $this->parse_view('Laporan Obat Masuk', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-137
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_get_data($data = array())
   {
     // init var - local
@@ -151,6 +180,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-138
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create($alert_flag = NULL)
   {
     // init var - view data
@@ -205,6 +239,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     $this->parse_view('Formulir Pencatatan Obat Keluar', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-139
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   public function replace_obat($data = array())
   {
     // init var - local
@@ -225,6 +264,10 @@ class C_pencatatan_obat_masuk extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-140
+   * @return [type] [description]
+   */
   public function store()
   {
     // init var - local var
@@ -263,6 +306,11 @@ class C_pencatatan_obat_masuk extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-141
+   * @param  [type] $id_obat_masuk [description]
+   * @return [type]                [description]
+   */
   public function destroy($id_obat_masuk)
   {
     // init var - view data

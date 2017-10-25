@@ -1680,7 +1680,7 @@ $config = array(
     array(
       'field' => 'alergi_obat',
       'label' => 'Alergi Obat',
-      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
+      'rules' => 'required|regex_match[/([A-Za-z -])/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => 'Isi %s dengan benar',
@@ -1689,7 +1689,7 @@ $config = array(
     array(
       'field' => 'alergi_makanan',
       'label' => 'Alergi Makanan',
-      'rules' => 'required|regex_match[/(?:\b[^\d\W]+\b)/]',
+      'rules' => 'required|regex_match[/([A-Za-z -])/]',
       'errors' => array(
         'required' => '%s harus diisi',
         'regex_match' => 'Isi %s dengan benar',

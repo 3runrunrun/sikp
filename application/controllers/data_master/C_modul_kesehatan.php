@@ -37,6 +37,14 @@ class C_modul_kesehatan extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-174
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content = NULL, $js_framework)
   {
     $data = array(
@@ -51,6 +59,11 @@ class C_modul_kesehatan extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-175
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -60,6 +73,12 @@ class C_modul_kesehatan extends CI_Controller
     return $id;
   }
 
+  /**
+   * SIKP-PF-176
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -70,8 +89,30 @@ class C_modul_kesehatan extends CI_Controller
   public function index()
   {
     // TEST YOUR CODE HERE
+    var_dump($this->M_faktor_risiko->get_data());
   }
 
+  /**
+   * SIKP-PF-192
+   * @return [type] [description]
+   */
+  public function show_all_modul()
+  {
+    $modul = $this->input->post('modul');
+    if ($modul == 'penyakit') {
+      $view_data = $this->M_penyakit->get_data();
+    } elseif ($modul == 'faktor_risiko') {
+      $view_data = $this->M_faktor_risiko->get_data();
+    } elseif ($modul == 'faktor_pemicu') {
+      $view_data = $this->M_faktor_pemicu->get_data();
+    }
+    echo json_encode($view_data);
+  }
+
+  /**
+   * SIKP-PF-177
+   * @return [type] [description]
+   */
   public function show_latest()
   {
     $nama = $this->input->post('nama');
@@ -89,10 +130,15 @@ class C_modul_kesehatan extends CI_Controller
   //////////
   // SHOW //
   //////////
+  /**
+   * SIKP-PF-178
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_modul_penyakit($alert_flag = NULL)
   {
     // init var - view data
-    $view_data['modul_penyakit'] = $this->M_penyakit->get_data();
+    $view_data['modul_penyakit'] = $this->M_penyakit->get_data_all();
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -146,10 +192,15 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Modul Kesehatan', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-179
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_modul_faktor_risiko($alert_flag = NULL)
   {
     // init var - view data
-    $view_data['modul_faktor_risiko'] = $this->M_faktor_risiko->get_data();
+    $view_data['modul_faktor_risiko'] = $this->M_faktor_risiko->get_data_all();
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -203,10 +254,15 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Modul Kesehatan', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-180
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_modul_faktor_pemicu($alert_flag = NULL)
   {
     // init var - view data
-    $view_data['modul_faktor_pemicu'] = $this->M_faktor_pemicu->get_data();
+    $view_data['modul_faktor_pemicu'] = $this->M_faktor_pemicu->get_data_all();
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -260,6 +316,11 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Modul Kesehatan', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-181
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_modul($data = array())
   {
     // init var - local
@@ -278,6 +339,11 @@ class C_modul_kesehatan extends CI_Controller
   ////////////
   // CREATE //
   ////////////
+  /**
+   * SIKP-PF-182
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_modul_penyakit($alert_flag = NULL)
   {
     // checking passed arguments
@@ -299,6 +365,10 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-183
+   * @return [type] [description]
+   */
   public function store_modul_penyakit()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -311,9 +381,13 @@ class C_modul_kesehatan extends CI_Controller
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post() as $key => $value) {
-        $modul_penyakit['id_mod_penyakit'] = $this->id_generator('MPNY');
+        if ($this->input->post('perbarui') !== '1') {
+          $modul_penyakit['id_mod_penyakit'] = $this->id_generator('MPNY');
+        }
         $modul_penyakit[$key] = $value;
       }
+      // unset perbarui flag
+      unset($modul_penyakit['perbarui']);
       $this->M_penyakit->store($modul_penyakit);
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
@@ -321,7 +395,7 @@ class C_modul_kesehatan extends CI_Controller
         header("Location: $url");
       } else {
         // upload file
-        if ( ! $this->do_upload('penyakit', $modul_penyakit['id_mod_penyakit'], 'file_modul')) {
+        if ( ! $this->do_upload('penyakit', $modul_penyakit['id_mod_penyakit'].$this->input->post('versi'), 'file_modul')) {
           $this->db->trans_rollback();
           $url = base_url() . 'create-modul-penyakit/gagal_modul_penyakit';
           header("Location: $url");
@@ -334,6 +408,11 @@ class C_modul_kesehatan extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-184
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_modul_faktor_risiko($alert_flag = NULL)
   {
     // checking passed arguments
@@ -355,6 +434,10 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-185
+   * @return [type] [description]
+   */
   public function store_modul_faktor_risiko()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -367,9 +450,13 @@ class C_modul_kesehatan extends CI_Controller
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post() as $key => $value) {
-        $modul_faktor_risiko['id_mod_faktor_risiko'] = $this->id_generator('MFR');
+        if ($this->input->post('perbarui') !== '1') {
+          $modul_faktor_risiko['id_mod_faktor_risiko'] = $this->id_generator('MFR');
+        }
         $modul_faktor_risiko[$key] = $value;
       }
+      // unset perbarui flag
+      unset($modul_faktor_risiko['perbarui']);
       $this->M_faktor_risiko->store($modul_faktor_risiko);
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
@@ -377,7 +464,7 @@ class C_modul_kesehatan extends CI_Controller
         header("Location: $url");
       } else {
         // upload file
-        if ( ! $this->do_upload('faktor_risiko', $modul_faktor_risiko['id_mod_faktor_risiko'], 'file_modul')) {
+        if ( ! $this->do_upload('faktor_risiko', $modul_faktor_risiko['id_mod_faktor_risiko'].$this->input->post('versi'), 'file_modul')) {
           $this->db->trans_rollback();
           $url = base_url() . 'create-modul-faktor-risiko/gagal_modul_faktor_risiko';
           header("Location: $url");
@@ -390,6 +477,11 @@ class C_modul_kesehatan extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-186
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_modul_faktor_pemicu($alert_flag = NULL)
   {
     // checking passed arguments
@@ -411,6 +503,10 @@ class C_modul_kesehatan extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-187
+   * @return [type] [description]
+   */
   public function store_modul_faktor_pemicu()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -423,9 +519,13 @@ class C_modul_kesehatan extends CI_Controller
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post() as $key => $value) {
-        $modul_faktor_pemicu['id_mod_faktor_pemicu'] = $this->id_generator('MFP');
+        if ($this->input->post('perbarui') !== '1') {
+          $modul_faktor_pemicu['id_mod_faktor_pemicu'] = $this->id_generator('MFP');
+        }
         $modul_faktor_pemicu[$key] = $value;
       }
+      // unset update flag
+      unset($modul_faktor_pemicu['perbarui']);
       $this->M_faktor_pemicu->store($modul_faktor_pemicu);
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
@@ -433,7 +533,7 @@ class C_modul_kesehatan extends CI_Controller
         header("Location: $url");
       } else {
         // upload file
-        if ( ! $this->do_upload('faktor_pemicu', $modul_faktor_pemicu['id_mod_faktor_pemicu'], 'file_modul')) {
+        if ( ! $this->do_upload('faktor_pemicu', $modul_faktor_pemicu['id_mod_faktor_pemicu'].$this->input->post('versi'), 'file_modul')) {
           $this->db->trans_rollback();
           $url = base_url() . 'create-modul-faktor-pemicu/gagal_modul_faktor_pemicu';
           header("Location: $url");
@@ -446,6 +546,13 @@ class C_modul_kesehatan extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-188
+   * @param  [type] $tipe_modul [description]
+   * @param  [type] $file_name  [description]
+   * @param  [type] $input_name [description]
+   * @return [type]             [description]
+   */
   public function do_upload($tipe_modul, $file_name, $input_name)
   {
     // init var - local
@@ -465,6 +572,7 @@ class C_modul_kesehatan extends CI_Controller
     $config['allowed_types'] = 'pdf';
     $config['max_size'] = 3072000000000;
     $config['file_name'] = $file_name;
+    $config['max_filename'] = 0;
 
     $this->upload->initialize($config);
 
@@ -483,11 +591,20 @@ class C_modul_kesehatan extends CI_Controller
   /////////////
   // DESTROY //
   /////////////
+  /**
+   * SIKP-PF-189
+   * @param  [type] $id_mod_penyakit [description]
+   * @return [type]                  [description]
+   */
   public function destroy_modul_penyakit($id_mod_penyakit)
   {
+    // init var - local
+    $pieces = explode('z', $id_mod_penyakit);
+    $filepath = FCPATH . 'mod_files\\' . 'modul_penyakit\\' . $pieces[0] . $pieces[1] . '.pdf';
+
     // storing data
     $this->db->trans_begin();
-    $this->M_penyakit->destroy($id_mod_penyakit);
+    $this->M_penyakit->destroy($pieces[0], $pieces[1]);
     if ($this->db->trans_status() === FALSE) {
       $this->db->trans_rollback();
       $url = base_url() . 'modul-penyakit/gagal_hapus_modul_penyakit';
@@ -495,16 +612,26 @@ class C_modul_kesehatan extends CI_Controller
     } else {
       // $this->db->trans_rollback();
       $this->db->trans_commit();
+      unlink($filepath);
       $url = base_url() . 'modul-penyakit/sukses_hapus_modul_penyakit';
       header("Location: $url");
     }
   }
 
+  /**
+   * SIKP-PF-190
+   * @param  [type] $id_mod_faktor_risiko [description]
+   * @return [type]                       [description]
+   */
   public function destroy_modul_faktor_risiko($id_mod_faktor_risiko)
   {
+    // init var - local
+    $pieces = explode('z', $id_mod_faktor_risiko);
+    $filepath = FCPATH . 'mod_files\\' . 'modul_faktor_risiko\\' . $pieces[0] . $pieces[1] . '.pdf';
+
     // storing data
     $this->db->trans_begin();
-    $this->M_faktor_risiko->destroy($id_mod_faktor_risiko);
+    $this->M_faktor_risiko->destroy($pieces[0], $pieces[1]);
     if ($this->db->trans_status() === FALSE) {
       $this->db->trans_rollback();
       $url = base_url() . 'modul-faktor-risiko/gagal_hapus_modul_faktor_risiko';
@@ -512,16 +639,26 @@ class C_modul_kesehatan extends CI_Controller
     } else {
       // $this->db->trans_rollback();
       $this->db->trans_commit();
+      unlink($filepath);
       $url = base_url() . 'modul-faktor-risiko/sukses_hapus_modul_faktor_risiko';
       header("Location: $url");
     }
   }
 
+  /**
+   * SIKP-PF-191
+   * @param  [type] $id_mod_faktor_pemicu [description]
+   * @return [type]                       [description]
+   */
   public function destroy_modul_faktor_pemicu($id_mod_faktor_pemicu)
   {
+    // init var - local
+    $pieces = explode('z', $id_mod_faktor_pemicu);
+    $filepath = FCPATH . 'mod_files\\' . 'modul_faktor_pemicu\\' . $pieces[0] . $pieces[1] . '.pdf';
+
     // storing data
     $this->db->trans_begin();
-    $this->M_faktor_pemicu->destroy($id_mod_faktor_pemicu);
+    $this->M_faktor_pemicu->destroy($pieces[0], $pieces[1]);
     if ($this->db->trans_status() === FALSE) {
       $this->db->trans_rollback();
       $url = base_url() . 'modul-faktor-pemicu/gagal_hapus_modul_faktor_pemicu';
@@ -529,6 +666,7 @@ class C_modul_kesehatan extends CI_Controller
     } else {
       // $this->db->trans_rollback();
       $this->db->trans_commit();
+      unlink($filepath);
       $url = base_url() . 'modul-faktor-pemicu/sukses_hapus_modul_faktor_pemicu';
       header("Location: $url");
     }

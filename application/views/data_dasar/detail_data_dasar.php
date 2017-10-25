@@ -180,6 +180,9 @@
               <tr>
                 <th>Konsumsi Alkohol</th>
                 <td>{alkohol}</td>
+                <td colspan="2">
+                  <button type="button" onclick="window.location='<?php echo base_url(); ?>hitung-tingkat-risiko-penyakit/{id_kk}/{id_riwayat_kes_kel}'" class="btn btn-box-tool bg-blue" style="width: 100%"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Perbarui Tingkat Risiko Penyakit</button>
+                </td>
               </tr>
               <tr>
                 <th>Konsumsi Kopi</th>
@@ -510,6 +513,11 @@
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Data Anggota Keluarga</h3>
+          <div class="box-tools pull-right">
+            <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
+            <button type="button" onclick="window.location='<?php echo base_url(); ?>edit-perkawinan/{id_kk}'" class="btn btn-box-tool bg-yellow"><i class="fa fa-pencil"></i>&nbsp;Ubah Data Perkawinan dan Anggota Keluarga</button>
+            <?php endif; ?>
+          </div>
         </div>
         <!-- ./box-header -->
         <div class="box-body">

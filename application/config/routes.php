@@ -161,6 +161,10 @@ $route['simpan-perilaku'] = 'data_dasar/C_data_dasar/store_perilaku';
 $route['simpan-riwayat-kes'] = 'data_dasar/C_data_dasar/store_riwayat_kes';
 $route['simpan-gejala-stres'] = 'data_dasar/C_data_dasar/store_gejala_stres';
 
+$route['hitung-tingkat-risiko-penyakit/(:any)'] = 'data_dasar/C_data_dasar/hitung_tingkat_risiko_penyakit/$1';
+$route['hitung-tingkat-risiko-penyakit/(:any)/(:any)'] = 'data_dasar/C_data_dasar/hitung_tingkat_risiko_penyakit/$1/$2';
+
+
 // DATA MASTER -- WILAYAH ADMINISTRATIF
 $route['provinsi'] = 'data_master/C_wilayah_administratif/show_provinsi';
 $route['provinsi/(:any)'] = 'data_master/C_wilayah_administratif/show_provinsi/$1';

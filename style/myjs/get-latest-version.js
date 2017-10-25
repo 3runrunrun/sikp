@@ -24,5 +24,4 @@ function get_latest (modul, selector) {
   .always(function() {
     console.log("complete");
   });
-  
 }

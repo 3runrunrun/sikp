@@ -40,8 +40,8 @@
                 <td>{tgl_dibuat}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_faktor_pemicu/{id_mod_faktor_pemicu}.pdf'"><i class="fa fa-eye"></i></button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-faktor-pemicu/{id_mod_faktor_pemicu}'"><i class="fa fa-remove"></i></button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_faktor_pemicu/{id_mod_faktor_pemicu}{versi}.pdf'"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-faktor-pemicu/{id_mod_faktor_pemicu}z{versi}'"><i class="fa fa-remove"></i></button>
                   </div>
                 </td>
               </tr>

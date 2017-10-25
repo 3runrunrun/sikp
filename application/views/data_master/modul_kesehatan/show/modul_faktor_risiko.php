@@ -40,8 +40,8 @@
                 <td>{tgl_dibuat}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_faktor_risiko/{id_mod_faktor_risiko}.pdf'"><i class="fa fa-eye"></i></button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-faktor-risiko/{id_mod_faktor_risiko}'"><i class="fa fa-remove"></i></button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_faktor_risiko/{id_mod_faktor_risiko}{versi}.pdf'"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-faktor-risiko/{id_mod_faktor_risiko}z{versi}'"><i class="fa fa-remove"></i></button>
                   </div>
                 </td>
               </tr>

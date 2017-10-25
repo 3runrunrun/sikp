@@ -18,8 +18,8 @@ class M_perilaku_keselamatan extends CI_Model
     $this->db->where_in('pengguna_sepeda_motor', $condition);
     $this->db->where('id_kk', $id_kk);
     $this->db->where('hapus', '0');
-    $this->db->order_by('tgl_isi', 'desc');
     $this->db->group_by('id_kk');
+    $this->db->order_by('tgl_isi', 'desc');
     $this->db->limit(1);
     $result = $this->db->get('kk_perilaku_keselamatan');
     return $result->num_rows();

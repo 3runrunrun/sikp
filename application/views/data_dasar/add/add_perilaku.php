@@ -34,6 +34,9 @@
 
           <form action="<?php echo base_url(); ?>simpan-perilaku" method="post" class="form-horizontal">
             <input type="hidden" name="id_kk" value="<?php echo $id_kk; ?>">
+            <?php if( ! empty($riwayat_kes_kel['data'][0]['id_riwayat_kes_kel'])): ?>
+            <input type="hidden" name="id_riwayat_kes_kel" value="<?php echo $riwayat_kes_kel['data'][0]['id_riwayat_kes_kel']; ?>">
+            <?php endif; ?>
             <input type="hidden" name="is_add" value="yes">
             <div class="box-body">
               <?php echo form_error('sumber_air_lain', '<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>'); ?>

@@ -40,8 +40,8 @@
                 <td>{tgl_dibuat}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_penyakit/{id_mod_penyakit}.pdf'"><i class="fa fa-eye"></i></button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-penyakit/{id_mod_penyakit}'"><i class="fa fa-remove"></i></button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo base_url(); ?>../mod_files/modul_penyakit/{id_mod_penyakit}{versi}.pdf'"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>destroy-modul-penyakit/{id_mod_penyakit}z{versi}'"><i class="fa fa-remove"></i></button>
                   </div>
                 </td>
               </tr>

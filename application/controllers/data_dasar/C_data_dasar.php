@@ -74,6 +74,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-06
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content = NULL, $js_framework)
   {
     $data = array(
@@ -88,6 +96,11 @@ class C_data_dasar extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-07
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -97,6 +110,12 @@ class C_data_dasar extends CI_Controller
     return $id;
   }
 
+  /**
+   * SIKP-PF-08
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -104,6 +123,10 @@ class C_data_dasar extends CI_Controller
     return $formatted_date;
   }
 
+  /**
+   * SIKP-PF-09
+   * @return [type] [description]
+   */
   public function filter_region()
   {
     $filter_data = $this->input->post('filter_data');
@@ -154,18 +177,30 @@ class C_data_dasar extends CI_Controller
     echo (($ak/$as)*1*40) + $frk + $pk;
   }
 
+  /**
+   * SIKP-PF-10
+   * @return [type] [description]
+   */
   public function show_perkawinan_ke()
   {
     $result = $this->M_data_perkawinan->show($this->input->post('id_kk'), 'perkawinan_ke');
     echo json_encode($result);
   }
 
+  /**
+   * SIKP-PF-11
+   * @return [type] [description]
+   */
   public function show_perkawinan_terakhir()
   {
     $result = $this->M_data_perkawinan->get_perkawinan_terakhir($this->input->post('no_bpjs'));
     echo json_encode($result);
   }
 
+  /**
+   * SIKP-PF-12
+   * @return [type] [description]
+   */
   public function show_anggota_keluarga()
   {
     $result = $this->M_anggota_keluarga->get_data_by_kk($this->input->post('id_kk'), 'b.no_bpjs, b.nama');
@@ -175,6 +210,10 @@ class C_data_dasar extends CI_Controller
   //////////////////////////////////
   // MODUL DATA DASAR - SHOW DATA //
   //////////////////////////////////
+  /**
+   * SIKP-PF-13
+   * @return [type] [description]
+   */
   public function show_data_dasar()
   {
     // init var - local var
@@ -184,7 +223,7 @@ class C_data_dasar extends CI_Controller
     // init var - view data
     $view_data['newest_keskel'] = $this->M_r_kes_keluarga->get_data_newest_distinct('MAX(tgl_isi) as atglisi');
     $view_data['newest_tk_stres'] = $this->M_gejala_stres->get_data_newest_distinct('MAX(tgl_isi) as btglisi');
-    $view_data['kk'] = $this->M_r_kes_keluarga->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, c.no_telp, a.tingkat_risiko_penyakit, a.tgl_isi, d.tingkat_stres, d.tgl_isi', $view_data['newest_keskel']['data'], $view_data['newest_tk_stres']['data']);
+    $view_data['kk'] = $this->M_kk->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, a.no_telp, c.tingkat_risiko_penyakit, c.tgl_isi, d.tingkat_stres, d.tgl_isi', $view_data['newest_keskel']['data'], $view_data['newest_tk_stres']['data']);
     foreach ($view_data as $key => $value) {
       if ($view_data[$key]['status'] == 'error') {
         $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
@@ -217,6 +256,11 @@ class C_data_dasar extends CI_Controller
     $this->parse_view('Data Dasar Kesehatan Keluarga', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-14
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_show_data_dasar($data = array())
   {
     // init var - return var
@@ -254,6 +298,12 @@ class C_data_dasar extends CI_Controller
   ///////////////////////////////
   // MODUL DATA DASAR - DETAIL //
   ///////////////////////////////
+  /**
+   * SIKP-PF-15
+   * @param  [type] $alert_flag [description]
+   * @param  [type] $id_kk      [description]
+   * @return [type]             [description]
+   */
   public function detail_data_dasar($alert_flag = NULL, $id_kk)
   {
     // init var - local var
@@ -368,6 +418,11 @@ class C_data_dasar extends CI_Controller
     $this->parse_view('Detail Data Dasar Kesehatan Keluarga', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-16
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_identitas($data = array())
   {
     // init var - return var
@@ -416,6 +471,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-17
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_ekonomi($data = array())
   {
     // init var - return
@@ -457,6 +517,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-18
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_perilaku($data= array())
   {
     // init var - local var
@@ -560,6 +625,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-19
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_kes_kel($data = array())
   {
     // init var - local var
@@ -632,6 +702,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-20
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_maskes($data = array())
   {
     // init var - local var
@@ -648,6 +723,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-21
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_masket($data = array())
   {
     // init var - local var
@@ -676,6 +756,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-22
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_satu_bulan($data = array())
   {
     // init var - local var
@@ -692,6 +777,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-23
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_tiga_bulan($data = array())
   {
     // init var - local var
@@ -708,6 +798,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-24
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_satu_tahun($data = array())
   {
     // init var - local var
@@ -724,6 +819,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-25
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_anggota_keluarga($data = array())
   {
     // init var - local
@@ -764,6 +864,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-26
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_dd_perkawinan($data = array())
   {
     // init var - local
@@ -810,6 +915,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-27
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_tr($data = array())
   {
     // init var - local
@@ -835,6 +945,11 @@ class C_data_dasar extends CI_Controller
     return $tmp;
   }
 
+  /**
+   * SIKP-PF-28
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_ts($data = array())
   {
     // init var - local
@@ -863,6 +978,12 @@ class C_data_dasar extends CI_Controller
   ////////////////////////////////////////////////////////////////////////////////
   // MODULE DATA DASAR - RIWAYAT DATA DASAR KESEHATAN KELUARGA DAN GEJALA STRES //
   ////////////////////////////////////////////////////////////////////////////////
+  /**
+   * SIKP-PF-29
+   * @param  [type] $id_kk      [description]
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function riwayat_kes_kel_stres($id_kk, $alert_flag = NULL)
   {
     // init var - local var
@@ -872,7 +993,7 @@ class C_data_dasar extends CI_Controller
     $view_data['riwayat_kes_kel'] = $this->M_r_kes_keluarga->show($id_kk);
     $view_data['gejala_stres'] = $this->M_gejala_stres->show_by_status($id_kk);
 
-    var_dump($view_data);
+    // var_dump($view_data);
 
     // die();
 
@@ -918,6 +1039,11 @@ class C_data_dasar extends CI_Controller
     $this->parse_view('Detail Data Dasar Kesehatan Keluarga', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-30
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_riwayat_kes_kel($data = array())
   {
     // init var - return var
@@ -942,6 +1068,11 @@ class C_data_dasar extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-31
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_gejala_stres($data = array())
   {
     // init var - return var
@@ -969,6 +1100,13 @@ class C_data_dasar extends CI_Controller
   /////////////////////////////
   // MODUL DATA DASAR - EDIT //
   /////////////////////////////
+  /**
+   * SIKP-PF-32
+   * @param  [type] $alert_flag [description]
+   * @param  [type] $id_kk      [description]
+   * @param  [type] $no_bpjs    [description]
+   * @return [type]             [description]
+   */
   public function edit_identitas_pasien($alert_flag = NULL, $id_kk, $no_bpjs)
   {
     // int var - local
@@ -1040,6 +1178,10 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-33
+   * @return [type] [description]
+   */
   public function update_identitas_pasien()
   {
     // init var - local
@@ -1072,6 +1214,12 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-34
+   * @param  [type] $alert_flag [description]
+   * @param  [type] $id_kk      [description]
+   * @return [type]             [description]
+   */
   public function edit_ekonomi($alert_flag = NULL, $id_kk)
   {
     // int var - local
@@ -1135,6 +1283,10 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-35
+   * @return [type] [description]
+   */
   public function update_ekonomi()
   {
     // init var - local
@@ -1164,6 +1316,12 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-36
+   * @param  [type] $alert_flag [description]
+   * @param  [type] $id_kk      [description]
+   * @return [type]             [description]
+   */
   public function edit_perkawinan($alert_flag = NULL, $id_kk)
   {
     // int var - local
@@ -1236,6 +1394,10 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-37
+   * @return [type] [description]
+   */
   public function update_perkawinan()
   {
     // init var - local
@@ -1317,6 +1479,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-38
+   * @return [type] [description]
+   */
   public function update_anggota_keluarga()
   {
     var_dump($this->input->post());
@@ -1366,7 +1532,14 @@ class C_data_dasar extends CI_Controller
   ///////////////////////////////
   // MODUL DATA DASAR - DELETE //
   ///////////////////////////////
-  public function destroy_anggota_keluarga($id_kk, $no_bpjs)
+  /**
+   * SIKP-PF-39
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $no_bpjs            [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
+  public function destroy_anggota_keluarga($id_kk, $no_bpjs, $id_riwayat_kes_kel = NULL)
   {
     // storing data
     $this->db->trans_begin();
@@ -1382,6 +1555,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-40
+   * SIKP-PF-119
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $tgl_isi            [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function destroy_perilaku_kes_kel($id_kk, $tgl_isi, $id_riwayat_kes_kel = NULL)
   {
     // init var - local
@@ -1393,7 +1574,7 @@ class C_data_dasar extends CI_Controller
     $this->M_perilaku_kesehatan->destroy($id_kk, $tgl_isi_formatted);
     $this->M_perilaku_keselamatan->destroy($id_kk, $tgl_isi_formatted);
 
-    if ( ! $id_riwayat_kes_kel) {
+    if ( $id_riwayat_kes_kel !== NULL) {
       // updating tingkat_risiko_penyakit
       $tingkat_risiko_penyakit = $this->get_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel);
       $ar_trp['tingkat_risiko_penyakit'] = $tingkat_risiko_penyakit;
@@ -1411,6 +1592,12 @@ class C_data_dasar extends CI_Controller
     } 
   }
 
+  /**
+   * SIKP-PF-41
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function destroy_riwayat_kes_kel($id_kk, $id_riwayat_kes_kel)
   {
     // storing data
@@ -1428,6 +1615,12 @@ class C_data_dasar extends CI_Controller
     } 
   }
 
+  /**
+   * SIKP-PF-42
+   * @param  [type] $id_kk           [description]
+   * @param  [type] $id_gejala_stres [description]
+   * @return [type]                  [description]
+   */
   public function destroy_gejala_stres($id_kk, $id_gejala_stres)
   {
     // storing data
@@ -1447,6 +1640,11 @@ class C_data_dasar extends CI_Controller
   ///////////////////////////////////////////////
   // MODUL DATA DASAR - INDIVIDUAL INPUT / ADD //
   ///////////////////////////////////////////////
+  /**
+   * SIKP-PF-43
+   * @param [type] $alert_flag [description]
+   * @param [type] $id_kk      [description]
+   */
   public function add_ekonomi($alert_flag = NULL, $id_kk = NULL)
   {
     // init var - view data
@@ -1479,9 +1677,30 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-44
+   * @param [type] $alert_flag [description]
+   * @param [type] $id_kk      [description]
+   */
   public function add_perilaku($alert_flag = NULL, $id_kk = NULL)
   {
     // init var - view data
+    $view_data['riwayat_kes_kel'] = $this->M_r_kes_keluarga->get_data_latest_by_kk($id_kk, 'id_riwayat_kes_kel');
+
+    // parsing error template
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>' . $key . '</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      }
+    }
+
+    // init local var - view data - again
     $view_data['id_kk'] = $id_kk;
 
     // checking passed arguments
@@ -1511,6 +1730,11 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-45
+   * @param [type] $alert_flag [description]
+   * @param [type] $id_kk      [description]
+   */
   public function add_riwayat_kes_kel($alert_flag = NULL, $id_kk = NULL)
   {
     // init var - view data
@@ -1576,6 +1800,12 @@ class C_data_dasar extends CI_Controller
   //////////////////////////////
   // MODUL DATA DASAR - INPUT //
   //////////////////////////////
+  /**
+   * SIKP-PF-46
+   * @param  [type] $alert_flag [description]
+   * @param  [type] $id_kk      [description]
+   * @return [type]             [description]
+   */
   public function create($alert_flag = NULL, $id_kk = NULL)
   {
     // init - view data
@@ -1634,6 +1864,10 @@ class C_data_dasar extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-47
+   * @return [type] [description]
+   */
   public function store_identitas_pasien()
   {
     // validating form
@@ -1661,6 +1895,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-48
+   * @return [type] [description]
+   */
   public function store_riwayat_pekerjaan()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -1697,6 +1935,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-49
+   * @return [type] [description]
+   */
   public function store_data_perkawinan()
   {
     // validating form
@@ -1756,6 +1998,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-50
+   * @return [type] [description]
+   */
   public function store_anggota_keluarga()
   {
     // validating form
@@ -1794,6 +2040,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-51
+   * @return [type] [description]
+   */
   public function store_ekonomi()
   {
     // init var - local
@@ -1852,6 +2102,11 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-52
+   * SIKP-PF-120
+   * @return [type] [description]
+   */
   public function store_perilaku()
   {
     // init var - local
@@ -1888,6 +2143,7 @@ class C_data_dasar extends CI_Controller
       // unsetting input_var that contains is_add key
       if ( ! empty($this->input->post('is_add'))) {
         unset($input_var['is_add']);
+        unset($input_var['id_riwayat_kes_kel']);
       }
 
       // populating variable
@@ -1911,6 +2167,14 @@ class C_data_dasar extends CI_Controller
       $this->db->trans_begin();
       $this->M_perilaku_kesehatan->store($ar_kesehatan);
       $this->M_perilaku_keselamatan->store($ar_keselamatan);
+
+      if ( ! empty($this->input->post('id_riwayat_kes_kel'))) {
+        // updating tingkat_risiko_penyakit
+        $tingkat_risiko_penyakit = $this->get_tingkat_risiko_penyakit($id_kk, $this->input->post('id_riwayat_kes_kel'));
+        $ar_trp['tingkat_risiko_penyakit'] = $tingkat_risiko_penyakit;
+        $this->update_tingkat_risiko_penyakit($id_kk, $this->input->post('id_riwayat_kes_kel'), $ar_trp);
+      }
+
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
         // set url based on form origin
@@ -1933,6 +2197,11 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-53
+   * SIKP-PF-121
+   * @return [type] [description]
+   */
   public function store_riwayat_kes()
   {
     // init var - local
@@ -2032,6 +2301,10 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-54
+   * @return [type] [description]
+   */
   public function store_gejala_stres()
   {
     // init var - local
@@ -2102,6 +2375,13 @@ class C_data_dasar extends CI_Controller
   ///////////////////////
   // RIWAYAT KESEHATAN //
   ///////////////////////
+  /**
+   * SIKP-PF-55
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $data               [description]
+   * @return [type]                     [description]
+   */
   public function riwayat_kes_kel($id_kk, $id_riwayat_kes_kel, $data = array())
   {
     // init var
@@ -2180,7 +2460,7 @@ class C_data_dasar extends CI_Controller
   }
 
   /**
-   * [riwayat_satu_bulan description]
+   * SIKP-PF-56
    * @param  string $id_kk
    * @param  array  $no_bpjs
    * @param  array  $jenis_penyakit
@@ -2203,7 +2483,7 @@ class C_data_dasar extends CI_Controller
   }
 
   /**
-   * [riwayat_tiga_bulan description]
+   * SIKP-PF-57
    * @param  string $id_kk
    * @param  array  $no_bpjs
    * @param  array  $jenis_penyakit
@@ -2225,6 +2505,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-58
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $no_bpjs            [description]
+   * @param  array  $jenis_penyakit     [description]
+   * @return [type]                     [description]
+   */
   private function riwayat_satu_tahun($id_kk, $id_riwayat_kes_kel, $no_bpjs = array(), $jenis_penyakit = array())
   {
     // INITIALIZE VAR
@@ -2241,6 +2529,13 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-59
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $no_bpjs            [description]
+   * @return [type]                     [description]
+   */
   private function batuk($id_kk, $id_riwayat_kes_kel, $no_bpjs = array())
   {
     // INITIALIZE VAR
@@ -2256,6 +2551,13 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-60
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $no_bpjs            [description]
+   * @return [type]                     [description]
+   */
   private function asma($id_kk, $id_riwayat_kes_kel, $no_bpjs = array())
   {
     // INITIALIZE VAR
@@ -2271,6 +2573,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-61
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $no_bpjs            [description]
+   * @param  array  $masalah_kes        [description]
+   * @return [type]                     [description]
+   */
   private function masalah_kesehatan($id_kk, $id_riwayat_kes_kel, $no_bpjs = array(), $masalah_kes = array())
   {
     // INITIALIZE VAR
@@ -2287,6 +2597,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-62
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $no_bpjs            [description]
+   * @param  array  $masalah_ket        [description]
+   * @return [type]                     [description]
+   */
   private function masalah_keturunan($id_kk, $id_riwayat_kes_kel, $no_bpjs = array(), $masalah_ket = array())
   {
     // INITIALIZE VAR
@@ -2303,6 +2621,14 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-63
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $jenis_sakit_keras  [description]
+   * @param  array  $tahun_sakit        [description]
+   * @return [type]                     [description]
+   */
   private function sakit_keras($id_kk, $id_riwayat_kes_kel, $jenis_sakit_keras = array(), $tahun_sakit = array())
   {
     // INITIALIZE VAR
@@ -2319,6 +2645,16 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-64
+   * @param  [type] $id_kk                  [description]
+   * @param  [type] $id_riwayat_kes_kel     [description]
+   * @param  array  $jenis_kecelakaan_kerja [description]
+   * @param  array  $tahun_kejadian         [description]
+   * @param  array  $jenis_kelainan         [description]
+   * @param  array  $durasi_perawatan       [description]
+   * @return [type]                         [description]
+   */
   private function kecelakaan_kerja($id_kk, $id_riwayat_kes_kel, $jenis_kecelakaan_kerja = array(), $tahun_kejadian = array(), $jenis_kelainan = array(), $durasi_perawatan = array())
   {
     // INITIALIZE VAR
@@ -2337,6 +2673,16 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-65
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  [type] $durasi_merokok     [description]
+   * @param  [type] $batang_per_hari    [description]
+   * @param  [type] $kretek_filter      [description]
+   * @param  [type] $durasi_berhenti    [description]
+   * @return [type]                     [description]
+   */
   private function merokok($id_kk, $id_riwayat_kes_kel, $durasi_merokok, $batang_per_hari, $kretek_filter, $durasi_berhenti = NULL)
   {
     // INITIALIZE VAR
@@ -2355,6 +2701,14 @@ class C_data_dasar extends CI_Controller
     $this->M_r_merokok->store($data_riwayat);
   }
 
+  /**
+   * SIKP-PF-66
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $jenis_jamu         [description]
+   * @param  array  $jamu_per_minggu    [description]
+   * @return [type]                     [description]
+   */
   private function jamu($id_kk, $id_riwayat_kes_kel, $jenis_jamu = array(), $jamu_per_minggu = array())
   {
     // INITIALIZE DATA
@@ -2371,6 +2725,13 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-67
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  [type] $durasi             [description]
+   * @return [type]                     [description]
+   */
   private function alkohol($id_kk, $id_riwayat_kes_kel, $durasi)
   {
     // INITIALIZE DATA
@@ -2384,6 +2745,13 @@ class C_data_dasar extends CI_Controller
     $this->M_r_alkohol->store($data_riwayat);
   }
 
+  /**
+   * SIKP-PF-68
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  [type] $gelas_per_hari     [description]
+   * @return [type]                     [description]
+   */
   private function kopi($id_kk, $id_riwayat_kes_kel, $gelas_per_hari)
   {
     // INITIALIZE DATA
@@ -2397,6 +2765,13 @@ class C_data_dasar extends CI_Controller
     $this->M_r_kopi->store($data_riwayat);
   }
 
+  /**
+   * SIKP-PF-69
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $jenis_obat         [description]
+   * @return [type]                     [description]
+   */
   private function obat($id_kk, $id_riwayat_kes_kel, $jenis_obat = array())
   {
     // INITIALIZE DATA
@@ -2412,6 +2787,15 @@ class C_data_dasar extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-70
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $jenis_olahraga     [description]
+   * @param  array  $jumlah_per_minggu  [description]
+   * @param  array  $olahraga_keluarga  [description]
+   * @return [type]                     [description]
+   */
   private function olahraga($id_kk, $id_riwayat_kes_kel, $jenis_olahraga = array(), $jumlah_per_minggu = array(), $olahraga_keluarga = array())
   {
     // INITIALIZE DATA
@@ -2432,7 +2816,12 @@ class C_data_dasar extends CI_Controller
   ////////////////////////////////////////////////
   // MODULE PERHITUNGAN TINGKAT RISIKO PENYAKIT //
   ////////////////////////////////////////////////
-  
+  /**
+   * SIKP-PF-71
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function count_anggota_sakit($id_kk, $id_riwayat_kes_kel)
   {
     // init var - local
@@ -2447,6 +2836,11 @@ class C_data_dasar extends CI_Controller
     return $satu_bulan + $tiga_bulan + $satu_tahun;
   }
 
+  /**
+   * SIKP-PF-72
+   * @param  [type] $id_kk [description]
+   * @return [type]        [description]
+   */
   public function count_anggota_keluarga($id_kk)
   {
     // init var - local
@@ -2457,6 +2851,12 @@ class C_data_dasar extends CI_Controller
     return $anggota_keluarga;
   }
 
+  /**
+   * SIKP-PF-73
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function get_percentage_pk($id_kk, $id_riwayat_kes_kel)
   {
     // init var - local
@@ -2468,6 +2868,12 @@ class C_data_dasar extends CI_Controller
     return $pk * 6;
   }
 
+  /**
+   * SIKP-PF-74
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function get_percentage_frk($id_kk, $id_riwayat_kes_kel)
   {
     // init var - local
@@ -2487,6 +2893,12 @@ class C_data_dasar extends CI_Controller
     return ($merokok + $jamu + $kasur_busa + $sepeda_motor + $kerja_pabrik) * 6;
   }
 
+  /**
+   * SIKP-PF-75
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
   public function get_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel)
   {
     // init var - local
@@ -2508,15 +2920,58 @@ class C_data_dasar extends CI_Controller
     return $tingkat_risiko_penyakit;
   }
 
+  /**
+   * SIKP-PF-76
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @param  array  $trp                [description]
+   * @return [type]                     [description]
+   */
   public function update_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel, $trp = array())
   {
     $no_bpjs = $this->M_kk->show($id_kk, 'no_bpjs');
     $this->M_r_kes_keluarga->update($id_kk, $id_riwayat_kes_kel, $no_bpjs['data'][0]['no_bpjs'], $trp);
   }
 
+  /**
+   * SIKP-PF-77
+   * @param  [type] $id_kk              [description]
+   * @param  [type] $id_riwayat_kes_kel [description]
+   * @return [type]                     [description]
+   */
+  public function hitung_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel = NULL)
+  {
+    if ($id_riwayat_kes_kel !== NULL) {
+      $this->db->trans_begin();
+      // updating tingkat_risiko_penyakit
+      $tingkat_risiko_penyakit = $this->get_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel);
+      $ar_trp['tingkat_risiko_penyakit'] = $tingkat_risiko_penyakit;
+
+      $this->update_tingkat_risiko_penyakit($id_kk, $id_riwayat_kes_kel, $ar_trp);
+      if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        $url = base_url() . 'detail-data-dasar/gagal_edit_tr/' . $id_kk;
+        header("Location: $url");
+      } else {
+        $this->db->trans_commit();
+        $url = base_url() . 'detail-data-dasar/sukses_edit_tr/' . $id_kk;
+        header("Location: $url");
+      }
+    } else {
+      $url = base_url() . 'detail-data-dasar/gagal_edit_tr/' . $id_kk;
+      header("Location: $url");
+    }
+  }
+
   //////////////////////////////////////////////
   // MODULE PENGHITUNGAN TINGKAT STRES PASIEN //
   //////////////////////////////////////////////
+  /**
+   * SIKP-PF-78
+   * @param  [type] $id_kk           [description]
+   * @param  [type] $id_gejala_stres [description]
+   * @return [type]                  [description]
+   */
   public function sum_skor_gejala_stres($id_kk, $id_gejala_stres)
   {
     // init var - local
@@ -2526,8 +2981,16 @@ class C_data_dasar extends CI_Controller
     return $skor[0]['skor'];
   }
 
+  /**
+   * SIKP-PF-79
+   * @param  [type] $id_kk           [description]
+   * @param  [type] $id_gejala_stres [description]
+   * @param  array  $ts              [description]
+   * @return [type]                  [description]
+   */
   public function update_tingkat_stres($id_kk, $id_gejala_stres, $ts = array())
   {
     $this->M_gejala_stres->update($id_kk, $id_gejala_stres, $ts);
   }
 }
+

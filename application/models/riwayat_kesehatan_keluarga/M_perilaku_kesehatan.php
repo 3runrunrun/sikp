@@ -17,8 +17,8 @@ class M_perilaku_kesehatan extends CI_Model
     $this->db->where('kasur_busa', '1');
     $this->db->where('id_kk', $id_kk);
     $this->db->where('hapus', '0');
-    $this->db->order_by('tgl_isi', 'desc');
     $this->db->group_by('id_kk');
+    $this->db->order_by('tgl_isi', 'desc');
     $this->db->limit(1);
     $result = $this->db->get('kk_perilaku_kes');
     return $result->num_rows();

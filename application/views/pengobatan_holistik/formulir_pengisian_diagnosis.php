@@ -144,7 +144,7 @@
                   <select name="id_mod_penyakit[]" class="form-control select2 modul-penyakit" style="width: 100% !important;" onchange="get_modul_penyakit(this)" required>
                     <option value="" selected disabled>Pilih Modul</option>
                     {modul_penyakit}
-                    <option value="{id_mod_penyakit}">{nama}&nbsp;(Versi: {versi})</option>
+                    <option value="{id_mod_penyakit}" class="{versi}">{nama}&nbsp;(Versi: {versi})</option>
                     {/modul_penyakit}
                   </select>
                   <span class="help-block pull-right"><a target="_blank" class="read-modul-penyakit" id="read-modul-penyakit-<?php echo $key ?>" href="">Baca Modul</a></span>
@@ -207,7 +207,7 @@
                   <select name="id_mod_faktor_risiko[]" id="modul-faktor-risiko" class="form-control select2 modul-faktor-risiko" style="width: 100% !important;" onchange="get_modul_faktor_risiko(this)" required>
                     <option value="" selected disabled>Pilih Modul</option>
                     {modul_faktor_risiko}
-                    <option value="{id_mod_faktor_risiko}">{nama}&nbsp;(Versi: {versi})</option>
+                    <option value="{id_mod_faktor_risiko}" class="{versi}">{nama}&nbsp;(Versi: {versi})</option>
                     {/modul_faktor_risiko}
                   </select>
                   <span class="help-block pull-right"><a target="_blank" href="" class="read-modul-faktor-risiko">Baca Modul</a></span>
@@ -229,7 +229,7 @@
                   <select name="id_mod_faktor_pemicu[]" id="modul-faktor-pemicu" class="form-control select2 modul-faktor-pemicu" style="width: 100% !important;" onchange="get_modul_faktor_pemicu(this)" required>
                     <option value="" selected disabled>Pilih Modul</option>
                     {modul_faktor_pemicu}
-                    <option value="{id_mod_faktor_pemicu}">{nama}&nbsp;(Versi: {versi})</option>
+                    <option value="{id_mod_faktor_pemicu}" class="{versi}">{nama}&nbsp;(Versi: {versi})</option>
                     {/modul_faktor_pemicu}
                   </select>
                   <span class="help-block pull-right"><a target="_blank" href="" class="read-modul-faktor-pemicu">Baca Modul</a></span>

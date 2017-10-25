@@ -37,6 +37,14 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-154
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content = NULL, $js_framework)
   {
     $data = array(
@@ -51,15 +59,12 @@ class C_wilayah_administratif extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
-  private function id_generator($prefix)
-  {
-    $micro_time = microtime();
-    $ex_mt = explode(' ', $micro_time);
-    $sbstr_mt = substr($ex_mt[0], 5, 3);
-    $id = $prefix . '-' . date('ymdHis') . $sbstr_mt;
-    return $id;
-  }
-
+  /**
+   * SIKP-PF-155
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -67,6 +72,10 @@ class C_wilayah_administratif extends CI_Controller
     return $formatted_date;
   }
 
+  /**
+   * SIKP-PF-156
+   * @return [type] [description]
+   */
   public function filter_region()
   {
     $filter_data = $this->input->post('filter_data');
@@ -120,6 +129,11 @@ class C_wilayah_administratif extends CI_Controller
   //////////
   // SHOW //
   //////////
+  /**
+   * SIKP-PF-157
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_provinsi($alert_flag = NULL)
   {
     // init var - view data
@@ -177,6 +191,11 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-158
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_kabupaten($alert_flag = NULL)
   {
     // init var - view data
@@ -234,6 +253,11 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-159
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_kecamatan($alert_flag = NULL)
   {
     // init var - view data
@@ -291,6 +315,11 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-160
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function show_kelurahan($alert_flag = NULL)
   {
     // init var - view data
@@ -351,6 +380,11 @@ class C_wilayah_administratif extends CI_Controller
   ////////////
   // CREATE //
   ////////////
+  /**
+   * SIKP-PF-161
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_provinsi($alert_flag = NULL)
   {
     // checking passed arguments
@@ -373,6 +407,10 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-162
+   * @return [type] [description]
+   */
   public function store_provinsi()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -402,6 +440,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-163
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_kabupaten($alert_flag = NULL)
   {
     // init var - view data
@@ -459,6 +502,11 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-164
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_provinsi($data = array())
   {
     // init var - local
@@ -473,6 +521,10 @@ class C_wilayah_administratif extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-165
+   * @return [type] [description]
+   */
   public function store_kabupaten()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -503,6 +555,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-166
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_kecamatan($alert_flag = NULL)
   {
     // init var - view data
@@ -560,6 +617,10 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-167
+   * @return [type] [description]
+   */
   public function store_kecamatan()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -591,6 +652,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-168
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create_kelurahan($alert_flag = NULL)
   {
     // init var - view data
@@ -648,6 +714,10 @@ class C_wilayah_administratif extends CI_Controller
     $this->parse_view('Data Wilayah Adminstratif', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-169
+   * @return [type] [description]
+   */
   public function store_kelurahan()
   {
     $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
@@ -683,6 +753,11 @@ class C_wilayah_administratif extends CI_Controller
   ////////////
   // DELETE //
   ////////////
+  /**
+   * SIKP-PF-170
+   * @param  [type] $id_provinsi [description]
+   * @return [type]              [description]
+   */
   public function destroy_provinsi($id_provinsi)
   {
     // storing data
@@ -700,6 +775,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-171
+   * @param  [type] $id_kabupaten [description]
+   * @return [type]               [description]
+   */
   public function destroy_kabupaten($id_kabupaten)
   {
     // storing data
@@ -717,6 +797,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-172
+   * @param  [type] $id_kecamatan [description]
+   * @return [type]               [description]
+   */
   public function destroy_kecamatan($id_kecamatan)
   {
     // storing data
@@ -734,6 +819,11 @@ class C_wilayah_administratif extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-173
+   * @param  [type] $id_kelurahan [description]
+   * @return [type]               [description]
+   */
   public function destroy_kelurahan($id_kelurahan)
   {
     // storing data

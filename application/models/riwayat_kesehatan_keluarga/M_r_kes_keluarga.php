@@ -33,7 +33,7 @@ class M_r_kes_keluarga extends CI_Model
     return $ret_val;
   }
 
-  public function get_kk_pasien($column = '*', $keskel = array(), $tkstres = array())
+  /*public function get_kk_pasien($column = '*', $keskel = array(), $tkstres = array())
   {
     $risiko = array();
     $stres = array();
@@ -76,7 +76,7 @@ class M_r_kes_keluarga extends CI_Model
         );
     }
     return $ret_val;
-  }
+  }*/
 
   public function get_data_newest_distinct($column = '*')
   {

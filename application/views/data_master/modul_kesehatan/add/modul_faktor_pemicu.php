@@ -26,6 +26,22 @@
               <form role="form" action="<?php echo base_url(); ?>store-modul-faktor-pemicu" method="post" enctype="multipart/form-data">
                 <div class="box-body">
                   <div class="row">
+                    <div id="modul-pemicu-out"></div>
+                    <!-- #/id-mod-faktor-pemicu -->
+                    <div class="col-md-4 col-sm-12">
+                      <div class="form-group">
+                        <label class="control-label" style="color: white;">modul</label>
+                        <div class="checkbox">
+                          <label class="control-label">
+                            <input type="checkbox" name="perbarui" id="update-modul-pemicu" onchange="get_latest_modul('faktor_pemicu')" value="1">&nbsp;Perbarui Modul Pemicu Penyakit
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /check-box -->
+                  </div>
+                  <!-- /update -->
+                  <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="control-label">Nama Modul</label>
@@ -78,3 +94,55 @@
     </div>
   </div>
 </section>
+<script type="text/javascript">
+  function titleCase(str) {
+    str = str.toLowerCase().split(' ');                // will split the string delimited by space into an array of words
+
+    for(var i = 0; i < str.length; i++){               // str.length holds the number of occurrences of the array...
+        str[i] = str[i].split('');                    // splits the array occurrence into an array of letters
+        str[i][0] = str[i][0].toUpperCase();          // converts the first occurrence of the array to uppercase
+        str[i] = str[i].join('');                     // converts the array of letters back into a word.
+    }
+    return str.join(' ');                              //  converts the array of words back to a sentence.
+  }
+
+  function get_latest_modul(modul) {
+    if ($('#update-modul-pemicu').prop('checked') === false) {
+      $('#modul-pemicu-out').children().remove();
+    } else {
+      var curURL = document.URL.split('/');
+      var reqURL = './data_master/C_modul_kesehatan/show_all_modul';
+      if (curURL[6] !== undefined) {
+        reqURL = './../data_master/C_modul_kesehatan/show_all_modul';
+      } 
+      $.ajax({
+        url: reqURL,
+        type: 'post',
+        data: {modul: modul},
+        dataType: 'json',
+        success: function(data) {
+          var option = $.map(data['data'], function(index, value){
+            return '<option value="' + index.id_mod_faktor_pemicu + '">' + titleCase(index.nama) + ' (Versi '+ index.versi + ')</option>'; 
+          });
+          var element = '<div class="col-md-8 col-sm-12">' +
+            '<div class="form-group">' +
+              '<label class="control-label">Modul Penyakit</label>' +
+              '<select name="id_mod_faktor_pemicu" class="form-control select2-single">' +
+                '<option value="" selected disabled>Pilih Modul</option>' +
+                option +
+              '</select>' +
+            '</div>' +
+          '</div>';
+          $('#modul-pemicu-out').append(element);
+          $(".select2-single").select2();
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    }
+  }
+</script>
