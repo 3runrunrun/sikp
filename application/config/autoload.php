@@ -165,10 +165,10 @@ $autoload['model'] = array(
   'pasien/M_riwayat_pekerjaan',
   // PEGAWAI
   'pegawai/M_admin',
-  'pegawai/M_staf_administrasi',
-  'pegawai/M_tenaga_kefarmasian',
-  'pegawai/M_tenaga_medis',
-  'pegawai/M_tenaga_paramedis',
+  'pegawai/M_pegawai',
+  // 'pegawai/M_tenaga_kefarmasian',
+  // 'pegawai/M_tenaga_medis',
+  // 'pegawai/M_tenaga_paramedis',
   // PEMERIKSAAN HOLISTIK
   'pemeriksaan_holistik/M_cek_darah',
   'pemeriksaan_holistik/M_diagnosis_penyakit',

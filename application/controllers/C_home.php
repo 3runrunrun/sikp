@@ -64,7 +64,7 @@ class C_home extends CI_Controller
   public function login($alert_flag = NULL)
   {
     // init var - view data
-    $view_data['pengguna'] = $this->M_staf_administrasi->get_user();
+    $view_data['pengguna'] = $this->M_pegawai->get_user();
 
     // parsing error template
     foreach ($view_data as $key => $value) {

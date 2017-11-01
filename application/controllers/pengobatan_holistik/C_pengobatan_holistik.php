@@ -238,7 +238,7 @@ class C_pengobatan_holistik extends CI_Controller
 
     // init - view data
     $view_data['pasien'] = $this->M_pasien_identitas->get_data('no_bpjs, nama');
-    $view_data['dokter'] = $this->M_tenaga_medis->get_data();
+    $view_data['dokter'] = $this->M_pegawai->get_data_dokter();
     $view_data['pasien_harian'] = $this->M_status->get_data_harian('a.id_registrasi, a.no_bpjs, c.nama, a.tgl_periksa, b.poli, a.status', array('terdaftar', 'anamnesis', 'diagnosis', 'intervensi'));
 
     // parsing error template
@@ -977,7 +977,7 @@ class C_pengobatan_holistik extends CI_Controller
       $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
     }
 
-    var_dump($data_tabel['faktor_risiko']);
+    // var_dump($data_tabel['faktor_risiko']);
 
     // parsing template
     $this->template = $this->load->view('pengobatan_holistik/formulir_pengisian_intervensi', '',TRUE);

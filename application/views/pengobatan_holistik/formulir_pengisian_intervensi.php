@@ -247,9 +247,9 @@
             <div class="col-md-12">
               <div class="form-group">
                 {status}
-                <input type="text" name="id_registrasi" id="id-registrasi" value="{id_registrasi}">
-                <input type="text" name="no_bpjs" id="no-bpjs" value="{no_bpjs}">
-                <input type="text" name="nik_tenaga_medis" id="nik-tenaga-medis" value="{nik_tenaga_medis}">
+                <input type="hidden" name="id_registrasi" id="id-registrasi" value="{id_registrasi}">
+                <input type="hidden" name="no_bpjs" id="no-bpjs" value="{no_bpjs}">
+                <input type="hidden" name="nik_tenaga_medis" id="nik-tenaga-medis" value="{nik_tenaga_medis}">
                 {/status}
                 <label class="control-label">Pilih Intervensi yang akan diberikan</label>
                 <select id="jenis-intervensi" name="jenis_intervensi" class="form-control" onchange="select_intervensi(this)">

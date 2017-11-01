@@ -16,7 +16,7 @@ class M_status extends CI_Model
   {
     $this->db->select($column);
     $this->db->from('hol_status a');
-    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('poli_pegawai b', 'a.nik_tenaga_medis = b.nik');
     $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
     $this->db->not_like('DATE_FORMAT(a.tgl_periksa, \'%d\')', date('d'));
     $this->db->where('a.hapus', '0');
@@ -40,7 +40,7 @@ class M_status extends CI_Model
   {
     $this->db->select($column);
     $this->db->from('hol_status a');
-    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('poli_pegawai b', 'a.nik_tenaga_medis = b.nik');
     $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
     $this->db->like('DATE_FORMAT(a.tgl_periksa, \'%d\')', date('d'));
     $this->db->where_in('a.status', $status);
@@ -75,7 +75,7 @@ class M_status extends CI_Model
   {
     $this->db->select($column);
     $this->db->from('hol_status a');
-    $this->db->join('poli_tenaga_medis b', 'a.nik_tenaga_medis = b.nik_tenaga_medis');
+    $this->db->join('poli_pegawai b', 'a.nik_tenaga_medis = b.nik');
     $this->db->join('pas_identitas c', 'a.no_bpjs = c.no_bpjs');
     $this->db->where('a.no_bpjs', $no_bpjs);
     $this->db->where('a.hapus', '0');
