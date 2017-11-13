@@ -73,6 +73,19 @@ class C_pencatatan_obat_baru extends CI_Controller
     return $id;
   }
 
+  /**
+   * SIKP-PF-209
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
+  private function date_formatter($date_string, $format)
+  {
+    $date_object = date_create($date_string);
+    $formatted_date = date_format($date_object, $format);
+    return $formatted_date;
+  }
+
   public function index()
   {
     $url = base_url();
@@ -214,6 +227,7 @@ class C_pencatatan_obat_baru extends CI_Controller
     // init var - local var
     $data_obat = array();
     $data_masuk = array();
+    $data_keluar_bulan = array();
 
     // validating form
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '<p><strong>Silahkan ulangi pengisian data</strong></p></div>');
@@ -223,24 +237,35 @@ class C_pencatatan_obat_baru extends CI_Controller
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post('nama[]') as $key => $value) {
+        // assign var - data_obat array
         $data_obat['id_obat'] = $this->id_generator('OBT');
         $data_obat['nama'] = $this->input->post('nama[]')[$key];
         $data_obat['bpjs'] = $this->input->post('bpjs[]')[$key];
         $data_obat['jumlah'] = $this->input->post('jumlah[]')[$key];
         $data_obat['jenis'] = $this->input->post('jenis[]')[$key];
+        $data_obat['harga'] = $this->input->post('harga[]')[$key];
         if ($this->input->post('jenis[]')[$key] == '1' || $this->input->post('jenis[]')[$key] == '2') {
           $data_obat['satuan'] = '1';
         } else {
           $data_obat['satuan'] = '2';
         }
 
+        // assign var - data_obat_masuk
         $data_obat_masuk['id_obat_masuk'] = $this->id_generator('OMSK');
         $data_obat_masuk['jumlah_masuk'] = $this->input->post('jumlah[]')[$key];
         $data_obat_masuk['id_obat'] = $data_obat['id_obat'];
         $data_obat_masuk['tgl_masuk'] = date('Y-m-d H:i:s');
 
+        // assign var - data_keluar_bulan
+        $data_keluar_bulan['id_obat'] = $data_obat['id_obat'];
+        $data_keluar_bulan['bulan'] = $this->date_formatter($data_obat_masuk['tgl_masuk'], 'm');
+        $data_keluar_bulan['tahun'] = $this->date_formatter($data_obat_masuk['tgl_masuk'], 'Y');
+        $data_keluar_bulan['jml_masuk'] = $data_obat_masuk['jumlah_masuk'];
+        $data_keluar_bulan['sisa'] = $data_obat_masuk['jumlah_masuk'];
+
         $this->M_obat->store($data_obat);
         $this->M_obat_masuk->store($data_obat_masuk);
+        $this->M_obat_keluar_bulan->store($data_keluar_bulan);
       }
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();

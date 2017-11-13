@@ -1,9 +1,9 @@
 <section class="content-header">
-  <h1>Pengobatan Holistik</h1>
+  <h1>Pengelolaan Obat</h1>
   <ol class="breadcrumb">
-    <li><a href="<?php echo base_url(); ?>pendaftaran-pasien"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
-    <li><i class="fa fa-book"></i>&nbsp;Riwayat Pelayanan Harian</a></li>
-    <li class="active">Anamnesis</li>
+    <li><i class="fa fa-medkit"></i>&nbsp;Pengelolaan Obat</li>
+    <li><i class="fa fa-book"></i>&nbsp;Laporan Obat</li>
+    <li class="active">Resep Keluar</li>
   </ol>
 </section>
 
@@ -12,38 +12,32 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Data Anamnesis Pasien</h3>
+          <h3 class="box-title">Resep Keluar</h3>
         </div>
         <!-- ./box-header -->
         <div class="box-body">
-          <div class="col-md-12">
-            {err_vars}
-          </div>
+          {err_vars}
           {alert_vars}
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th>ID Registrasi</th>
-              <th>No. BPJS</th>
               <th>Nama Pasien</th>
-              <th>Tanggal Periksa</th>
-              <th>Poli</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>Poli (Nama Dokter)</th>
+              <th>Tanggal Keluar</th>
+              <th>Opsi</th>
             </tr>
             </thead>
             <tbody>
             {data_tabel}
               <tr>
                 <td>{new_id_registrasi}</td>
-                <td>{no_bpjs}</td>
-                <td>{nama}</td>
-                <td>{tgl_periksa}</td>
-                <td>{poli}</td>
-                <td>{status}</td>
+                <td>{nama_pasien}</td>
+                <td>{poli} ({nama_dokter})</td>
+                <td>{tgl_keluar}</td>
                 <td>
-                  <div class="form-group btn-group-vertical" style="width: 100% !important;">
-                    {opsi}
+                  <div class="form-group btn-group">
+                    <button type="button" class="btn btn-success btn-sm" onclick="window.location='<?php echo base_url(); ?>cetak-resep-obat-keluar/{id_resep_obat}'"><i class="fa fa-print"></i></button>
                   </div>
                 </td>
               </tr>

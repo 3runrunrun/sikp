@@ -30,7 +30,7 @@
         <div class="row text-purple" style="margin-bottom: 10px !important">
           <h4>
             <div class="col-md-2"><strong>No. Registrasi</strong></div>
-            <div class="col-md-10"><strong>{id_registrasi}</strong></div style="margin-bottom: 10px !important">
+            <div class="col-md-10"><strong>{new_id_registrasi}</strong></div style="margin-bottom: 10px !important">
           </h4>
         </div>
         <div class="row">
@@ -230,48 +230,47 @@
     </div>
     <!-- ./box-body -->
   </div>
-    <div class="box box-solid box-primary">
-      <div class="box-header">
-        <h3 class="box-title">Intervensi</h3>
-      </div>
-      <!-- ./box-header -->
-      <form role="form" action="<?php echo base_url() ?>simpan-intervensi" method="post">
-        <div class="box-body">
-          <?php echo form_error('id_registrasi'); ?>
-          <?php echo form_error('no_bpjs'); ?>
-          <?php echo form_error('nik_tenaga_medis'); ?>
-          <?php echo form_error('jenis_pasien'); ?>
-          <?php echo form_error('rs'); ?>
-          <?php echo form_error('jenis_rujukan'); ?>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                {status}
-                <input type="hidden" name="id_registrasi" id="id-registrasi" value="{id_registrasi}">
-                <input type="hidden" name="no_bpjs" id="no-bpjs" value="{no_bpjs}">
-                <input type="hidden" name="nik_tenaga_medis" id="nik-tenaga-medis" value="{nik_tenaga_medis}">
-                {/status}
-                <label class="control-label">Pilih Intervensi yang akan diberikan</label>
-                <select id="jenis-intervensi" name="jenis_intervensi" class="form-control" onchange="select_intervensi(this)">
-                  <option value="" selected disabled>Pilih opsi</option>
-                  <option value="1">Resep Obat</option>
-                  <option value="2">Rujukan</option>
-                  <option value="3">Anjuran Cek Darah</option>
-                </select>
-              </div>
+  <div class="box box-solid box-primary">
+    <div class="box-header">
+      <h3 class="box-title">Intervensi</h3>
+    </div>
+    <!-- ./box-header -->
+    <form role="form" action="<?php echo base_url() ?>simpan-intervensi" method="post">
+      <div class="box-body">
+        <?php echo form_error('id_registrasi'); ?>
+        <?php echo form_error('no_bpjs'); ?>
+        <?php echo form_error('nik_tenaga_medis'); ?>
+        <?php echo form_error('jenis_pasien'); ?>
+        <?php echo form_error('rs'); ?>
+        <?php echo form_error('jenis_rujukan'); ?>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              {status}
+              <input type="hidden" name="id_registrasi" id="id-registrasi" value="{id_registrasi}">
+              <input type="hidden" name="no_bpjs" id="no-bpjs" value="{no_bpjs}">
+              <input type="hidden" name="nik_tenaga_medis" id="nik-tenaga-medis" value="{nik_tenaga_medis}">
+              {/status}
+              <label class="control-label">Pilih Intervensi yang akan diberikan</label>
+              <select id="jenis-intervensi" name="jenis_intervensi" class="form-control" onchange="select_intervensi(this)">
+                <option value="" selected disabled>Pilih opsi</option>
+                <option value="1">Resep Obat</option>
+                <option value="2">Rujukan</option>
+              </select>
             </div>
           </div>
-          <div id="intervensi-out"></div>
-          <!-- #/intervensi-out -->
         </div>
-        <!-- ./box-body -->
-        <div class="box-footer">
-          <button type="reset" class="btn btn-danger">Batal</button>
-          <button type="submit" class="btn btn-primary pull-right">Simpan</button>
-        </div>
-        <!-- ./box-footer -->
-      </form>
-    </div>
+        <div id="intervensi-out"></div>
+        <!-- #/intervensi-out -->
+      </div>
+      <!-- ./box-body -->
+      <div class="box-footer">
+        <button type="reset" class="btn btn-danger">Batal</button>
+        <button type="submit" class="btn btn-primary pull-right">Simpan</button>
+      </div>
+      <!-- ./box-footer -->
+    </form>
+  </div>
   <!-- /intervensi -->
 </section>
 <script type="text/javascript">
@@ -309,8 +308,6 @@
       element = resep_obat();
     } else if (jenis_intervensi == '2') {
       element = rujukan();
-    } else if (jenis_intervensi == '3') {
-      element = cek_darah();
     }
 
     $('#intervensi-out').children().remove();
@@ -352,19 +349,6 @@
         '</div>' +
       '</div>';
    
-    return element;
-  }
-
-  function cek_darah(){
-    var element = '<div class="row">' +
-      '<div class="col-md-12">' +
-        '<div class="callout callout-warning">' +
-          '<h4>Pemberian Surat Pengantar Cek Darah</h4>' +
-          '<p>Pastikan surat pengantar cek darah telah diberikan kepada pasien.</p>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-
     return element;
   }
 </script>

@@ -25,7 +25,7 @@
         <div class="row text-purple" style="margin-bottom: 10px !important">
           <h4>
             <div class="col-md-2"><strong>No. Registrasi</strong></div>
-            <div class="col-md-10"><strong>{id_registrasi}</strong></div style="margin-bottom: 10px !important">
+            <div class="col-md-10"><strong>{new_id_registrasi}</strong></div style="margin-bottom: 10px !important">
           </h4>
         </div>
         <div class="row">
@@ -158,19 +158,6 @@
                 </div>
               </div>
               <!-- /terapi -->
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="lokasi-intervensi" class="control-label">Lokasi Intervensi</label>
-                  <select name="lokasi_intervensi[]" id="lokasi-intervensi" class="form-control" required>
-                    <option value="" selected disabled>Pilih Lokasi Intervensi</option>
-                    <option value="1">Klinik</option>
-                    <option value="2">Rumah Sakit</option>
-                    <option value="3">Tempat Tinggal</option>
-                    <option value="4">Tempat Kerja</option>
-                  </select>
-                </div>
-              </div>
-              <!-- /lokasi-intervensi -->
             </div>
             <div id="diagnosis-out"></div>
             <!-- #/diagnosis-out -->

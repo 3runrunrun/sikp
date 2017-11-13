@@ -28,7 +28,7 @@
         <div class="row text-purple" style="margin-bottom: 10px !important">
           <h4>
             <div class="col-md-2"><strong>No. Registrasi</strong></div>
-            <div class="col-md-10"><strong>{id_registrasi}</strong></div style="margin-bottom: 10px !important">
+            <div class="col-md-10"><strong>{new_id_registrasi}</strong></div style="margin-bottom: 10px !important">
           </h4>
         </div>
         <div class="row">
@@ -229,7 +229,7 @@
         <div class="box-header">
           <h3 class="box-title">Intervensi</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
           </div>
         </div>
@@ -237,7 +237,6 @@
         <div class="box-body">
           {resep_obat}
           {rujukan}
-          {cek_darah}
         </div>
         <!-- ./box-body -->
       </div>

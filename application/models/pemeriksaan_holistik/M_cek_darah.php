@@ -12,21 +12,88 @@ class M_cek_darah extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
-  public function show_by_status_pasien($id_registrasi, $no_bpjs, $column = '*')
+  public function get_data_harian($column = '*', $status = array('1', '2'))
   {
     $this->db->select($column);
-    $this->db->where('id_registrasi', $id_registrasi);
-    $this->db->where('no_bpjs', $no_bpjs);
-    $this->db->where('hapus', '0');
-    $result = $this->db->get('hol_cek_darah');
+    $this->db->from('hol_cek_darah a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->like('DATE_FORMAT(a.tgl_cek_darah, \'%d\')', date('d'));
+    $this->db->where_in('a.status', $status);
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(
-        'status' => 'error',
+        'status' => 'error', 
         'data' => $this->db->error()
         );
     } else {
       $ret_val = array(
-        'status' => 'success',
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_data_riwayat($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('hol_cek_darah a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->not_like('DATE_FORMAT(a.tgl_cek_darah, \'%d\')', date('d'));
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function get_data($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('hol_cek_darah a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
+  public function show($no_surat_pengantar, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('hol_cek_darah a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->where('a.no_surat_pengantar', $no_surat_pengantar);
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
         'data' => $result->result_array()
         );
     }
@@ -39,30 +106,17 @@ class M_cek_darah extends CI_Model
     $this->db->query($sql);
   }
 
-  public function destroy_by_status_pasien($id_registrasi, $no_bpjs)
+  public function update($no_surat_pengantar, $data = array())
   {
-    $this->db->where('id_registrasi', $id_registrasi);
-    $this->db->where('no_bpjs', $no_bpjs);
-    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('hol_cek_darah');
+    $this->db->where('no_surat_pengantar', $no_surat_pengantar);
+    $sql = $this->db->set($data)->get_compiled_update('hol_cek_darah');
     $this->db->query($sql);
   }
 
-  public function count_by_status_pasien($id_registrasi, $no_bpjs)
+  public function destroy($no_surat_pengantar)
   {
-    $this->db->where('id_registrasi', $id_registrasi);
-    $this->db->where('no_bpjs', $no_bpjs);
-    $result = $this->db->get('hol_cek_darah');
-    if ( ! $result) {
-      $ret_val = array(
-        'status' => 'error', 
-        'data' => $this->db->error()
-        );
-    } else {
-      $ret_val = array(
-        'status' => 'success', 
-        'data' => array($result->num_rows())
-        );
-    }
-    return $ret_val;
+    $this->db->where('no_surat_pengantar', $no_surat_pengantar);
+    $sql = $this->db->set(array('hapus' => '1'))->get_compiled_update('hol_cek_darah');
+    $this->db->query($sql);
   }
 }

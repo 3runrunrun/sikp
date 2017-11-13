@@ -3,7 +3,7 @@
     {rujukan}
     <div class="callout callout-success">
       <h4>Rujukan</h4>
-      <p>kode rujukan: <strong>{id_rujukan}</strong>.</p>
+      <p>kode rujukan: <strong>{new_id_rujukan}</strong>.</p>
       <p>Pasien menerima rujukan <strong>{jenis_rujukan}</strong> ke rumah sakit atau puskesmas <strong>{rs}</strong>.</p>
     </div>
     {/rujukan}

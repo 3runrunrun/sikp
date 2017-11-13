@@ -159,6 +159,7 @@ $autoload['model'] = array(
   'obat/M_obat',
   'obat/M_obat_masuk',
   'obat/M_obat_keluar',
+  'obat/M_obat_keluar_bulan',
   // PASIEN
   'pasien/M_kk',
   'pasien/M_pasien_identitas',

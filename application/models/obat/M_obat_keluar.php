@@ -35,11 +35,13 @@ class M_obat_keluar extends CI_Model
     return $ret_val;
   }
 
-  public function get_data_obat($column)
+  public function get_data_obat($column = '*')
   {
     $this->db->select($column);
     $this->db->from('poli_obat_keluar a');
     $this->db->join('poli_obat b', 'a.id_obat = b.id_obat');
+    $this->db->join('hol_resep_obat c', 'a.id_resep_obat = c.id_resep_obat');
+    $this->db->join('pas_identitas d', 'c.no_bpjs = d.no_bpjs');
     $this->db->where('a.hapus', '0');
     $this->db->where('b.hapus', '0');
     $result = $this->db->get();
@@ -76,20 +78,23 @@ class M_obat_keluar extends CI_Model
     return $ret_val;
   }
 
-  public function get_data_by_range($from, $to)
+  /**
+   * data obat keluar harian
+   * @param  [type] $from [description]
+   * @param  [type] $to   [description]
+   * @return [type]       [description]
+   */
+  public function get_data_by_range($from, $to, $column = '*')
   {
-    $sql = 'select a.id_obat_keluar, d.nama as nama_pasien, a.id_obat, b.nama, a.jumlah_keluar, b.satuan, a.tgl_keluar
-      from poli_obat_keluar a
-      join poli_obat b
-        on a.id_obat = b.id_obat
-      join hol_resep_obat c
-        on a.id_resep_obat = c.id_resep_obat
-      join pas_identitas d
-        on c.no_bpjs = d.no_bpjs
-      where a.hapus = \'0\'
-        and a.tgl_keluar between ? and ?';
-    $bind_param = array($from, $to);
-    $result = $this->db->query($sql, $bind_param);
+    $this->db->select($column);
+    $this->db->from('poli_obat_keluar a');
+    $this->db->join('poli_obat b', 'a.id_obat = b.id_obat');
+    $this->db->join('hol_resep_obat c', 'a.id_resep_obat = c.id_resep_obat');
+    $this->db->where('a.hapus', '0');
+    $this->db->where('a.tgl_keluar >=', $from);
+    $this->db->where('a.tgl_keluar <=', $to);
+    $this->db->group_by('a.id_obat');
+    $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(
         'status' => 'error',
@@ -102,6 +107,31 @@ class M_obat_keluar extends CI_Model
         );
     }
     return $ret_val;
+  }
+
+  public function get_resep_keluar($column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('poli_obat_keluar a');
+    $this->db->join('hol_resep_obat b', 'a.id_resep_obat = b.id_resep_obat');
+    $this->db->join('hol_status c', 'b.id_registrasi = c.id_registrasi');
+    $this->db->join('poli_pegawai d', 'c.nik_tenaga_medis = d.nik');
+    $this->db->join('pas_identitas e', 'b.no_bpjs = e.no_bpjs');
+    $this->db->where('a.hapus', '0');
+    $this->db->group_by('a.id_resep_obat');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val; 
   }
 
   public function store($data = array())

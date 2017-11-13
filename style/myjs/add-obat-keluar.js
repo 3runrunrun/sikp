@@ -7,7 +7,7 @@ $(document).ready(function(){
     }).get();
 
     var element = '<div class="row">' +
-        '<div class="col-xs-9 col-md-9">' +
+        '<div class="col-md-6 col-sm-12 col-xs-12">' +
           '<div class="form-group">' +
             '<label for="obat" class="control-label">Pilih Obat</label>' +
             '<select name="id_obat[]" class="form-control select2-single" style="width: 100% !important;" onchange="get_harga(this)" required>' +
@@ -15,7 +15,24 @@ $(document).ready(function(){
             '</select>' +
           '</div>' +
         '</div>' +
-        '<!-- /obat -->' +
+        '<div class="col-md-1 col-sm-5 col-xs-5">' +
+          '<div class="form-group">' +
+            '<label class="control-label">Signa</label>' +
+            '<input type="number" name="a_signa[]" step="1" min="1" class="form-control" placeholder="0" required>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1 col-sm-2 col-xs-1" style="width: 10px">' +
+          '<div class="form-group">' +
+            '<label class="control-label" style="color: white">Signa</label><br />' +
+            '<label class="control-label">&times;</label>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col-md-1 col-sm-5 col-xs-5">' +
+          '<div class="form-group">' +
+            '<label class="control-label" style="color: white">Signa</label>' +
+            '<input type="number" name="b_signa[]" step="1" min="1" class="form-control" placeholder="0" required>' +
+          '</div>' +
+        '</div>' +
         '<div class="col-xs-9 col-md-2">' +
           '<div class="form-group">' +
             '<label for="jumlah-keluar" class="control-label">Jumlah Obat Keluar</label>' +

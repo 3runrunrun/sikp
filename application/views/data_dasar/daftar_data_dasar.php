@@ -16,7 +16,7 @@
         <div class="box-header">
           <h3 class="box-title">Daftar Data Dasar Kesehatan Keluarga</h3>
           <!-- /.box-title -->
-          <?php if ($this->session->userdata('tabel') != 'keperawatan'): ?>
+          <?php if ($this->session->userdata('tabel') == 'administrasi'): ?>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-block btn-default bg-green" onclick="window.location.href='<?php echo base_url(); ?>formulir-data-dasar'"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data Baru</button>
           </div>

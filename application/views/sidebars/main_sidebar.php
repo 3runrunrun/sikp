@@ -48,7 +48,7 @@
   <ul class="sidebar-menu">
     <li class="header">MENU UTAMA</li>
     <?php if($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'medis' || $this->session->userdata('tabel') == 'administrasi'): ?>
-    <li class="treeview">
+    <li class="active treeview">
       <a href="#">
         <i class="fa fa-stethoscope"></i> <span>Pengobatan Holistik</span>
         <span class="pull-right-container">
@@ -58,47 +58,34 @@
       <ul class="treeview-menu">
         <?php if($this->session->userdata('tabel') == 'administrasi'): ?>
         <li><a href="<?php echo base_url(); ?>pendaftaran-pasien"><i class="fa fa-pencil"></i>&nbsp;Pendaftaran Pengobatan</a></li>
+        <li><a href="<?php echo base_url(); ?>pendaftaran-cek-darah"><i class="fa fa-pencil"></i>&nbsp;Pendaftaran Cek Darah</a></li>
         <?php endif; ?>
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
-            <i class="fa fa-book"></i> <span>Data Pengobatan Harian</span>
+            <i class="fa fa-book"></i> <span>Riwayat Pelayanan Harian</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <?php if($this->session->userdata('tabel') == 'administrasi'): ?>
-            <li><a href="<?php echo base_url(); ?>pasien-terdaftar-harian"><i class="fa fa-database"></i>&nbsp;Pasien Terdaftar</a></li>
+            <li><a href="<?php echo base_url(); ?>pasien-terdaftar-harian"><i class="fa fa-database"></i>&nbsp;Pendaftaran Pengobatan</a></li>
+            <li><a href="<?php echo base_url(); ?>pasien-cek-darah-harian"><i class="fa fa-database"></i>&nbsp;Pendaftaran Cek Darah</a></li>
             <?php endif; ?>
 
             <?php if($this->session->userdata('tabel') == 'keperawatan'): ?>
-            <li><a href="<?php echo base_url(); ?>pasien-anamnesis-harian"><i class="fa fa-database"></i>&nbsp;Data Anamnesis Pasien</a></li>
+            <li><a href="<?php echo base_url(); ?>pasien-anamnesis-harian"><i class="fa fa-database"></i>&nbsp;Anamnesis</a></li>
+            <li><a href="<?php echo base_url(); ?>hasil-cek-darah"><i class="fa fa-database"></i>&nbsp;Cek Darah</a></li>
             <?php endif; ?>
 
             <?php if($this->session->userdata('tabel') == 'medis'): ?>
-            <li><a href="<?php echo base_url(); ?>pasien-diagnosis-harian"><i class="fa fa-database"></i>&nbsp;Data Diagnosis Pasien</a></li>
+            <li><a href="<?php echo base_url(); ?>pasien-diagnosis-harian"><i class="fa fa-database"></i>&nbsp;Diagnosis &amp; Intervensi</a></li>
             <?php endif; ?>
           </ul>
         </li>
       </ul>
     </li>
-    <!-- Pengobatan Holistik -->
-    <?php endif; ?>
-
-
-    <?php if($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'medis' || $this->session->userdata('tabel') == 'administrasi'): ?>
-    <li class="treeview">
-      <a href="#">
-        <i class="fa fa-book"></i> <span>Data Dasar Kesehatan</span>
-        <span class="pull-right-container">
-          <i class="fa fa-angle-left pull-right"></i>
-        </span>
-      </a>
-      <ul class="treeview-menu">
-        <li><a href="<?php echo base_url(); ?>lihat-data-dasar"><i class="fa fa-database"></i> <span>Data Dasar Kesehatan</span></a></li>
-      </ul>
-    </li>
-    <!-- Data Dasar Kesehatan -->
+    <!-- /pengobatan-holistik -->
     <?php endif; ?>
 
     <?php if($this->session->userdata('tabel') == 'kefarmasian'): ?>
@@ -130,6 +117,7 @@
             </span>
           </a>
           <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url(); ?>lihat-resep-keluar"><i class="fa fa-book"></i>&nbsp;Resep Keluar</a></li>
             <li><a href="<?php echo base_url(); ?>data-obat"><i class="fa fa-book"></i>&nbsp;Data Obat</a></li>
             <li><a href="<?php echo base_url(); ?>data-obat-masuk"><i class="fa fa-book"></i>&nbsp;Laporan Obat Masuk</a></li>
             <li><a href="<?php echo base_url(); ?>data-obat-keluar"><i class="fa fa-book"></i>&nbsp;Laporan Obat Keluar</a></li>
@@ -139,9 +127,28 @@
     </li>
     <!-- /pengelolaan-obat -->
     <?php endif; ?>
-
-    <?php if($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'medis' || $this->session->userdata('tabel') == 'administrasi'): ?>
+  
+    <?php if($this->session->userdata('tabel') != 'kefarmasian'): ?>
     <li class="header">ARSIP POLIKLINIK</li>
+    <?php endif; ?>
+
+    <?php if($this->session->userdata('tabel') == 'administrasi'): ?>
+    <li class="treeview">
+      <a href="#">
+        <i class="fa fa-book"></i> <span>Riwayat Pelayanan</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a href="<?php echo base_url(); ?>riwayat-pengobatan"><i class="fa fa-database"></i> <span>&nbsp;Pengobatan Holistik</span></a></li>
+        <li><a href="<?php echo base_url(); ?>riwayat-cek-darah"><i class="fa fa-database"></i> <span>&nbsp;Cek Darah</span></a></li>
+      </ul>
+    </li>
+    <!-- /pengobatan -->
+    <?php endif; ?>
+
+    <?php if($this->session->userdata('tabel') == 'administrasi' || $this->session->userdata('tabel') == 'medis'): ?>
     <li class="treeview">
       <a href="#">
         <i class="fa fa-book"></i> <span>Pasien</span>
@@ -154,18 +161,21 @@
       </ul>
     </li>
     <!-- /pasien -->
+    <?php endif; ?>
+
+    <?php if($this->session->userdata('tabel') == 'medis' || $this->session->userdata('tabel') == 'administrasi'): ?>
     <li class="treeview">
       <a href="#">
-        <i class="fa fa-book"></i> <span>Pengobatan</span>
+        <i class="fa fa-book"></i> <span>Data Dasar Kesehatan</span>
         <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
         </span>
       </a>
       <ul class="treeview-menu">
-        <li><a href="<?php echo base_url(); ?>riwayat-pengobatan"><i class="fa fa-database"></i> <span>&nbsp;Riwayat Pengobatan</span></a></li>
+        <li><a href="<?php echo base_url(); ?>lihat-data-dasar"><i class="fa fa-database"></i> <span>Data Dasar Kesehatan</span></a></li>
       </ul>
     </li>
-    <!-- /pengobatan -->
+    <!-- /data-dasar-kesehatan-keluarga -->
     <?php endif; ?>
 
 

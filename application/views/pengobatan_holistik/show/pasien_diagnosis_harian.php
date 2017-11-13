@@ -2,8 +2,8 @@
   <h1>Pengobatan Holistik</h1>
   <ol class="breadcrumb">
     <li><a href="<?php echo base_url(); ?>pendaftaran-pasien"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
-    <li><i class="fa fa-book"></i>&nbsp;Data Pengobatan Harian</a></li>
-    <li class="active">Data Diagnosis Pasien</li>
+    <li><i class="fa fa-book"></i>&nbsp;Riwayat Pelayanan Harian</a></li>
+    <li class="active">Diagnosis &amp; Intervensi</li>
   </ol>
 </section>
 
@@ -35,7 +35,7 @@
             <tbody>
             {data_tabel}
               <tr>
-                <td>{id_registrasi}</td>
+                <td>{new_id_registrasi}</td>
                 <td>{no_bpjs}</td>
                 <td>{nama}</td>
                 <td>{tgl_periksa}</td>

@@ -1734,15 +1734,6 @@ $config = array(
         )
       ),
     array(
-      'field' => 'lokasi_intervensi[]',
-      'label' => 'Lokasi Intervensi atau Pengobatan',
-      'rules' => 'required|in_list[1,2,3,4]',
-      'errors' => array(
-        'required' => '%s harus diisi',
-        'in_list' => 'Isi %s dengan data yang sudah disediakan'
-        )
-      ),
-    array(
       'field' => 'id_registrasi',
       'label' => 'ID Registrasi',
       'rules' => 'required',
@@ -1844,7 +1835,29 @@ $config = array(
         )
       ),
     ),
-  
+  // PENGOBATAN HOLISTIK -- PENDAFTARAN CEK DARAH
+  'pengobatan_holistik/C_pengobatan_holistik/store_cek_darah' => array(
+    array(
+      'field' => 'no_bpjs',
+      'label' => 'Data pasien',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => 'Terdapat kesalahan dalam pengisian %s'
+        )
+      ),
+    ),
+  // PENGOBATAN HOLISTIK -- PENGISIAN HASIL CEK DARAH
+  'pengobatan_holistik/C_pengobatan_holistik/store_hasil_cek_darah' => array(
+    array(
+      'field' => 'no_surat_pengantar',
+      'label' => 'Data pasien',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => '%s harus diisi'
+        )
+      ),
+    ),
+
   // PENGELOLAAN OBAT -- PENCATATAN OBAT BARU
   'pengelolaan_obat/C_pencatatan_obat_baru/store' => array(
     array(
@@ -1881,6 +1894,15 @@ $config = array(
       'errors' => array(
         'required' => '%s harus diisi',
         'in_list' => 'Isi %s dengan data yang tersedia',
+        ),
+      ),
+    array(
+      'field' => 'harga[]',
+      'label' => 'Harga Obat',
+      'rules' => 'required|numeric',
+      'errors' => array(
+        'required' => '%s harus diisi',
+        'numeric' => 'Isi %s dengan angka',
         ),
       ),
     ),

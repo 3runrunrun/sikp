@@ -27,6 +27,7 @@ class M_diagnosis_penyakit extends CI_Model
     $this->db->where('id_registrasi', $id_registrasi);
     $this->db->where('no_bpjs', $no_bpjs);
     $this->db->where('hapus', '0');
+    $this->db->group_by('a.id_diagnosa');
     $result = $this->db->get();
     if ( ! $result) {
       $ret_val = array(

@@ -19,7 +19,7 @@ $(document).ready(function(){
         '<div class="col-xs-9 col-md-2">' +
           '<div class="form-group">' +
             '<label for="jumlah-masuk" class="control-label">Jumlah Obat Masuk</label>' +
-            '<input type="number" min="0" name="jumlah_masuk[]" class="form-control jumlah" step="1" placeholder="0" required>' +
+            '<input type="number" min="0" name="jumlah_masuk[]" class="form-control" step="1" placeholder="0" required>' +
             '<span class="help-block"><small>Dalam butir atau botol</small></span>' +
           '</div>' +
         '</div>' +

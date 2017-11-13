@@ -19,6 +19,10 @@
       <div class="box-body">
         {err_vars}
         {alert_vars}
+        <div class="callout callout-info">
+          <h4>Pendaftaran Pasien</h4>
+          <p>Jika pasien belum terdaftar ke dalam sistem, klik <a href="<?php echo base_url(); ?>formulir-pasien-bpjs"><strong>disini</strong></a> untuk mendaftarkan pasien.</p>
+        </div>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -44,7 +48,7 @@
                 <select name="nik_tenaga_medis" id="tenaga-medis" class="form-control select2" style="width: 100%" required>
                   <option value="" selected disabled>Pilih Poli</option>
                   {data_dokter}
-                  <option value="{nik_tenaga_medis}">Poli {poli}&nbsp;(dr. {nama})</option>
+                  <option value="{nik}">Poli {poli}&nbsp;(dr. {nama})</option>
                   {/data_dokter}
                 </select>
                 <?php echo form_error('nik_tenaga_medis'); ?>
@@ -83,7 +87,7 @@
         <tbody>
         {data_tabel}
           <tr>
-            <td>{id_registrasi}</td>
+            <td>{new_id_registrasi}</td>
             <td>{no_bpjs}</td>
             <td>{nama}</td>
             <td>{tgl_periksa}</td>

@@ -29,18 +29,6 @@ $(function(){
             '<input type="text" name="terapi[]" id="terapi" class="form-control" required>' +
           '</div>' +
         '</div>' +
-        '<div class="col-md-2">' +
-          '<div class="form-group">' +
-            '<label for="lokasi-intervensi" class="control-label">Lokasi Intervensi</label>' +
-            '<select name="lokasi_intervensi[]" id="lokasi-intervensi" class="form-control" required>' +
-              '<option value="" selected disabled>Pilih Lokasi Intervensi</option>' +
-              '<option value="1">Klinik</option>' +
-              '<option value="2">Rumah Sakit</option>' +
-              '<option value="3">Tempat Tinggal</option>' +
-              '<option value="4">Tempat Kerja</option>' +
-            '</select>' +
-          '</div>' +
-        '</div>' +
         '<div class="col-md-1">' +
           '<div class="form-group">' +
             '<label class="control-label" style="color: white;">hap</label>' +

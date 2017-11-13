@@ -139,6 +139,29 @@ class M_status extends CI_Model
     return $ret_val;
   }
 
+  public function show_pasien_by_resep($id_resep_obat, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('hol_status a');
+    $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
+    $this->db->join('poli_pegawai c', 'a.nik_tenaga_medis = c.nik');
+    $this->db->where_in('a.id_registrasi', "select id_registrasi from hol_resep_obat where id_resep_obat = '$id_resep_obat'", FALSE);
+    $this->db->where('a.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error', 
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success', 
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
   public function store($data = array())
   {
     $sql = $this->db->set($data)->get_compiled_insert('hol_status');

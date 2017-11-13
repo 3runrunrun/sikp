@@ -58,6 +58,37 @@ class M_resep_obat extends CI_Model
     return $ret_val;
   }
 
+  /**
+   * fungsi untuk resep cetak
+   * @param  string $value [description]
+   * @return [type]        [description]
+   */
+  public function get_data_cetak_resep($id_resep_obat, $column = '*')
+  {
+    $this->db->select($column);
+    $this->db->from('hol_resep_obat a');
+    $this->db->join('poli_obat_keluar b', 'a.id_resep_obat = b.id_resep_obat');
+    $this->db->join('poli_obat c', 'b.id_obat = c.id_obat');
+    $this->db->join('pas_identitas d', 'a.no_bpjs = d.no_bpjs');
+    $this->db->join('poli_pegawai e', 'a.nik_tenaga_medis = e.nik');
+    $this->db->where('a.id_resep_obat', $id_resep_obat);
+    $this->db->where('a.hapus', '0');
+    $this->db->where('b.hapus', '0');
+    $result = $this->db->get();
+    if ( ! $result) {
+      $ret_val = array(
+        'status' => 'error',
+        'data' => $this->db->error()
+        );
+    } else {
+      $ret_val = array(
+        'status' => 'success',
+        'data' => $result->result_array()
+        );
+    }
+    return $ret_val;
+  }
+
   public function get_data($column = '*')
   {
     $this->db->select($column);

@@ -93,7 +93,7 @@
             <tbody>
             {riwayat_pengobatan}
               <tr>
-                <td>{id_registrasi}</td>
+                <td>{new_id_registrasi}</td>
                 <td>{no_bpjs}</td>
                 <td>{nama}</td>
                 <td>{tgl_periksa}</td>
@@ -114,5 +114,4 @@
     </section>
     <!-- /anggota-keluarga -->
   </div>
-  <!-- /masalah-keturunan /riwayat-penyakit-kecelakaan -->
 </section>

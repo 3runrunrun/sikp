@@ -27,9 +27,10 @@
               <th>ID Obat</th>
               <th>Nama Obat</th>
               <th>Pembiayaan BPJS</th>
-              <th>Jumlah Tersedia</th>
               <th>Jenis</th>
+              <th>Jumlah Tersedia</th>
               <th>Satuan</th>
+              <th>Harga</th>
               <th>Opsi</th>
             </tr>
             </thead>
@@ -39,9 +40,10 @@
                 <td>{id_obat}</td>
                 <td>{nama}</td>
                 <td>{bpjs}</td>
-                <td>{jumlah}</td>
                 <td>{jenis}</td>
+                <td>{jumlah}</td>
                 <td>{satuan}</td>
+                <td>Rp {harga}</td>
                 <td>
                   <div class="form-group btn-group" style="width: 100% !important;">
                     <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>delete-obat/{id_obat}'" style="width: 100% !important;"><i class="fa fa-remove"></i></button>

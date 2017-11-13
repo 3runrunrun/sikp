@@ -35,9 +35,14 @@ class C_pengobatan_holistik extends CI_Controller
       header("Location: $url");
     } else { 
       switch ($urisegment) {
+        case 'riwayat-pengobatan':
+        case 'riwayat-cek-darah':
         case 'pendaftaran-pasien':
         case 'pasien-terdaftar-harian':
         case 'simpan-pendaftaran-pasien':
+        case 'pendaftaran-cek-darah':
+        case 'simpan-cek-darah':
+        case 'hapus-cek-darah':
           if ($this->session->userdata('tabel') != 'administrasi') {
             $url = base_url();
             header("Location: $url");
@@ -48,18 +53,20 @@ class C_pengobatan_holistik extends CI_Controller
         case 'formulir-anamnesis':
         case 'simpan-anamnesis':
         case 'destroy-anamnesis':
+        case 'hasil-cek-darah':
+        case 'store-hasil-cek-darah':
           if ($this->session->userdata('tabel') != 'keperawatan') {
             $url = base_url();
             header("Location: $url");
           }
           break;
           
-        case 'destroy-riwayat-pengobatan':
+        /*case 'destroy-riwayat-pengobatan':
           if ($this->session->userdata('tabel') == 'keperawatan') {
             $url = base_url();
             header("Location: $url");
           }
-          break;
+          break;*/
 
         case 'pasien-diagnosis-harian':
         case 'formulir-diagnosis':
@@ -68,6 +75,13 @@ class C_pengobatan_holistik extends CI_Controller
         case 'formulir-intervensi':
         case 'simpan-intervensi':
           if ($this->session->userdata('tabel') != 'medis') {
+            $url = base_url();
+            header("Location: $url");
+          }
+          break;
+
+        case 'destroy-riwayat-pengobatan':
+          if ($this->session->userdata('tabel') != 'administrasi' || $this->session->userdata('tabel') != 'medis') {
             $url = base_url();
             header("Location: $url");
           }
@@ -210,9 +224,10 @@ class C_pengobatan_holistik extends CI_Controller
       $btn_detail = "<button type='button' class='btn btn-sm btn-primary' onclick=\"window.location='" . base_url() . "detail-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-eye'></i></button>";
       $btn_delete = "<button type='button' class='btn btn-sm btn-danger' onclick=\"window.location='" . base_url() . "destroy-riwayat-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-remove'></i></button>";
 
+      // replacing array
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['opsi'] = $btn_detail.$btn_delete;
 
-      // replacing array
       $value['nama'] = ucwords($value['nama']);
       $value['tgl_periksa'] = $this->date_formatter($value['tgl_periksa'], 'd-M-Y H:i');
       $value['poli'] = 'Poli ' . ucwords($value['poli']);
@@ -276,10 +291,11 @@ class C_pengobatan_holistik extends CI_Controller
     if ( ! empty($alert_flag)) {
       $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
       if ( ! empty($id_registrasi) && ! empty($no_bpjs)) {
+        $new_id_registrasi = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
         $this->alert_template = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
         $this->alert_template_data = array(
           'no_bpjs' => $no_bpjs,
-          'id_registrasi' => $id_registrasi,
+          'new_id_registrasi' => $new_id_registrasi,
           );
         $this->alert_vars = $this->parser->parse_string($this->alert_template, $this->alert_template_data, TRUE);
       }
@@ -343,6 +359,372 @@ class C_pengobatan_holistik extends CI_Controller
     }
   }
 
+  ///////////////
+  // CEK DARAH //
+  ///////////////
+  /**
+   * SIKP-PF-193
+   * @param  [type] $alert_flag         [description]
+   * @param  [type] $no_surat_pengantar [description]
+   * @return [type]                     [description]
+   */
+  public function create_cek_darah($alert_flag = NULL, $no_surat_pengantar = NULL)
+  {
+    // init var - local
+    $page_content = NULL;
+    $data_tabel = array();
+
+    // init var - view data
+    $view_data['pasien'] = $this->M_pasien_identitas->get_data('no_bpjs, nama');
+    $view_data['cek_darah_harian'] = $this->M_cek_darah->get_data_harian('a.no_surat_pengantar, a.no_bpjs, b.nama, a.tgl_cek_darah, a.gd_kolesterol, COALESCE(a.h_kolesterol, \'-\') as h_kolesterol, a.gd_puasa, COALESCE(a.h_puasa, \'-\') as h_puasa, a.gd_acak, COALESCE(a.h_acak, \'-\') as h_acak, a.gd_asam_urat, COALESCE(a.h_asam_urat, \'-\') as h_asam_urat, a.status');
+
+    // parsing error template
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>' . $key . '</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      } else {
+        // assign data tabel
+        $data_tabel[$key] = $view_data[$key]['data'];
+        if (empty($data_tabel[$key])) {
+          $data_tabel[$key] = array();
+        }
+      }
+    }
+
+    // parsing error template for empty data tabel
+    $check_data_tabel = $this->dc->empty_data_tabel($data_tabel);
+    if ( ! empty($check_data_tabel)) {
+      $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+      $this->err_template_data = array(
+        'alert_title' => 'Data Tidak Tersedia',
+        'alert_msg' => 'Mohon maaf, data <strong>' . $check_data_tabel . '</strong> belum tersedia.',
+        'alert_action' => $alert_action
+        );
+      $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+    }
+
+    // checking passed arguments
+    if ( ! empty($alert_flag)) {
+      $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+      if ( ! empty($no_surat_pengantar)) {
+        $this->alert_template = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+        $this->alert_template_data = array(
+          'new_no_surat_pengantar' => $no_surat_pengantar,
+          );
+        $this->alert_vars = $this->parser->parse_string($this->alert_template, $this->alert_template_data, TRUE);
+      }
+    }
+
+    // parsing template
+    $this->template = $this->load->view('pengobatan_holistik/formulir_cek_darah', '',TRUE);
+    $this->template_data = array(
+      'err_vars' => $this->err_vars,
+      'alert_vars' => $this->alert_vars,
+      'data_pasien' => $this->replace_create_pasien($data_tabel['pasien']),
+      'data_tabel' => $this->replace_create_cek_darah($data_tabel['cek_darah_harian']),
+      );
+    
+    // parsing view
+    $page_title = 'Formulir Pendaftaran Cek Darah';
+    $css_framework = $this->load->view('css_framework/head_form', '', TRUE) . $this->load->view('css_framework/head_table', '', TRUE);
+    $page_content = $this->parser->parse_string($this->template, $this->template_data, TRUE);
+    $js_framework = $this->load->view('js_framework/js_form', '', TRUE) . $this->load->view('js_framework/js_datatables', '', TRUE);
+
+    $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
+  }
+
+  /**
+   * SIKP-PF-194
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
+  public function replace_create_cek_darah($data = array())
+  {
+    // init var - return var
+    $ret_val = array();
+    $btn_delete = NULL;
+    $no_surat_pengantar = NULL;
+
+    // init var
+    $status = array(
+      '1' => '<span class="badge bg-blue">Terdaftar</span>',
+      '2' => '<span class="badge bg-green">Selesai</span>',
+      );
+
+    // replacing and repopulating view data
+    foreach ($data as $key => $value) {
+      // init var - array for replacement
+      $no_surat_pengantar = $value['no_surat_pengantar'];
+      $btn_delete = "<button type='button' class='btn btn-sm btn-danger' onclick=\"window.location='" . base_url() . "hapus-cek-darah/$no_surat_pengantar'\"><i class='fa fa-remove'></i></button>";
+
+      // replacing array
+      $value['new_no_surat_pengantar'] = substr($no_surat_pengantar, 0, 4) . substr($no_surat_pengantar, 6, 4) . substr($no_surat_pengantar, 12, 2);
+      $value['opsi'] = $btn_delete;
+      $value['gd_kolesterol'] = ( ! empty($value['gd_kolesterol'])) ? '<span class="badge bg-blue">Kolesterol</span>' : NULL;
+      $value['new_h_kolesterol'] = ($value['h_kolesterol'] != '-') ? '(' . $value['h_kolesterol'] . ' mg/dl)<br />' : '<br />';
+      $value['gd_puasa'] = ( ! empty($value['gd_puasa'])) ? '<span class="badge bg-blue">Gula Darah Puasa</span>' : NULL;
+      $value['new_h_puasa'] = ($value['h_puasa'] != '-') ? '(' . $value['h_puasa'] . ' mg/dl)<br />' : '<br />';
+      $value['gd_acak'] = ( ! empty($value['gd_acak'])) ? '<span class="badge bg-blue">Gula Darah Acak</span>' : NULL;
+      $value['new_h_acak'] = ($value['h_acak'] != '-') ? '(' . $value['h_acak'] . ' mg/dl)<br />' : '<br />';
+      $value['gd_asam_urat'] = ( ! empty($value['gd_asam_urat'])) ? '<span class="badge bg-blue">Asam Urat</span>' : NULL;
+      $value['new_h_asam_urat'] = ($value['h_asam_urat'] != '-') ? '(' . $value['h_asam_urat'] . ' mg/dl)' : NULL;
+      $value['opsi'] = $btn_delete;
+
+      $value['nama'] = ucwords($value['nama']);
+      $value['tgl_cek_darah'] = $this->date_formatter($value['tgl_cek_darah'], 'd-M-Y H:i');
+      $value['status'] = str_replace(array_keys($status), $status, $value['status']);
+      array_push($ret_val, $value);
+    }
+
+    return $ret_val;
+  }
+
+  /**
+   * SIKP-PF-108
+   * @return [type]       [description]
+   */
+  public function store_cek_darah()
+  {
+    if ($this->form_validation->run() == FALSE) {
+      $this->create_cek_darah('gagal_form_invalid');
+    } else {
+      // init var - local
+      $data = array();
+      foreach ($this->input->post() as $key => $value) {
+        $data[$key] = $value;
+      }
+
+      $data['no_surat_pengantar'] = $this->id_generator('DRH');
+      $data['tgl_cek_darah'] = date('Y-m-d H:i:s');
+      $data['status'] = "1";
+      $new_no_surat_pengantar = substr($data['no_surat_pengantar'], 0, 4) . substr($data['no_surat_pengantar'], 6, 4) . substr($data['no_surat_pengantar'], 12, 2);
+
+      // var_dump($data);
+      // die();
+
+      // execute query
+      $this->db->trans_begin();
+      $this->M_cek_darah->store($data);
+      if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        $url = base_url() . 'pendaftaran-cek-darah/gagal_cek_darah';
+        header("Location: $url");
+      } else {
+        $this->db->trans_commit();
+        $url = base_url() . 'pendaftaran-cek-darah/sukses_cek_darah/' . $new_no_surat_pengantar;
+        header("Location: $url");
+      }
+    }
+  }
+
+  /**
+   * SIKP-PF-195
+   * @param  [type] $no_surat_pengantar [description]
+   * @return [type]                     [description]
+   */
+  public function destroy_cek_darah($no_surat_pengantar)
+  {
+    // execute query
+    $this->db->trans_begin();
+    $this->M_cek_darah->destroy($no_surat_pengantar);
+    if ($this->db->trans_status() === FALSE) {
+      $this->db->trans_rollback();
+      $url = base_url() . 'pendaftaran-cek-darah/gagal_hapus_cek_darah';
+      header("Location: $url");
+    } else {
+      // $this->db->trans_rollback();
+      $this->db->trans_commit();
+      $url = base_url() . 'pendaftaran-cek-darah/sukses_hapus_cek_darah';
+      header("Location: $url");
+    }
+  }
+
+  /**
+   * SIKP-PF-196
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
+  public function show_riwayat_cek_darah($alert_flag = NULL)
+  {
+    // init var - local
+    $data_tabel = array();
+    $page_content = NULL;
+
+    // init var - view data
+    $view_data['riwayat_cek_darah'] = $this->M_cek_darah->get_data_riwayat('a.no_surat_pengantar, a.no_bpjs, b.nama, a.tgl_cek_darah, a.gd_kolesterol, COALESCE(a.h_kolesterol, \'-\') as h_kolesterol, a.gd_puasa, COALESCE(a.h_puasa, \'-\') as h_puasa, a.gd_acak, COALESCE(a.h_acak, \'-\') as h_acak, a.gd_asam_urat, COALESCE(a.h_asam_urat, \'-\') as h_asam_urat, a.status');
+
+    // parsing error template
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>' . $key . '</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      }
+      $data_tabel[$key] = $view_data[$key]['data'];
+      if (empty($data_tabel[$key])) {
+        $data_tabel[$key] = array();
+      }
+    }
+
+    if ($alert_flag !== NULL) {
+      $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+    }
+
+    // parsing template
+    $this->template = $this->load->view('pengobatan_holistik/show/riwayat_cek_darah', '', TRUE);
+    $this->template_data = array(
+      'err_vars' => $this->err_vars,
+      'alert_vars' => $this->alert_vars,
+      'data_tabel' => $this->replace_create_cek_darah($data_tabel['riwayat_cek_darah'])
+      );
+
+    // parsing view
+    $css_framework = $this->load->view('css_framework/head_table', '', TRUE);
+    $page_content = $this->parser->parse_string($this->template, $this->template_data, TRUE);
+    $js_framework = $this->load->view('js_framework/js_datatables', '', TRUE);
+
+    $this->parse_view('Pengobatan Holistik', $css_framework, $page_content, $js_framework);
+  }
+
+  /**
+   * SIKP-PF-197
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
+  public function create_hasil_cek_darah($alert_flag = NULL)
+  {
+    // init var - local
+    $page_content = NULL;
+    $data_tabel = array();
+
+    // init var - view data
+    $view_data['cek_darah_baru'] = $this->M_cek_darah->get_data_harian('a.no_surat_pengantar, b.nama', array('1'));
+    $view_data['cek_darah_harian'] = $this->M_cek_darah->get_data_harian('a.no_surat_pengantar, a.no_bpjs, b.nama, a.tgl_cek_darah, a.gd_kolesterol, COALESCE(a.h_kolesterol, \'-\') as h_kolesterol, a.gd_puasa, COALESCE(a.h_puasa, \'-\') as h_puasa, a.gd_acak, COALESCE(a.h_acak, \'-\') as h_acak, a.gd_asam_urat, COALESCE(a.h_asam_urat, \'-\') as h_asam_urat, a.status');
+
+    // parsing error template
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>' . $key . '</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      } else {
+        // assign data tabel
+        $data_tabel[$key] = $view_data[$key]['data'];
+        if (empty($data_tabel[$key])) {
+          $data_tabel[$key] = array();
+        }
+      }
+    }
+
+    // parsing error template for empty data tabel
+    $check_data_tabel = $this->dc->empty_data_tabel($data_tabel);
+    if ( ! empty($check_data_tabel)) {
+      $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+      $this->err_template_data = array(
+        'alert_title' => 'Data Tidak Tersedia',
+        'alert_msg' => 'Mohon maaf, data <strong>' . $check_data_tabel . '</strong> belum tersedia.',
+        'alert_action' => $alert_action
+        );
+      $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+    }
+
+    // checking passed arguments
+    if ( ! empty($alert_flag)) {
+      $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+      if ( ! empty($no_surat_pengantar)) {
+        $this->alert_template = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+        $this->alert_template_data = array(
+          'new_no_surat_pengantar' => $no_surat_pengantar,
+          );
+        $this->alert_vars = $this->parser->parse_string($this->alert_template, $this->alert_template_data, TRUE);
+      }
+    }
+
+    // parsing template
+    $this->template = $this->load->view('pengobatan_holistik/formulir_hasil_cek_darah', '',TRUE);
+    $this->template_data = array(
+      'err_vars' => $this->err_vars,
+      'alert_vars' => $this->alert_vars,
+      'data_pasien' => $this->replace_create_cek_darah($data_tabel['cek_darah_baru']),
+      'data_tabel' => $this->replace_create_cek_darah($data_tabel['cek_darah_harian']),
+      );
+    
+    // parsing view
+    $page_title = 'Formulir Pendaftaran Cek Darah';
+    $css_framework = $this->load->view('css_framework/head_form', '', TRUE) . $this->load->view('css_framework/head_table', '', TRUE);
+    $page_content = $this->parser->parse_string($this->template, $this->template_data, TRUE);
+    $js_framework = $this->load->view('js_framework/js_form', '', TRUE) . $this->load->view('js_framework/js_datatables', '', TRUE);
+
+    $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
+  }
+
+  /**
+   * SIKP-PF-198
+   * @return [type] [description]
+   */
+  public function show_cek_darah_by_no()
+  {
+    // init var - local
+    $no_surat_pengantar = $this->input->post('no_surat_pengantar');
+
+    // init var - view_data
+    $view_data['cek_darah'] = $this->M_cek_darah->show($no_surat_pengantar, 'b.nama, a.gd_kolesterol, a.h_kolesterol, a.gd_puasa, a.h_puasa, a.gd_acak, a.h_acak, a.gd_asam_urat, a.h_asam_urat');
+
+    echo json_encode($view_data['cek_darah']);
+  }
+
+  /**
+   * SIKP-PF-199
+   * @return [type] [description]
+   */
+  public function store_hasil_cek_darah()
+  {
+    if ($this->form_validation->run() == FALSE) {
+      $this->create_hasil_cek_darah('gagal_form_invalid');
+    } else {
+      // init var - local
+      $data = array();
+
+      // repopulating data
+      foreach ($this->input->post() as $key => $value) {
+        $data[$key] = $value;
+      }
+
+      $data['status'] = '2';
+      unset($data['no_surat_pengantar']);
+
+      // var_dump($data);
+      // die();
+
+      // executing query
+      $this->db->trans_begin();
+      $this->M_cek_darah->update($this->input->post('no_surat_pengantar'), $data);
+      if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        $url = base_url() . 'hasil-cek-darah/gagal_hasil_cek_darah';
+        header("Location: $url");
+      } else {
+        $this->db->trans_commit();
+        $url = base_url() . 'hasil-cek-darah/sukses_hasil_cek_darah';
+        header("Location: $url");
+      }
+    }
+  }
+
   /////////////////////////
   // PENGISIAN ANAMNESIS //
   /////////////////////////
@@ -366,6 +748,7 @@ class C_pengobatan_holistik extends CI_Controller
     foreach ($data as $key => $value) {
       $value['nama'] = ucwords($value['nama']);
       $value['jenis_kelamin'] = str_replace(array_keys($jenis_kelamin), $jenis_kelamin, $value['jenis_kelamin']);
+      $value['alamat'] = ucwords($value['alamat']);
       array_push($ret_val, $value);
     }
 
@@ -537,6 +920,7 @@ class C_pengobatan_holistik extends CI_Controller
   {
     // init var - return var
     $ret_val = array();
+    $id_registrasi = NULL;
 
     // init var - array replacement
     $jenis_kelamin = array(
@@ -546,7 +930,14 @@ class C_pengobatan_holistik extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
+      // assign var - for array replacement
+      $id_registrasi = $value['id_registrasi'];
+
+      // replacing array
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
+
       $value['nama'] = ucwords($value['nama']);
+      $value['alamat'] = ucwords($value['alamat']);
       $value['jenis_kelamin'] = str_replace(array_keys($jenis_kelamin), $jenis_kelamin, $value['jenis_kelamin']);
       $value['alergi_obat'] = ucwords($value['alergi_obat']);
       $value['alergi_makanan'] = ucwords($value['alergi_makanan']);
@@ -718,7 +1109,7 @@ class C_pengobatan_holistik extends CI_Controller
     // init var - array
     $diagnosis = NULL;
 
-    echo "diagnosis";
+    // echo "diagnosis";
     // repopulating and storing data -- diagnosis
     foreach ($data['penyakit'] as $key => $value) {
       $id_diagnosa = $this->id_generator('DIA');
@@ -729,7 +1120,8 @@ class C_pengobatan_holistik extends CI_Controller
       $diagnosis['penyakit'] = $value;
       $diagnosis['id_mod_penyakit'] = $data['id_mod_penyakit'][$key];
       $diagnosis['terapi'] = $data['terapi'][$key];
-      $diagnosis['lokasi_intervensi'] = $data['lokasi_intervensi'][$key];
+      // $diagnosis['lokasi_intervensi'] = $data['lokasi_intervensi'][$key];
+      $diagnosis['lokasi_intervensi'] = '1';
       $this->M_diagnosis_penyakit->store($diagnosis);
     }
   }
@@ -806,7 +1198,6 @@ class C_pengobatan_holistik extends CI_Controller
     // init var - view data
     $view_data['resep_obat'] = $this->M_resep_obat->count_by_status_pasien($id_registrasi, $no_bpjs);
     $view_data['rujukan'] = $this->M_rujukan->count_by_status_pasien($id_registrasi, $no_bpjs);
-    $view_data['cek_darah'] = $this->M_cek_darah->count_by_status_pasien($id_registrasi, $no_bpjs);
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -826,10 +1217,6 @@ class C_pengobatan_holistik extends CI_Controller
     // rujukan
     if ($data_tabel['rujukan'][0] > 0 ) {
       $this->M_rujukan->destroy_by_status_pasien($id_registrasi, $no_bpjs);
-    }
-    // cek darah
-    if ($data_tabel['cek_darah'][0] > 0 ) {
-      $this->M_cek_darah->destroy_by_status_pasien($id_registrasi, $no_bpjs);
     }
 
     // repopulating and storing data
@@ -1021,9 +1408,7 @@ class C_pengobatan_holistik extends CI_Controller
         $this->save_resep_obat($this->input->post());
       } elseif ($this->input->post('jenis_intervensi') == '2') {
         $this->save_rujukan($this->input->post());
-      } elseif ($this->input->post('jenis_intervensi') == '3') {
-        $this->save_pengantar_cek_darah($this->input->post());
-      }
+      } 
       $this->M_status->update($id_registrasi, $no_bpjs, array('status' => 'intervensi'));
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
@@ -1071,23 +1456,6 @@ class C_pengobatan_holistik extends CI_Controller
     $this->M_rujukan->store($data);
   }
 
-  /**
-   * SIKP-PF-108
-   * @param  array  $data [description]
-   * @return [type]       [description]
-   */
-  private function save_pengantar_cek_darah($data = array())
-  {
-    // init var - local
-    $data['no_surat_pengantar'] = $this->id_generator('DRH');
-
-    // unsetting jenis_intervensi
-    unset($data['jenis_intervensi']);
-
-    // execute query
-    $this->M_cek_darah->store($data);
-  }
-
   ////////////////////////////
   // DATA PENGOBATAN HARIAN //
   ////////////////////////////
@@ -1113,13 +1481,15 @@ class C_pengobatan_holistik extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
-      // assign var - local
+      // init var - for replacement
       $id_registrasi = $value['id_registrasi'];
       $no_bpjs = $value['no_bpjs'];
 
       $btn_detail = "<button type='button' class='btn btn-sm btn-primary' onclick=\"window.location='" . base_url() . "detail-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-eye'></i>&nbsp;Lihat Detail</button>";
       $btn_delete = "<button type='button' class='btn btn-sm btn-danger' onclick=\"window.location='" . base_url() . "destroy-riwayat-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-remove'></i>&nbsp;Hapus Data</button>";
 
+      // replacing array
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['opsi'] = $btn_detail.$btn_delete;
 
       $value['nama'] = ucwords($value['nama']);
@@ -1184,6 +1554,75 @@ class C_pengobatan_holistik extends CI_Controller
   }
 
   /**
+   * SIKP-PF-200
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
+  public function show_cek_darah_harian($alert_flag = NULL)
+  {
+    $view_data['cek_darah_harian'] = $this->M_cek_darah->get_data_harian('a.no_surat_pengantar, a.no_bpjs, b.nama, a.tgl_cek_darah, a.gd_kolesterol, COALESCE(a.h_kolesterol, \'-\') as h_kolesterol, a.gd_puasa, COALESCE(a.h_puasa, \'-\') as h_puasa, a.gd_acak, COALESCE(a.h_acak, \'-\') as h_acak, a.gd_asam_urat, COALESCE(a.h_asam_urat, \'-\') as h_asam_urat, a.status');
+
+    // parsing error template
+    foreach ($view_data as $key => $value) {
+      if ($view_data[$key]['status'] == 'error') {
+        $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+        $this->err_template_data = array(
+          'alert_title' => 'Kegagalan Pemuatan Data',
+          'alert_msg' => 'Mohon maaf, proses pemuatan <strong>' . $key . '</strong> gagal dilakukan.',
+          'alert_action' => '<strong>Mohon tunggu proses perbaikan</strong>'
+          );
+        $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+      } else {
+        // assign data tabel
+        $data_tabel[$key] = $view_data[$key]['data'];
+        if (empty($data_tabel[$key])) {
+          $data_tabel[$key] = array();
+        }
+      }
+    }
+
+    // parsing error template for empty data tabel
+    $check_data_tabel = $this->dc->empty_data_tabel($data_tabel);
+    if ( ! empty($check_data_tabel)) {
+      $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
+      $this->err_template_data = array(
+        'alert_title' => 'Data Tidak Tersedia',
+        'alert_msg' => 'Mohon maaf, data <strong>' . $check_data_tabel . '</strong> belum tersedia.',
+        'alert_action' => $alert_action
+        );
+      $this->err_vars = $this->parser->parse_string($this->err_template, $this->err_template_data, TRUE);
+    }
+
+    // checking passed arguments
+    if ( ! empty($alert_flag)) {
+      $this->alert_vars = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+      if ( ! empty($no_surat_pengantar)) {
+        $this->alert_template = $this->load->view("alert_template/pengobatan_holistik/$alert_flag", '', TRUE);
+        $this->alert_template_data = array(
+          'new_no_surat_pengantar' => $no_surat_pengantar,
+          );
+        $this->alert_vars = $this->parser->parse_string($this->alert_template, $this->alert_template_data, TRUE);
+      }
+    }
+
+    // parsing template
+    $this->template = $this->load->view('pengobatan_holistik/show/pasien_cek_darah_harian', '',TRUE);
+    $this->template_data = array(
+      'err_vars' => $this->err_vars,
+      'alert_vars' => $this->alert_vars,
+      'data_tabel' => $this->replace_create_cek_darah($data_tabel['cek_darah_harian']),
+      );
+    
+    // parsing view
+    $page_title = 'Formulir Pendaftaran Cek Darah';
+    $css_framework = $this->load->view('css_framework/head_form', '', TRUE) . $this->load->view('css_framework/head_table', '', TRUE);
+    $page_content = $this->parser->parse_string($this->template, $this->template_data, TRUE);
+    $js_framework = $this->load->view('js_framework/js_datatables', '', TRUE);
+
+    $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
+  }
+
+  /**
    * SIKP-PF-111
    * @param  array  $data [description]
    * @return [type]       [description]
@@ -1222,6 +1661,7 @@ class C_pengobatan_holistik extends CI_Controller
         $value['opsi'] = $btn_detail;
       }
 
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['nama'] = ucwords($value['nama']);
       $value['tgl_periksa'] = $this->date_formatter($value['tgl_periksa'], 'd-M-Y H:i');
       $value['poli'] = 'Poli ' . ucwords($value['poli']);
@@ -1326,6 +1766,7 @@ class C_pengobatan_holistik extends CI_Controller
         $value['opsi'] = $btn_detail;
       }
 
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['nama'] = ucwords($value['nama']);
       $value['tgl_periksa'] = $this->date_formatter($value['tgl_periksa'], 'd-M-Y H:i');
       $value['poli'] = 'Poli ' . ucwords($value['poli']);
@@ -1452,7 +1893,6 @@ class C_pengobatan_holistik extends CI_Controller
     // init var - local
     $resep_obat_vars = NULL;
     $rujukan_vars = NULL;
-    $cek_darah_vars = NULL;
     $data_tabel = array();
 
     // init var - view data
@@ -1461,9 +1901,8 @@ class C_pengobatan_holistik extends CI_Controller
     $view_data['diagnosis'] = $this->M_diagnosis_penyakit->show_modul_by_status_pasien($id_registrasi, $no_bpjs, 'a.id_diagnosa, a.penyakit, a.id_mod_penyakit, b.nama, b.versi, a.terapi, a.lokasi_intervensi');
     $view_data['faktor_risiko'] = $this->M_hol_faktor_risiko->show_modul_by_status_pasien($id_registrasi, $no_bpjs);
     $view_data['faktor_pemicu'] = $this->M_hol_faktor_pemicu->show_modul_by_status_pasien($id_registrasi, $no_bpjs);
-    $view_data['resep_obat'] = $this->M_resep_obat->show_by_status_pasien($id_registrasi, $no_bpjs);
+    $view_data['resep_obat'] = $this->M_resep_obat->show_by_status_pasien($id_registrasi, $no_bpjs, 'id_resep_obat, CONCAT(SUBSTR(id_resep_obat, 1,4), SUBSTR(id_resep_obat, 7,4), SUBSTR(id_resep_obat, 13,2)) as new_id_resep_obat');
     $view_data['rujukan'] = $this->M_rujukan->show_by_status_pasien($id_registrasi, $no_bpjs);
-    $view_data['cek_darah'] = $this->M_cek_darah->show_by_status_pasien($id_registrasi, $no_bpjs);
 
     // parsing error template
     foreach ($view_data as $key => $value) {
@@ -1507,11 +1946,6 @@ class C_pengobatan_holistik extends CI_Controller
       $rujukan_template_data = array('rujukan' => $this->replace_detail_riwayat_pengobatan($data_tabel['rujukan']));
       $rujukan_vars = $this->parser->parse_string($rujukan_template, $rujukan_template_data, TRUE);
     }
-    if ( ! empty($data_tabel['cek_darah'])) {
-      $cek_darah_template = $this->load->view('pengobatan_holistik/show/detail_template/detail_cek_darah', '', TRUE);
-      $cek_darah_template_data = array('cek_darah' => $data_tabel['cek_darah']);
-      $cek_darah_vars = $this->parser->parse_string($cek_darah_template, $cek_darah_template_data, TRUE);
-    }
 
     // parsing template
     $this->template = $this->load->view('pengobatan_holistik/show/detail_pengobatan', '',TRUE);
@@ -1525,7 +1959,6 @@ class C_pengobatan_holistik extends CI_Controller
       'faktor_pemicu' => $this->replace_create_intervensi_faktor_pemicu($data_tabel['faktor_pemicu']),
       'resep_obat' => $resep_obat_vars,
       'rujukan' => $rujukan_vars,
-      'cek_darah' => $cek_darah_vars,
       );
 
     // parsing view
@@ -1552,7 +1985,6 @@ class C_pengobatan_holistik extends CI_Controller
     $view_data['faktor_pemicu'] = $this->M_hol_faktor_pemicu->count_by_status_pasien($id_registrasi, $no_bpjs);
     $view_data['resep_obat'] = $this->M_resep_obat->count_by_status_pasien($id_registrasi, $no_bpjs);
     $view_data['rujukan'] = $this->M_rujukan->count_by_status_pasien($id_registrasi, $no_bpjs);
-    $view_data['cek_darah'] = $this->M_cek_darah->count_by_status_pasien($id_registrasi, $no_bpjs);
 
     // var_dump($view_data);
     
@@ -1594,10 +2026,6 @@ class C_pengobatan_holistik extends CI_Controller
     if ($data_tabel['rujukan'][0] > 0 ) {
       $this->M_rujukan->destroy_by_status_pasien($id_registrasi, $no_bpjs);
     }
-    // cek darah
-    if ($data_tabel['cek_darah'][0] > 0 ) {
-      $this->M_cek_darah->destroy_by_status_pasien($id_registrasi, $no_bpjs);
-    }
     if ($this->db->trans_status() === FALSE) {
       $this->db->trans_rollback();
       end:
@@ -1630,6 +2058,11 @@ class C_pengobatan_holistik extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
+      // init var - array for replacement
+      $id_rujukan = $value['id_rujukan'];
+
+      // replacing array
+      $value['new_id_rujukan'] = substr($id_rujukan, 0, 4) . substr($id_rujukan, 6, 4) . substr($id_rujukan, 12, 2);
       $value['rs'] = strtoupper($value['rs']);
       $value['jenis_rujukan'] = str_replace(array_keys($jenis_rujukan), $jenis_rujukan, $value['jenis_rujukan']);
       array_push($ret_val, $value);

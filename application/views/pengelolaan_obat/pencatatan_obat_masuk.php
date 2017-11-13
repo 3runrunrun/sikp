@@ -37,7 +37,7 @@ $satuan_obat = array(
               <select name="id_obat[]" id="obat" class="form-control select2" style="width: 100% !important;" onchange="get_harga(this)" required>
                 <option value="" selected disabled>Pilih Obat</option>
                 {obat}
-                <option value="{id_obat}"><?php echo ucwords($value['nama']); ?>&nbsp;(Persediaan: {jumlah}&nbsp;{satuan})</option>
+                <option value="{id_obat}">{nama}&nbsp;(Persediaan: {jumlah}&nbsp;{satuan})</option>
                 {/obat}
               </select>
             </div>
@@ -46,7 +46,7 @@ $satuan_obat = array(
           <div class="col-md-3">
             <div class="form-group">
               <label for="jumlah-masuk" class="control-label">Jumlah Obat Masuk</label>
-              <input type="number" name="jumlah_masuk[]" class="form-control jumlah" min="0" step="1" placeholder="0" required>
+              <input type="number" name="jumlah_masuk[]" class="form-control" min="1" step="1" placeholder="0" required>
               <span class="help-block"><small>Dalam butir atau botol</small></span>
             </div>
           </div>

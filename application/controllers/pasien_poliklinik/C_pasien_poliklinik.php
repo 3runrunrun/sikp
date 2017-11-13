@@ -38,7 +38,7 @@ class C_pasien_poliklinik extends CI_Controller
         case 'formulir-pasien-bpjs':
         case 'simpan-pasien-bpjs':
         case 'simpan-pekerjaan-pasien-bpjs':
-          if ($this->session->userdata('tabel') == 'keperawatan') {
+          if ($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'medis') {
             $url = base_url();
             header("Location: $url");
           }
@@ -54,6 +54,14 @@ class C_pasien_poliklinik extends CI_Controller
     }
   }
 
+  /**
+   * SIKP-PF-06
+   * @param  [type] $page_title    [description]
+   * @param  [type] $css_framework [description]
+   * @param  [type] $page_content  [description]
+   * @param  [type] $js_framework  [description]
+   * @return [type]                [description]
+   */
   private function parse_view($page_title, $css_framework, $page_content, $js_framework)
   {
     $data = array(
@@ -68,6 +76,11 @@ class C_pasien_poliklinik extends CI_Controller
     $this->parser->parse('home', $data);
   }
 
+  /**
+   * SIKP-PF-07
+   * @param  [type] $prefix [description]
+   * @return [type]         [description]
+   */
   private function id_generator($prefix)
   {
     $micro_time = microtime();
@@ -77,6 +90,12 @@ class C_pasien_poliklinik extends CI_Controller
     return $id;
   }
 
+  /**
+   * SIKP-PF-08
+   * @param  [type] $date_string [description]
+   * @param  [type] $format      [description]
+   * @return [type]              [description]
+   */
   private function date_formatter($date_string, $format)
   {
     $date_object = date_create($date_string);
@@ -92,6 +111,11 @@ class C_pasien_poliklinik extends CI_Controller
   ///////////////////////////////////////////////////////////
   // MODULE PENDAFTARAN PASIEN BPJS POLIKLINIK - SHOW DATA //
   ///////////////////////////////////////////////////////////
+  /**
+   * SIKP-PF-210
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   public function replace_data_pasien_bpjs($data = array())
   {
     // init var - return var
@@ -130,6 +154,10 @@ class C_pasien_poliklinik extends CI_Controller
     return $ret_val;
   }
 
+  /**
+   * SIKP-PF-211
+   * @return [type] [description]
+   */
   public function show_data_pasien_bpjs()
   {
     // init var - local
@@ -186,6 +214,11 @@ class C_pasien_poliklinik extends CI_Controller
     $this->parse_view('Arsip Poliklinik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-212
+   * @param  [type] $no_bpjs [description]
+   * @return [type]          [description]
+   */
   public function detail_pasien_bpjs($no_bpjs)
   {
     // init var - view data
@@ -240,6 +273,11 @@ class C_pasien_poliklinik extends CI_Controller
     $this->parse_view('Arsip Poliklinik', $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-213
+   * @param  array  $data [description]
+   * @return [type]       [description]
+   */
   private function replace_riwayat_pengobatan($data = array())
   {
     // init var - return var
@@ -257,13 +295,15 @@ class C_pasien_poliklinik extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
-      // assign var - local
+      // assign var - for array replacement
       $id_registrasi = $value['id_registrasi'];
       $no_bpjs = $value['no_bpjs'];
 
       $btn_detail = "<button type='button' class='btn btn-primary' onclick=\"window.location='" . base_url() . "detail-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-eye'></i>&nbsp;Lihat Detail</button>";
       $btn_delete = "<button type='button' class='btn btn-danger' onclick=\"window.location='" . base_url() . "destroy-riwayat-pengobatan/$id_registrasi/$no_bpjs'\"><i class='fa fa-plus'></i>&nbsp;Hapus Data</button>";
 
+      // replacing array
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['opsi'] = $btn_detail.$btn_delete;
 
       $value['nama'] = ucwords($value['nama']);
@@ -279,7 +319,11 @@ class C_pasien_poliklinik extends CI_Controller
   ///////////////////////////////////////////////////////
   // MODULE PENDAFTARAN PASIEN BPJS POLIKLINIK - INPUT //
   ///////////////////////////////////////////////////////
-
+  /**
+   * SIKP-PF-214
+   * @param  [type] $alert_flag [description]
+   * @return [type]             [description]
+   */
   public function create($alert_flag = NULL)
   {
     // init - view data
@@ -320,7 +364,7 @@ class C_pasien_poliklinik extends CI_Controller
       );
     
     // parsing view
-    $page_title = 'Formulir Data Dasar Kesehatan Keluarga';
+    $page_title = 'Formulir Pasien BPJS';
     $css_framework = $this->load->view('css_framework/head_form', '', TRUE);
     $page_content = $this->parser->parse_string($this->template, $this->template_data,TRUE);
     $js_framework = $this->load->view('js_framework/js_form', '', TRUE);
@@ -328,6 +372,10 @@ class C_pasien_poliklinik extends CI_Controller
     $this->parse_view($page_title, $css_framework, $page_content, $js_framework);
   }
 
+  /**
+   * SIKP-PF-215
+   * @return [type] [description]
+   */
   public function store_identitas_pasien()
   {
     // validating form
@@ -350,42 +398,6 @@ class C_pasien_poliklinik extends CI_Controller
       } else {
         $this->db->trans_commit();
         $url = base_url() . 'formulir-pasien-bpjs/sukses_data_pasien';
-        header("Location: $url");
-      }
-    }
-  }
-
-  public function store_riwayat_pekerjaan()
-  {
-    $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>');
-    if ($this->form_validation->run() == FALSE) {
-      $this->create('gagal_form_invalid');
-    } else {
-      // init var - request param
-      $data_riwayat_pekerjaan = array();
-
-      // storing data
-      $this->db->trans_begin();
-      foreach ($this->input->post('rp_no_bpjs[]') as $key => $value) {
-        $data_riwayat_pekerjaan['id_riwayat_pekerjaan'] = $this->id_generator('RPK');
-        $data_riwayat_pekerjaan['no_bpjs'] = $this->input->post('rp_no_bpjs[]')[$key];
-        $data_riwayat_pekerjaan['pekerjaan'] = $this->input->post('rp_pekerjaan')[$key];
-        $data_riwayat_pekerjaan['divisi'] = $this->input->post('rp_divisi[]')[$key];
-        $data_riwayat_pekerjaan['sub_divisi'] = $this->input->post('rp_sub_divisi[]')[$key];
-        $data_riwayat_pekerjaan['jenis_aktivitas'] = $this->input->post('rp_jenis_aktivitas[]')[$key];
-        $data_riwayat_pekerjaan['dari_tahun'] = $this->input->post('rp_dari_tahun[]')[$key];
-        $data_riwayat_pekerjaan['intensitas_aktivitas'] = $this->input->post('rp_intensitas_aktivitas[]')[$key];
-        $data_riwayat_pekerjaan['sampai_tahun'] = $this->input->post('rp_sampai_tahun[]')[$key];
-        $data_riwayat_pekerjaan['pekerjaan_utama'] = $this->input->post('rp_pekerjaan_utama[]')[$key];
-        $this->M_riwayat_pekerjaan->store($data_riwayat_pekerjaan);
-      }
-      if ($this->db->trans_status() === FALSE) {
-        $this->db->trans_rollback();
-        $url = base_url() . 'formulir-pasien-bpjs/gagal_data_riwayat_pekerjaan';
-        header("Location: $url");
-      } else {
-        $this->db->trans_commit();
-        $url = base_url() . 'formulir-pasien-bpjs/sukses_data_riwayat_pekerjaan';
         header("Location: $url");
       }
     }

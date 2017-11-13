@@ -43,8 +43,8 @@
                 <td>{satuan}</td>
                 <td>{tgl_masuk}</td>
                 <td>
-                  <div class="form-group btn-group" style="width: 100% !important;">
-                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>delete-obat-masuk/{id_obat_masuk}'" style="width: 100% !important;"><i class="fa fa-remove"></i></button>
+                  <div class="form-group btn-group">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="window.location='<?php echo base_url(); ?>delete-obat-masuk/{id_obat_masuk}'"><i class="fa fa-remove"></i></button>
                   </div>
                 </td>
               </tr>

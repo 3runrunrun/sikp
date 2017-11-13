@@ -8,7 +8,7 @@
 <!-- Datatables -->
 <script>
   $(function () {
-    $("#example1, #dd-anggota-keluarga, #dd-perkawinan, #dd-riwayat-maskes, #dd-riwayat-masket, #dd-riwayat-kecelakaan-kerja, #dd-riwayat-sakit-keras, #tbl-riwayat-gejala-stres, #tbl-riwayat-data-dasar").DataTable();
+    $("#example1, #dd-anggota-keluarga, #dd-perkawinan, #dd-riwayat-maskes, #dd-riwayat-masket, #dd-riwayat-kecelakaan-kerja, #dd-riwayat-sakit-keras, #tbl-riwayat-gejala-stres, #tbl-riwayat-data-dasar, #obat-keluar-bulan").DataTable();
     $('#example2, #tabel-penyakit-kecelakaan, #tabel-kecelakaan-kerja, #dd-riwayat-1-bulan, #dd-riwayat-3-bulan, #dd-riwayat-1-tahun').DataTable({
       "paging": true,
       "lengthChange": false,

@@ -273,25 +273,37 @@ class C_pencatatan_obat_masuk extends CI_Controller
     // init var - local var
     $data_obat = array();
     $data_masuk = array();
+    $data_obat_bulan = array();
 
     // validating form
     $this->form_validation->set_error_delimiters('<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '<p><strong>Silahkan ulangi pengisian data</strong></p></div>');
     if ($this->form_validation->run() == FALSE) {
       $this->create('gagal_form_invalid');
     } else {
-
       // repopulating and storing data
       $this->db->trans_begin();
       foreach ($this->input->post('id_obat[]') as $key => $value) {
-        // data masuk
+        // assign var - data_masuk
         $data_masuk['id_obat_masuk'] = $this->id_generator('OMSK');
         $data_masuk['jumlah_masuk'] = $this->input->post('jumlah_masuk[]')[$key];
         $data_masuk['id_obat'] = $value;
         $data_masuk['tgl_masuk'] = date('Y-m-d H:i:s');
 
+        // assign var - data_obat_bulan
+        $data_obat_bulan['id_obat'] = $value;
+        $data_obat_bulan['bulan'] = $this->date_formatter($data_masuk['tgl_masuk'], 'm');
+        $data_obat_bulan['tahun'] = $this->date_formatter($data_masuk['tgl_masuk'], 'Y');
+        $data_obat_bulan['jml_masuk'] = $data_masuk['jumlah_masuk'];
+
         // data obat
         $this->M_obat->update_persediaan($value, strtolower('tambah'), $data_masuk['jumlah_masuk']);
         $this->M_obat_masuk->store($data_masuk);
+        if ($this->check_if_any_catatan_bulan($data_obat_bulan['id_obat'], $data_obat_bulan['bulan'], $data_obat_bulan['tahun']) === TRUE) {
+          $this->M_obat_keluar_bulan->update_laporan($data_obat_bulan['id_obat'], $data_obat_bulan['bulan'], $data_obat_bulan['tahun'], $data_obat_bulan['jml_masuk'], strtolower('masuk'));
+        } else {
+          $data_obat_bulan['sisa'] = $this->get_total_obat($data_obat_bulan['id_obat']); // sisa obat sudah ditambah dengan jumlah masuk karena query pertama (update_persediaan)
+          $this->M_obat_keluar_bulan->store($data_obat_bulan);
+        }
       }
 
       if ($this->db->trans_status() === FALSE) {
@@ -307,6 +319,42 @@ class C_pencatatan_obat_masuk extends CI_Controller
   }
 
   /**
+   * SIKP-PF-201
+   * @param  [type] $id_obat [description]
+   * @param  [type] $bulan   [description]
+   * @param  [type] $tahun   [description]
+   * @return [type]          [description]
+   */
+  public function check_if_any_catatan_bulan($id_obat, $bulan, $tahun)
+  {
+    // init var - local
+    $ret_val = FALSE;
+
+    // init var - view data
+    $view_data['catatan_bulanan'] = $this->M_obat_keluar_bulan->show_if_any($id_obat, $bulan, $tahun);
+
+    // check if any catatan bulanan
+    if ($view_data['catatan_bulanan'] > 0) {
+      $ret_val = TRUE;
+    }
+
+    return $ret_val;   
+  }
+
+  /**
+   * SIKP-PF-202
+   * @param  [type] $id_obat [description]
+   * @return [type]          [description]
+   */
+  public function get_total_obat($id_obat)
+  {
+    // init var - view_data
+    $view_data['jumlah'] = $this->M_obat->show($id_obat, 'jumlah');
+
+    return intval($view_data['jumlah']['data'][0]['jumlah']);
+  }
+
+  /**
    * SIKP-PF-141
    * @param  [type] $id_obat_masuk [description]
    * @return [type]                [description]
@@ -314,16 +362,18 @@ class C_pencatatan_obat_masuk extends CI_Controller
   public function destroy($id_obat_masuk)
   {
     // init var - view data
-    $view_data = $this->M_obat_masuk->show($id_obat_masuk, 'a.id_obat, a.jumlah_masuk');
+    $view_data = $this->M_obat_masuk->show($id_obat_masuk, 'a.id_obat, a.jumlah_masuk, a.tgl_masuk');
 
     // init var
     $id_obat = $view_data['data']['0']['id_obat'];
     $jumlah_masuk = $view_data['data']['0']['jumlah_masuk'];
+    $tgl_masuk = $view_data['data']['0']['tgl_masuk'];
 
     // deleting data
     $this->db->trans_begin();
     $this->M_obat_masuk->destroy($id_obat_masuk);
     $this->M_obat->update_persediaan($id_obat, strtolower('kurang'), $jumlah_masuk);
+    $this->M_obat_keluar_bulan->update_undo_laporan($id_obat, $this->date_formatter($tgl_masuk, 'm'), $this->date_formatter($tgl_masuk, 'Y'), $jumlah_masuk, strtolower('masuk'));
     if ($this->db->trans_status() === FALSE) {
       $this->db->trans_rollback();
       $url = base_url() . 'data-obat-masuk/' . 'gagal_hapus_obat_masuk';

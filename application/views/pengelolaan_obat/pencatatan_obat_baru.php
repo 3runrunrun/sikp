@@ -23,6 +23,7 @@
         <?php echo form_error('jumlah[]'); ?>
         <?php echo form_error('bpjs[]'); ?>
         <?php echo form_error('jenis[]'); ?>
+        <?php echo form_error('harga[]'); ?>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -36,7 +37,7 @@
             </div>
             <!-- #/obat-jumlah -->
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="obat-bpjs" class="control-label">Status Pembiayaan BPJS</label>
               <select name="bpjs[]" id="obat-bpjs" class="form-control">
@@ -56,6 +57,16 @@
               </select>
             </div>
             <!-- #/obat-jenis -->
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="obat-harga" class="control-label">Harga</label>
+              <div class="input-group">
+                <span class="input-group-addon">Rp</span>
+                <input type="number" name="harga[]" id="obat-harga" class="form-control" min="0" step="1" required>
+              </div>
+            </div>
+            <!-- #/obat-harga -->
           </div>
         </div>
         <!-- ./row -->

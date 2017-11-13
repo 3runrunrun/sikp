@@ -2,8 +2,8 @@
   <h1>Pengobatan Holistik</h1>
   <ol class="breadcrumb">
     <li><i class="fa fa-database"></i>&nbsp;Arsip Poliklinik</li>
-    <li><i class="fa fa-book"></i>&nbsp;Pengobatan</a></li>
-    <li class="active">Riwayat Pengobatan</li>
+    <li><i class="fa fa-book"></i>&nbsp;Riwayat Pelayanan</a></li>
+    <li class="active">Pengobatan Holistik</li>
   </ol>
 </section>
 
@@ -33,7 +33,7 @@
             <tbody>
             {data_tabel}
               <tr>
-                <td>{id_registrasi}</td>
+                <td>{new_id_registrasi}</td>
                 <td>{no_bpjs}</td>
                 <td>{nama}</td>
                 <td>{tgl_periksa}</td>

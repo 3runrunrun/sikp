@@ -58,6 +58,9 @@ class C_data_dasar extends CI_Controller
         case 'simpan-perilaku':
         case 'simpan-riwayat-kes':
         case 'simpan-gejala-stres':
+        case 'lihat-data-dasar':
+        case 'detail-data-dasar':
+        case 'riwayat-data-dasar':
           if ($this->session->userdata('tabel') == 'keperawatan' || $this->session->userdata('tabel') == 'kefarmasian') {
             $url = base_url();
             header("Location: $url");

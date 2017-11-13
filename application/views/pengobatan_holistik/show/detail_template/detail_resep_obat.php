@@ -3,7 +3,7 @@
     {resep_obat}
     <div class="callout callout-success">
       <h4>Resep Obat</h4>
-      <p>Resep obat dengan kode resep <strong>{id_resep_obat}</strong> telah diberikan kepada pasien sebagai salah satu bentuk intervensi kesehatan.</p>
+      <p>Resep obat dengan kode resep <strong>{new_id_resep_obat}</strong> telah diberikan kepada pasien.</p>
     </div>
     {/resep_obat}
   </div>

@@ -3,7 +3,7 @@
   <ol class="breadcrumb">
     <li><a href="<?php echo base_url(); ?>pendaftaran-pasien"><i class="fa fa-stethoscope"></i>&nbsp;Pengobatan Holistik</a></li>
     <li><i class="fa fa-book"></i>&nbsp;Riwayat Pelayanan Harian</a></li>
-    <li class="active">Anamnesis</li>
+    <li class="active">Pendaftaran Cek Darah</li>
   </ol>
 </section>
 
@@ -12,7 +12,7 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Data Anamnesis Pasien</h3>
+          <h3 class="box-title">Pasien Terdaftar</h3>
         </div>
         <!-- ./box-header -->
         <div class="box-body">
@@ -23,26 +23,24 @@
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>ID Registrasi</th>
-              <th>No. BPJS</th>
+              <th>No Surat Cek Darah</th>
               <th>Nama Pasien</th>
-              <th>Tanggal Periksa</th>
-              <th>Poli</th>
+              <th>Tanggal Cek Darah</th>
+              <th>Layanan Cek Darah (Hasil)</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Opsi</th>
             </tr>
             </thead>
             <tbody>
             {data_tabel}
               <tr>
-                <td>{new_id_registrasi}</td>
-                <td>{no_bpjs}</td>
+                <td>{new_no_surat_pengantar}</td>
                 <td>{nama}</td>
-                <td>{tgl_periksa}</td>
-                <td>{poli}</td>
+                <td>{tgl_cek_darah}</td>
+                <td>{gd_kolesterol}&nbsp;{new_h_kolesterol}{gd_puasa}&nbsp;{new_h_puasa}{gd_acak}&nbsp;{new_h_acak}{gd_asam_urat}&nbsp;{new_h_asam_urat}</td>
                 <td>{status}</td>
                 <td>
-                  <div class="form-group btn-group-vertical" style="width: 100% !important;">
+                  <div class="form-group btn-group" style="width: 100% !important;">
                     {opsi}
                   </div>
                 </td>

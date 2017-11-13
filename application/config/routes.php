@@ -50,35 +50,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 // PENGOBATAN HOLISTIK
+// riwayat pengobatan harian
 $route['pasien-terdaftar-harian'] = 'pengobatan_holistik/C_pengobatan_holistik/show_terdaftar_harian';
 $route['pasien-terdaftar-harian/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_terdaftar_harian/$1';
+$route['pasien-cek-darah-harian'] = 'pengobatan_holistik/C_pengobatan_holistik/show_cek_darah_harian';
+$route['pasien-cek-darah-harian/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_cek_darah_harian/$1';
 $route['pasien-anamnesis-harian'] = 'pengobatan_holistik/C_pengobatan_holistik/show_anamnesis_harian';
 $route['pasien-anamnesis-harian/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_anamnesis_harian/$1';
 $route['pasien-diagnosis-harian'] = 'pengobatan_holistik/C_pengobatan_holistik/show_diagnosis_harian';
 $route['pasien-diagnosis-harian/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_diagnosis_harian/$1';
+
+// riwayat pelayanan
 $route['riwayat-pengobatan'] = 'pengobatan_holistik/C_pengobatan_holistik/show_riwayat_pengobatan';
 $route['riwayat-pengobatan/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_riwayat_pengobatan/$1';
 $route['detail-pengobatan/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/detail_riwayat_pengobatan/$1/$2';
 $route['destroy-riwayat-pengobatan/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/destroy_riwayat_pengobatan/$1/$2';
 
+// pendaftaran pasien
 $route['pendaftaran-pasien'] = 'pengobatan_holistik/C_pengobatan_holistik/create';
 $route['pendaftaran-pasien/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create/$1';
 $route['pendaftaran-pasien/(:any)/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create/$1/$2/$3';
 $route['simpan-pendaftaran-pasien'] = 'pengobatan_holistik/C_pengobatan_holistik/store_pendaftaran_pengobatan';
 
+// anamnesis
 $route['formulir-anamnesis/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_anamnesis/$1/$2';
 $route['formulir-anamnesis/(:any)/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_anamnesis/$1/$2/$3';
 $route['simpan-anamnesis'] = 'pengobatan_holistik/C_pengobatan_holistik/store_anamnesis';
 $route['destroy-anamnesis/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/destroy_anamnesis/$1/$2';
 
+// diagnosis
 $route['formulir-diagnosis/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_diagnosis/$1/$2';
 $route['formulir-diagnosis/(:any)/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_diagnosis/$1/$2/$3';
 $route['simpan-diagnosis'] = 'pengobatan_holistik/C_pengobatan_holistik/store_diagnosis';
 $route['destroy-diagnosis/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/destroy_diagnosis/$1/$2';
 
+// intervensi
 $route['formulir-intervensi/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_intervensi/$1/$2';
 $route['formulir-intervensi/(:any)/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_intervensi/$1/$2/$3';
 $route['simpan-intervensi'] = 'pengobatan_holistik/C_pengobatan_holistik/store_intervensi';
+
+// cek darah
+$route['riwayat-cek-darah'] = 'pengobatan_holistik/C_pengobatan_holistik/show_riwayat_cek_darah';
+$route['riwayat-cek-darah/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/show_riwayat_cek_darah/$1';
+
+$route['pendaftaran-cek-darah'] = 'pengobatan_holistik/C_pengobatan_holistik/create_cek_darah';
+$route['pendaftaran-cek-darah/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_cek_darah/$1';
+$route['pendaftaran-cek-darah/(:any)/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_cek_darah/$1/$2';
+$route['simpan-cek-darah'] = 'pengobatan_holistik/C_pengobatan_holistik/store_cek_darah';
+
+$route['hasil-cek-darah'] = 'pengobatan_holistik/C_pengobatan_holistik/create_hasil_cek_darah';
+$route['hasil-cek-darah/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/create_hasil_cek_darah/$1';
+$route['store-hasil-cek-darah'] = 'pengobatan_holistik/C_pengobatan_holistik/store_hasil_cek_darah';
+
+$route['hapus-cek-darah/(:any)'] = 'pengobatan_holistik/C_pengobatan_holistik/destroy_cek_darah/$1';
+
 
 // PENGELOLAAN OBAT
 $route['formulir-obat-baru'] = 'pengelolaan_obat/C_pencatatan_obat_baru/create';
@@ -97,12 +122,18 @@ $route['delete-obat-masuk/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_masuk/d
 
 $route['formulir-pencatatan-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/create';
 $route['formulir-pencatatan-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/create/$1';
+$route['formulir-pencatatan-obat-keluar/(:any)/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/create/$1/$2';
 $route['simpan-pencatatan-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/store';
 $route['data-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data';
 $route['data-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data/$1';
 $route['delete-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/destroy/$1';
 
 $route['cetak-laporan-obat-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/cetak_laporan_obat_keluar';
+$route['cetak-laporan-per-bulan/(:any)/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/laporan_bulanan/$1/$2';
+$route['cetak-resep-obat-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/cetak_resep_obat/$1';
+
+$route['lihat-resep-keluar'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data_resep_keluar';
+$route['lihat-resep-keluar/(:any)'] = 'pengelolaan_obat/C_pencatatan_obat_keluar/get_data_resep_keluar/$1';
 
 // DATA PASIEN
 $route['lihat-data-pasien-bpjs'] = 'pasien_poliklinik/C_pasien_poliklinik/show_data_pasien_bpjs';
@@ -111,7 +142,6 @@ $route['detail-pasien-bpjs/(:any)'] = 'pasien_poliklinik/C_pasien_poliklinik/det
 $route['formulir-pasien-bpjs'] = 'pasien_poliklinik/C_pasien_poliklinik/create';
 $route['formulir-pasien-bpjs/(:any)'] = 'pasien_poliklinik/C_pasien_poliklinik/create/$1';
 $route['simpan-pasien-bpjs'] = 'pasien_poliklinik/C_pasien_poliklinik/store_identitas_pasien';
-$route['simpan-pekerjaan-pasien-bpjs'] = 'pasien_poliklinik/C_pasien_poliklinik/store_riwayat_pekerjaan';
 
 // DATA DASAR
 $route['lihat-data-dasar'] = 'data_dasar/C_data_dasar/show_data_dasar';

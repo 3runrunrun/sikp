@@ -17,9 +17,11 @@
         <div class="box-header">
           <h3 class="box-title">Daftar Pasien BPJS</h3>
           <!-- /.box-title -->
+          <?php if ($this->session->userdata('tabel') == 'administrasi'): ?>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-block btn-default bg-green" onclick="window.location.href='<?php echo base_url(); ?>formulir-pasien-bpjs'"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Pasien Baru</button>
           </div>
+          <?php endif; ?>
           <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
