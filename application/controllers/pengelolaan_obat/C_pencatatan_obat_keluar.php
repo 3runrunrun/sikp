@@ -233,6 +233,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
 
   /**
    * SIKP-PF-148
+   * Sequence Diagram - Menambah Catatan Obat Keluar
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -344,6 +345,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
 
   /**
    * SIKP-PF-151
+   * Sequence Diagram - Menyimpan Catatan Obat Keluar
    * @return [type] [description]
    */
   public function store()
@@ -378,6 +380,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
         $data_obat_bulan['tahun'] = $this->date_formatter($data_obat_keluar['tgl_keluar'], 'Y');
         $data_obat_bulan['jml_keluar'] = $jumlah_keluar;
         
+        // exexuting query
         $this->M_obat_keluar->store($data_obat_keluar);
         $this->M_obat->update_persediaan($value, 'kurang', $jumlah_keluar);
         if ($this->check_if_any_catatan_bulan($data_obat_bulan['id_obat'], $data_obat_bulan['bulan'], $data_obat_bulan['tahun']) === TRUE) {
@@ -439,6 +442,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
 
   /**
    * SIKP-PF-204
+   * Sequence Diagram - Melihat Riwayat Resep Obat
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -503,7 +507,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
    * @param  array  $data [description]
    * @return [type]       [description]
    */
-  public function replace_get_data_resep_keluar($data = array())
+  private function replace_get_data_resep_keluar($data = array())
   {
     // init var - local
     $ret_val = array();
@@ -533,6 +537,7 @@ class C_pencatatan_obat_keluar extends CI_Controller
   /////////////////////////////
   /**
    * SIKP-PF-206
+   * Sequence Diagram - Menerbitkan Resep Obat
    * @param  [type] $id_resep_obat [description]
    * @return [type]                [description]
    */

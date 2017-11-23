@@ -94,6 +94,7 @@ class C_pencatatan_obat_baru extends CI_Controller
 
   /**
    * SIKP-PF-128
+   * Sequence Diagram - Melihat Seluruh Data Obat
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -196,6 +197,7 @@ class C_pencatatan_obat_baru extends CI_Controller
 
   /**
    * SIKP-PF-130
+   * Sequence Diagram - Menambah Obat Baru
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */

@@ -12,7 +12,7 @@
   <div class="box box-solid box-primary">
     <div class="box-header with-border">
       <h3 class="box-title">
-        Formulir Pengisian Intervensi
+        Data Status Pasien
       </h3>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -22,7 +22,6 @@
 
     <div class="box-body">
       {err_vars}
-      {alert_vars}
       {status}
       <div id="data-dasar" class="callout callout-info">
         <div class="row text-purple" style="margin-bottom: 10px !important">

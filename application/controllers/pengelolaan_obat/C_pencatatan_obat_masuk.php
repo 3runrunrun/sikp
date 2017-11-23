@@ -94,6 +94,7 @@ class C_pencatatan_obat_masuk extends CI_Controller
 
   /**
    * SIKP-PF-136
+   * Sequence Diagram - Melihat Catatan Obat Masuk
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -182,6 +183,7 @@ class C_pencatatan_obat_masuk extends CI_Controller
 
   /**
    * SIKP-PF-138
+   * Sequence Diagram - Menambah Catatan Obat Masuk
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */

@@ -444,7 +444,7 @@ class C_pengobatan_holistik extends CI_Controller
    * @param  array  $data [description]
    * @return [type]       [description]
    */
-  public function replace_create_cek_darah($data = array())
+  private function replace_create_cek_darah($data = array())
   {
     // init var - return var
     $ret_val = array();
@@ -1063,6 +1063,7 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-96
+   * Sequence Diagram - Menyimpan Data Diagnosis
    * @return [type] [description]
    */
   public function store_diagnosis()
@@ -1184,6 +1185,7 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-100
+   * Sequence Diagram - Menghapus Data Pengobatan Holistik
    * @param  [type] $id_registrasi [description]
    * @param  [type] $no_bpjs       [description]
    * @return [type]                [description]
@@ -1388,6 +1390,7 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-105
+   * Sequence Diagram - Menyimpan Data Intervensi Kesehatan
    * @return [type] [description]
    */
   public function store_intervensi()
@@ -1779,6 +1782,7 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-114
+   * Sequence Diagram - Menampilkan Diagnosis Harian
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -1833,6 +1837,7 @@ class C_pengobatan_holistik extends CI_Controller
   ///////////////////////////////
   /**
    * SIKP-PF-115
+   * Sequence Diagram - Menampilkan Riwayat Pengobatah Holistik
    * @param  [type] $alert_flag [description]
    * @return [type]             [description]
    */
@@ -1884,6 +1889,8 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-116
+   * Sequence Diagram - Menampilkan Detail Riwayat Pengobatan
+   * Sequence Diagram - Menampilkan Detail 
    * @param  [type] $id_registrasi [description]
    * @param  [type] $no_bpjs       [description]
    * @return [type]                [description]
@@ -1951,7 +1958,6 @@ class C_pengobatan_holistik extends CI_Controller
     $this->template = $this->load->view('pengobatan_holistik/show/detail_pengobatan', '',TRUE);
     $this->template_data = array(
       'err_vars' => $this->err_vars,
-      'alert_vars' => $this->alert_vars,
       'status' => $this->replace_create_diagnosis_status($data_tabel['status']),
       'anamnesis' => $this->replace_create_diagnosis_anamnesis($data_tabel['anamnesis']),
       'diagnosis' => $this->replace_create_intervensi_diagnosis($data_tabel['diagnosis']),
@@ -1971,6 +1977,7 @@ class C_pengobatan_holistik extends CI_Controller
 
   /**
    * SIKP-PF-117
+   * Sequence Diagram - Menghapus Riwayat Pengobatan Holistik
    * @param  [type] $id_registrasi [description]
    * @param  [type] $no_bpjs       [description]
    * @return [type]                [description]
