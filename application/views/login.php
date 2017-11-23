@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>../style/plugins/iCheck/all.css">
   <!-- Select2 -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>../style/plugins/select2/select2.min.css">
   <!-- Theme style -->
@@ -75,16 +74,5 @@
     });
   </script>
   <!-- Page script -->
-  <!-- iCheck 1.0.1 -->
-  <script src="<?php echo base_url(); ?>../style/plugins/iCheck/icheck.min.js"></script>
-  <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
 </body>
 </html>

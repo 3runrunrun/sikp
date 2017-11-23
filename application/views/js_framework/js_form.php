@@ -1,43 +1,17 @@
   <!-- Select2 -->
   <script src="<?php echo base_url(); ?>../style/plugins/select2/select2.full.min.js"></script>
-  <!-- InputMask -->
-  <script src="<?php echo base_url(); ?>../style/plugins/input-mask/jquery.inputmask.js"></script>
-  <script src="<?php echo base_url(); ?>../style/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-  <script src="<?php echo base_url(); ?>../style/plugins/input-mask/jquery.inputmask.extensions.js"></script>
   <!-- date-range-picker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
   <script src="<?php echo base_url(); ?>../style/plugins/daterangepicker/daterangepicker.js"></script>
   <!-- bootstrap datepicker -->
   <script src="<?php echo base_url(); ?>../style/plugins/datepicker/bootstrap-datepicker.js"></script>
-  <!-- bootstrap color picker -->
-  <script src="<?php echo base_url(); ?>../style/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
   <!-- bootstrap time picker -->
   <script src="<?php echo base_url(); ?>../style/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-  <!-- SlimScroll 1.3.0 -->
-  <script src="<?php echo base_url(); ?>../style/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <!-- iCheck 1.0.1 -->
-  <script src="<?php echo base_url(); ?>../style/plugins/iCheck/icheck.min.js"></script>
   <!-- Advanced Form -->
   <script>
     $(function () {
       //Initialize Select2 Elements
       $(".select2").select2();
-
-      //iCheck for checkbox and radio inputs
-      $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-      });
-      //Red color scheme for iCheck
-      $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-        checkboxClass: 'icheckbox_minimal-red',
-        radioClass: 'iradio_minimal-red'
-      });
-      //Flat red color scheme for iCheck
-      $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-        checkboxClass: 'icheckbox_flat-green',
-        radioClass: 'iradio_flat-green'
-      });
     });
   </script>
   <!-- My Script -->
