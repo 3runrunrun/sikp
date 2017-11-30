@@ -1,6 +1,6 @@
 function get_harga(selector){
   var id_obat = $(selector).find(':selected').val();
-  var input_target = $(selector).parent().parent().next().children().children('.jumlah');
+  var input_target = $(selector).parent().parent().next().next().next().next().children().children('.jumlah');
   // console.log(input_target);
   var pathArray = window.location.pathname.split( '/' );
   var urlRequest = './pengelolaan_obat/C_pencatatan_obat_keluar/show_sisa_obat';
