@@ -62,7 +62,7 @@
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label for="rr" class="control-label">Respiratory Rate</label>
+                  <label for="rr" class="control-label">Frekuensi Pernapasan</label>
                   <input type="text" name="rr" id="rr" class="form-control" value="<?php echo set_value('rr'); ?>" required>
                   <?php echo form_error('rr', '<span class="help-block" style="color: #dd4b39"><i class="fa fa-times-circle-o"></i>&nbsp;<small>', '</small></span>'); ?>
                 </div>
