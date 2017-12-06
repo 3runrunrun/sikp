@@ -224,9 +224,7 @@ class C_data_dasar extends CI_Controller
     $page_content = NULL;
 
     // init var - view data
-    $view_data['newest_keskel'] = $this->M_r_kes_keluarga->get_data_newest_distinct('MAX(tgl_isi) as atglisi');
-    $view_data['newest_tk_stres'] = $this->M_gejala_stres->get_data_newest_distinct('MAX(tgl_isi) as btglisi');
-    $view_data['kk'] = $this->M_kk->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, a.no_telp, c.tingkat_risiko_penyakit, c.tgl_isi, d.tingkat_stres, d.tgl_isi', $view_data['newest_keskel']['data'], $view_data['newest_tk_stres']['data']);
+    $view_data['kk'] = $this->M_kk->get_kk_pasien('a.id_kk, a.no_bpjs, b.nama, a.no_telp, c.tingkat_risiko_penyakit, c.tgl_isi, d.tingkat_stres, d.tgl_isi');
     foreach ($view_data as $key => $value) {
       if ($view_data[$key]['status'] == 'error') {
         $this->err_template = $this->load->view('alert_template/alert_data_tidak_tersedia', '', TRUE);
@@ -271,7 +269,7 @@ class C_data_dasar extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
-      if (empty($value['tingkat_risiko_penyakit'])) {
+      if ($value['tingkat_risiko_penyakit'] === NULL) {
         $value['tingkat_risiko_penyakit'] = '<span class="badge bg-primary">N/A</span>';
       } elseif ($value['tingkat_risiko_penyakit'] >= 0 && $value['tingkat_risiko_penyakit'] <= 10) {
         $value['tingkat_risiko_penyakit'] = '<span class="badge bg-green">Rendah</span>';
@@ -281,7 +279,7 @@ class C_data_dasar extends CI_Controller
         $value['tingkat_risiko_penyakit'] = '<span class="badge bg-red">Tinggi</span>';
       }
 
-      if (empty($value['tingkat_stres'])) {
+      if ($value['tingkat_stres'] === NULL) {
         $value['tingkat_stres'] = '<span class="badge bg-blue">N/A</span>';
       } elseif ($value['tingkat_stres'] >= 0 && $value['tingkat_stres'] <= 15) {
         $value['tingkat_stres'] = '<span class="badge bg-green">Rendah</span>';
@@ -1337,7 +1335,7 @@ class C_data_dasar extends CI_Controller
     $view_data['perkawinan_ke'] = $this->M_data_perkawinan->show($id_kk, 'perkawinan_ke');
     $view_data['pasien'] = $this->M_pasien_identitas->get_data('no_bpjs, nama');
 
-    print_r($view_data);
+    // print_r($view_data);
 
     // check if view data is empty
     $check_view_data = $this->dc->empty_view_data($view_data);

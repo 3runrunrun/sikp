@@ -84,6 +84,7 @@ class M_r_kes_keluarga extends CI_Model
     $this->db->where('hapus', '0');
     $this->db->group_by('id_kk');    
     $result = $this->db->get('kk_riwayat_kes_kel');
+    // echo $this->db->last_query();
     if ( ! $result) {
       $ret_val = array(
         'status' => 'error',

@@ -69,37 +69,18 @@ class M_kk extends CI_Model
     return $ret_val;
   }
 
-  public function get_kk_pasien($column = '*', $keskel = array(), $tkstres = array())
+  public function get_kk_pasien($column = '*')
   {
-    $risiko = array();
-    $stres = array();
-    if ( ! empty($keskel)) {
-      foreach ($keskel as $value) {
-        array_push($risiko, $value['atglisi']);
-      }
-    }
-    if ( ! empty($tkstres)) {
-      foreach ($tkstres as $value) {
-        array_push($stres, $value['btglisi']);
-      }
-    }
-
     $this->db->select($column);
     $this->db->from('pas_kk a');
     $this->db->join('pas_identitas b', 'a.no_bpjs = b.no_bpjs');
-    $this->db->join('kk_riwayat_kes_kel c', 'a.no_bpjs = c.no_bpjs', 'left');
-    $this->db->join('kk_gejala_stres d', 'c.id_kk = d.id_kk', 'left');
-    $this->db->where_in('c.tgl_isi', $risiko);
-    if (count($risiko) !==  count($stres)) {
-      $this->db->or_where_in('d.tgl_isi', $stres);
-    } else {
-      $this->db->where_in('d.tgl_isi', $stres);
-    }
-    $this->db->or_where('c.tgl_isi IS NULL', NULL);
-    $this->db->or_where('d.tgl_isi IS NULL', NULL);
+    $this->db->join('(SELECT * FROM kk_riwayat_kes_kel WHERE tgl_isi IN (SELECT MAX(tgl_isi) as atglisi FROM kk_riwayat_kes_kel WHERE hapus = \'0\' GROUP BY id_kk)) c', 'a.no_bpjs = c.no_bpjs', 'left', FALSE);
+    $this->db->join('(SELECT * FROM kk_gejala_stres WHERE tgl_isi IN (SELECT MAX(tgl_isi) as btglisi FROM kk_gejala_stres WHERE hapus = \'0\' GROUP BY id_kk)) d', 'c.id_kk = d.id_kk', 'left', FALSE);
     $this->db->where('a.hapus', '0');
     $this->db->where('b.hapus', '0');
     $result = $this->db->get();
+    // echo $this->db->last_query();
+
     if (! $result) {
       $ret_val = array(
         'status' => 'error', 

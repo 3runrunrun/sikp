@@ -1478,15 +1478,15 @@ $config = array(
         ),
       ),
     array(
-      'field' => 'id_data_perkawinan[]',
-      'label' => 'ID Perkawinan',
+      'field' => 'ak_no_bpjs[]',
+      'label' => 'No. BPJS',
       'rules' => 'required',
       'errors' => array(
         'required' => '%s harus diisi',
         ),
       ),
     array(
-      'field' => 'psg_no_bpjs[]',
+      'field' => 'ak_hubungan_keluarga[]',
       'label' => 'Kepala Keluarga',
       'rules' => 'required',
       'errors' => array(
@@ -1494,7 +1494,7 @@ $config = array(
         ),
       ),
     array(
-      'field' => 'psg_hubungan_keluarga[]',
+      'field' => 'ak_domisili_serumah[]',
       'label' => 'Hubungan Keluarga',
       'rules' => 'required|in_list[1,2]',
       'errors' => array(
@@ -1503,7 +1503,44 @@ $config = array(
         ),
       ),
     array(
-      'field' => 'psg_domisili_serumah[]',
+      'field' => 'ak_hubungan_keluarga[]',
+      'label' => 'Keterangan Domisili',
+      'rules' => 'required|in_list[0,1,2]',
+      'errors' => array(
+        'required' => '%s harus diisi',
+        'in_list' => 'Isi %s sesuai dengan data yang disediakan',
+        ),
+      ),
+    ),
+  // DATA DASAR -- DATA ANGGOTA KELUARGA -- EDIT
+  'data_dasar/C_data_dasar/update_anggota_keluarga' => array(
+    array(
+      'field' => 'id_kk',
+      'label' => 'ID Kepala Keluarga',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => '%s tidak tertera'
+        ),
+      ),
+    array(
+      'field' => 'ak_no_bpjs[]',
+      'label' => 'Anggota keluarga',
+      'rules' => 'required',
+      'errors' => array(
+        'required' => '%s harus diisi'
+        ),
+      ),
+    array(
+      'field' => 'ak_hubungan_keluarga[]',
+      'label' => 'Hubungan Keluarga',
+      'rules' => 'required|in_list[3,4]',
+      'errors' => array(
+        'required' => '%s harus diisi',
+        'in_list' => 'Isi %s sesuai dengan data yang disediakan',
+        ),
+      ),
+    array(
+      'field' => 'ak_domisili_serumah[]',
       'label' => 'Keterangan Domisili',
       'rules' => 'required|in_list[0,1,2]',
       'errors' => array(
@@ -1512,41 +1549,11 @@ $config = array(
         ),
       ),
     array(
-      'field' => 'psg_no_telp',
-      'label' => 'Nomor Telepon',
-      'rules' => 'required|numeric|min_length[10]|max_length[12]',
+      'field' => 'ak_perkawinan_ke[]',
+      'label' => 'Keturunan dari perkawinan',
+      'rules' => 'required',
       'errors' => array(
         'required' => '%s harus diisi',
-        'numeric' => 'Masukkan %s dengan benar',
-        'min_length' => '%s tidak kurang dari 10 digit',
-        'max_length' => '%s tidak lebih dari 12 digit'
-        ),
-      ),
-    array(
-      'field' => 'psg_status_kawin[]',
-      'label' => 'Status Perkawinan',
-      'rules' => 'required|in_list[0,1]',
-      'errors' => array(
-        'required' => '%s harus diisi',
-        'in_list' => 'Isi %s sesuai dengan data yang disediakan',
-        ),
-      ),
-    array(
-      'field' => 'psg_perkawinan_ke[]',
-      'label' => 'Jumlah Perkawinan',
-      'rules' => 'required|greater_than_equal_to[1]',
-      'errors' => array(
-        'required' => '%s harus diisi',
-        'greater_than_equal_to' => 'Isi %s dengan angka dan tidak kurang dari 1',
-        ),
-      ),
-    array(
-      'field' => 'psg_umur_pasangan[]',
-      'label' => 'Umur Pasangan Ketika menikah',
-      'rules' => 'required|greater_than_equal_to[16]',
-      'errors' => array(
-        'required' => '%s harus diisi',
-        'greater_than_equal_to' => 'Isi %s tidak boleh kurang dari 16 tahun',
         ),
       ),
     ),

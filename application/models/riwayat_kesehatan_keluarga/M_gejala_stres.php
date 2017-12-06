@@ -39,6 +39,7 @@ class M_gejala_stres extends CI_Model
     $this->db->where('hapus', '0');
     $this->db->group_by('id_kk');    
     $result = $this->db->get('kk_gejala_stres');
+    // echo $this->db->last_query();
     if ( ! $result) {
       $ret_val = array(
         'status' => 'error',

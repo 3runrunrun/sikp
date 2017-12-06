@@ -202,6 +202,7 @@
                     <?php echo form_error('ak_no_bpjs[]'); ?>
                     <?php echo form_error('ak_hubungan_keluarga[]'); ?>
                     <?php echo form_error('ak_domisili_serumah[]'); ?>
+                    <?php echo form_error('ak_hubungan_keluarga[]'); ?>
                     <!-- ./callout -->
                     {anggota_keluarga}
                     <div class="row">
