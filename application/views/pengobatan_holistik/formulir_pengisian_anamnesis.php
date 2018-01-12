@@ -30,7 +30,7 @@
           <div class="row" style="margin-bottom: 10px !important">
             <h4>
               <div class="col-md-2"><strong>No. Registrasi</strong></div>
-              <div class="col-md-10"><strong>{id_registrasi}</strong></div style="margin-bottom: 10px !important">
+              <div class="col-md-10"><strong>{new_id_registrasi}</strong></div style="margin-bottom: 10px !important">
             </h4>
           </div>
           <div class="row">

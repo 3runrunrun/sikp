@@ -142,8 +142,8 @@
         }
 
         var first = id_registrasi.substring(0,4);
-        var second = id_registrasi.substring(7, 1);
-        var third = '';
+        var second = id_registrasi.substring(6,10);
+        var third = id_registrasi.substring(12,14);
         var new_id = first + second + third;
 
         var element = '<div class="form-group">' +

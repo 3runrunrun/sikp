@@ -737,6 +737,7 @@ class C_pengobatan_holistik extends CI_Controller
   {
     // init var - return var
     $ret_val = array();
+    $id_registrasi = NULL;
 
     // init var - array replacement
     $jenis_kelamin = array(
@@ -746,6 +747,8 @@ class C_pengobatan_holistik extends CI_Controller
 
     // replacing and repopulating view data
     foreach ($data as $key => $value) {
+      $id_registrasi = $value['id_registrasi'];
+      $value['new_id_registrasi'] = substr($id_registrasi, 0, 4) . substr($id_registrasi, 6, 4) . substr($id_registrasi, 12, 2);
       $value['nama'] = ucwords($value['nama']);
       $value['jenis_kelamin'] = str_replace(array_keys($jenis_kelamin), $jenis_kelamin, $value['jenis_kelamin']);
       $value['alamat'] = ucwords($value['alamat']);
