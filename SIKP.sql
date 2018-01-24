@@ -62,6 +62,7 @@ INSERT INTO `adl_mod_penyakit` (`id_mod_penyakit`, `nama`, `tgl_dibuat`, `versi`
 	('MPNY-01', 'batuk', '2017-08-01', '1'),
 	('MPNY-01', 'batuk', '2017-10-25', '2'),
 	('MPNY-01', 'Batuk', '2017-11-15', '3'),
+	('MPNY-01', 'batuk', '2017-12-07', '4'),
 	('MPNY-02', 'pusing', '2017-08-01', '1'),
 	('MPNY-03', 'diabetes', '2017-08-01', '1');
 /*!40000 ALTER TABLE `adl_mod_penyakit` ENABLE KEYS */;
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `hol_cek_darah` (
   CONSTRAINT `fk_hol_cek_darah_identitas` FOREIGN KEY (`no_bpjs`) REFERENCES `pas_identitas` (`no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_cek_darah: ~9 rows (approximately)
+-- Dumping data for table sia.hol_cek_darah: ~8 rows (approximately)
 /*!40000 ALTER TABLE `hol_cek_darah` DISABLE KEYS */;
 INSERT INTO `hol_cek_darah` (`no_surat_pengantar`, `no_bpjs`, `tgl_cek_darah`, `gd_kolesterol`, `h_kolesterol`, `gd_puasa`, `h_puasa`, `gd_acak`, `h_acak`, `gd_asam_urat`, `h_asam_urat`, `status`, `hapus`) VALUES
 	('DRH-171102081022638', '5123497187923', '2017-11-03 09:38:06', '1', NULL, '0', NULL, '0', NULL, '0', NULL, '1', '1'),
@@ -121,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `hol_diagnosis_penyakit` (
   CONSTRAINT `FK_hol_diagnosis_penyakit_1` FOREIGN KEY (`id_mod_penyakit`) REFERENCES `adl_mod_penyakit` (`id_mod_penyakit`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_diagnosis_penyakit: ~17 rows (approximately)
+-- Dumping data for table sia.hol_diagnosis_penyakit: ~27 rows (approximately)
 /*!40000 ALTER TABLE `hol_diagnosis_penyakit` DISABLE KEYS */;
 INSERT INTO `hol_diagnosis_penyakit` (`id_diagnosa`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `penyakit`, `id_mod_penyakit`, `terapi`, `lokasi_intervensi`, `hapus`) VALUES
 	('DIA-171109130102607', 'STS-171109204402607', '1364916349016912', '3142312354123', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
@@ -136,12 +137,25 @@ INSERT INTO `hol_diagnosis_penyakit` (`id_diagnosa`, `id_registrasi`, `nik_tenag
 	('DIA-171109130139840', 'STS-171109204239840', '1364916349016912', '1238754817235', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
 	('DIA-171109130145004', 'STS-171109204245004', '1364916349016912', '1267831624891', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
 	('DIA-171109130147126', 'STS-171109204847126', '1364916349016912', '5169734174619', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
-	('DIA-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'influenza', 'MPNY-01', 'minum obat', '1', '1'),
 	('DIA-171109130158150', 'STS-171109204858150', '1364916349016912', '5612784167248', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
 	('DIA-171109135834252', 'STS-171109204232892', '1364916349016912', '1235198764912', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
 	('DIA-171109210624215', 'STS-171109204227426', '1364916349016912', '1232454563456', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
 	('DIA-171115072846799', 'STS-171115072654735', '1364916349016912', '1232454563456', 'migrain', 'MPNY-01', 'istirahat', '1', '0'),
-	('DIA-171116080617811', 'STS-171116080144969', '1364916349016912', '1235198764912', 'migrain', 'MPNY-01', 'minum obat', '1', '0');
+	('DIA-171116080617811', 'STS-171116080144969', '1364916349016912', '1235198764912', 'migrain', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171121140337345', 'STS-171121135234901', '1364916349016912', '1238754817235', 'migrain', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171129081717990', 'STS-171129080551364', '1364916349016912', '9023023782342', 'migrain', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171205131907325', 'STS-171205124221536', '1364916349016912', '5091623796490', 'migrain', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171207111427564', 'STS-171207110859566', '1364916349016912', '1232454563456', 'migrain', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-171229091655313', 'STS-171229091539610', '1364916349016912', '1235198764912', 'migrain', 'MPNY-02', 'minum obat', '1', '0'),
+	('DIA-171229103740524', 'STS-171229103604469', '1364916349016912', '1235198764912', 'migrain', 'MPNY-02', 'minum obat', '1', '0'),
+	('DIA-180108192917471', 'STS-180108192136268', '1364916349016912', '9023023782342', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-180108192959881', 'STS-180108192130170', '1253417u26548125', '6512374519264', 'gigi sensitif', 'MPNY-02', 'minum obat', '1', '0'),
+	('DIA-180108193035175', 'STS-180108192122106', '1265381127618267', '6142987351876', 'influenza', 'MPNY-01', 'perawatan lanjutan', '1', '0'),
+	('DIA-180108195805223', 'STS-180108194213590', '1253417u26548125', '1235198764912', 'infeksi gusi', 'MPNY-02', 'minum obat', '1', '0'),
+	('DIA-180109110501391', 'STS-180109110345336', '1364916349016912', '1237176235677', 'influenza', 'MPNY-01', 'minum obat', '1', '0'),
+	('DIA-180109114110437', 'STS-180109113303419', '1265381127618267', '1238754817235', 'flu', 'MPNY-01', 'minum obat', '1', '1'),
+	('DIA-180109114253730', 'STS-180109113303419', '1265381127618267', '1238754817235', 'flu', 'MPNY-01', 'resep obat', '1', '0');
 /*!40000 ALTER TABLE `hol_diagnosis_penyakit` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_faktor_pemicu
@@ -161,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `hol_faktor_pemicu` (
   CONSTRAINT `FK_hol_faktor_pemicu_1` FOREIGN KEY (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) REFERENCES `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_faktor_pemicu: ~17 rows (approximately)
+-- Dumping data for table sia.hol_faktor_pemicu: ~27 rows (approximately)
 /*!40000 ALTER TABLE `hol_faktor_pemicu` DISABLE KEYS */;
 INSERT INTO `hol_faktor_pemicu` (`id_faktor_pemicu`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `faktor_pemicu`, `id_mod_faktor_pemicu`, `hapus`) VALUES
 	('PMC-171109130102607', 'STS-171109204402607', '1364916349016912', '3142312354123', 'alergi', 'MFP-01', '0'),
@@ -176,12 +190,25 @@ INSERT INTO `hol_faktor_pemicu` (`id_faktor_pemicu`, `id_registrasi`, `nik_tenag
 	('PMC-171109130139840', 'STS-171109204239840', '1364916349016912', '1238754817235', 'alergi', 'MFP-01', '0'),
 	('PMC-171109130145004', 'STS-171109204245004', '1364916349016912', '1267831624891', 'alergi', 'MFP-01', '0'),
 	('PMC-171109130147126', 'STS-171109204847126', '1364916349016912', '5169734174619', 'alergi', 'MFP-01', '0'),
-	('PMC-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'alergi', 'MFP-01', '0'),
+	('PMC-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'alergi', 'MFP-01', '1'),
 	('PMC-171109130158150', 'STS-171109204858150', '1364916349016912', '5612784167248', 'alergi', 'MFP-01', '0'),
 	('PMC-171109135834252', 'STS-171109204232892', '1364916349016912', '1235198764912', 'alergi', 'MFP-01', '0'),
 	('PMC-171109210624531', 'STS-171109204227426', '1364916349016912', '1232454563456', 'alergi', 'MFP-01', '0'),
 	('PMC-171115072846171', 'STS-171115072654735', '1364916349016912', '1232454563456', 'alergi', 'MFP-01', '0'),
-	('PMC-171116080617755', 'STS-171116080144969', '1364916349016912', '1235198764912', 'asd', 'MFP-01', '0');
+	('PMC-171116080617755', 'STS-171116080144969', '1364916349016912', '1235198764912', 'asd', 'MFP-01', '0'),
+	('PMC-171121140337470', 'STS-171121135234901', '1364916349016912', '1238754817235', 'alergi', 'MFP-01', '0'),
+	('PMC-171129081717267', 'STS-171129080551364', '1364916349016912', '9023023782342', 'alergi', 'MFP-01', '0'),
+	('PMC-171205131907159', 'STS-171205124221536', '1364916349016912', '5091623796490', 'alergi', 'MFP-01', '0'),
+	('PMC-171207111427693', 'STS-171207110859566', '1364916349016912', '1232454563456', 'alergi', 'MFP-01', '0'),
+	('PMC-171229091655262', 'STS-171229091539610', '1364916349016912', '1235198764912', 'alergi', 'MFP-01', '0'),
+	('PMC-171229103740773', 'STS-171229103604469', '1364916349016912', '1235198764912', 'alergi', 'MFP-01', '0'),
+	('PMC-180108192917879', 'STS-180108192136268', '1364916349016912', '9023023782342', 'alergi', 'MFP-01', '0'),
+	('PMC-180108192959570', 'STS-180108192130170', '1253417u26548125', '6512374519264', 'alergi', 'MFP-01', '0'),
+	('PMC-180108193035321', 'STS-180108192122106', '1265381127618267', '6142987351876', 'alergi', 'MFP-01', '0'),
+	('PMC-180108195805539', 'STS-180108194213590', '1253417u26548125', '1235198764912', 'alergi', 'MFP-01', '0'),
+	('PMC-180109110502820', 'STS-180109110345336', '1364916349016912', '1237176235677', 'alergi', 'MFP-01', '0'),
+	('PMC-180109114110617', 'STS-180109113303419', '1265381127618267', '1238754817235', 'alergi', 'MFP-01', '1'),
+	('PMC-180109114253720', 'STS-180109113303419', '1265381127618267', '1238754817235', 'alergi', 'MFP-01', '0');
 /*!40000 ALTER TABLE `hol_faktor_pemicu` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_faktor_risiko
@@ -201,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `hol_faktor_risiko` (
   CONSTRAINT `FK_hol_faktor_risiko_1` FOREIGN KEY (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) REFERENCES `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_faktor_risiko: ~17 rows (approximately)
+-- Dumping data for table sia.hol_faktor_risiko: ~27 rows (approximately)
 /*!40000 ALTER TABLE `hol_faktor_risiko` DISABLE KEYS */;
 INSERT INTO `hol_faktor_risiko` (`id_faktor_risiko`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `faktor_risiko`, `id_mod_faktor_risiko`, `hapus`) VALUES
 	('RSK-171109130102607', 'STS-171109204402607', '1364916349016912', '3142312354123', 'minuman dingin', 'MFR-02', '0'),
@@ -216,12 +243,25 @@ INSERT INTO `hol_faktor_risiko` (`id_faktor_risiko`, `id_registrasi`, `nik_tenag
 	('RSK-171109130139840', 'STS-171109204239840', '1364916349016912', '1238754817235', 'minuman dingin', 'MFR-02', '0'),
 	('RSK-171109130145004', 'STS-171109204245004', '1364916349016912', '1267831624891', 'minuman dingin', 'MFR-02', '0'),
 	('RSK-171109130147126', 'STS-171109204847126', '1364916349016912', '5169734174619', 'minuman dingin', 'MFR-02', '0'),
-	('RSK-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'minuman dingin', 'MFR-02', '0'),
+	('RSK-171109130151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'minuman dingin', 'MFR-02', '1'),
 	('RSK-171109130158150', 'STS-171109204858150', '1364916349016912', '5612784167248', 'minuman dingin', 'MFR-02', '0'),
 	('RSK-171109135834252', 'STS-171109204232892', '1364916349016912', '1235198764912', 'minuman dingin', 'MFR-02', '0'),
 	('RSK-171109210624534', 'STS-171109204227426', '1364916349016912', '1232454563456', 'minuman dingin', 'MFR-02', '0'),
 	('RSK-171115072846761', 'STS-171115072654735', '1364916349016912', '1232454563456', 'dingin', 'MFR-02', '0'),
-	('RSK-171116080617321', 'STS-171116080144969', '1364916349016912', '1235198764912', 'asd', 'MFR-01', '0');
+	('RSK-171116080617321', 'STS-171116080144969', '1364916349016912', '1235198764912', 'asd', 'MFR-01', '0'),
+	('RSK-171121140337016', 'STS-171121135234901', '1364916349016912', '1238754817235', 'dingin', 'MFR-02', '0'),
+	('RSK-171129081717719', 'STS-171129080551364', '1364916349016912', '9023023782342', 'dingin', 'MFR-01', '0'),
+	('RSK-171205131907356', 'STS-171205124221536', '1364916349016912', '5091623796490', 'kurang tidur', 'MFR-01', '0'),
+	('RSK-171207111427030', 'STS-171207110859566', '1364916349016912', '1232454563456', 'kurang tidur', 'MFR-01', '0'),
+	('RSK-171229091655861', 'STS-171229091539610', '1364916349016912', '1235198764912', 'kurang tidur', 'MFR-01', '0'),
+	('RSK-171229103740238', 'STS-171229103604469', '1364916349016912', '1235198764912', 'kurang tidur', 'MFR-01', '0'),
+	('RSK-180108192917399', 'STS-180108192136268', '1364916349016912', '9023023782342', 'minum dingin', 'MFR-02', '0'),
+	('RSK-180108192959111', 'STS-180108192130170', '1253417u26548125', '6512374519264', 'minum dingin', 'MFR-02', '0'),
+	('RSK-180108193035954', 'STS-180108192122106', '1265381127618267', '6142987351876', 'kurang tidur', 'MFR-01', '0'),
+	('RSK-180108195805106', 'STS-180108194213590', '1253417u26548125', '1235198764912', 'minum dingin', 'MFR-02', '0'),
+	('RSK-180109110502936', 'STS-180109110345336', '1364916349016912', '1237176235677', 'minum dingin', 'MFR-02', '0'),
+	('RSK-180109114110152', 'STS-180109113303419', '1265381127618267', '1238754817235', 'udara dingin', 'MFR-02', '1'),
+	('RSK-180109114253206', 'STS-180109113303419', '1265381127618267', '1238754817235', 'udara dingin', 'MFR-02', '0');
 /*!40000 ALTER TABLE `hol_faktor_risiko` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_keluhan
@@ -237,14 +277,14 @@ CREATE TABLE IF NOT EXISTS `hol_keluhan` (
   CONSTRAINT `FK_hol_keluhan` FOREIGN KEY (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) REFERENCES `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_keluhan: ~18 rows (approximately)
+-- Dumping data for table sia.hol_keluhan: ~33 rows (approximately)
 /*!40000 ALTER TABLE `hol_keluhan` DISABLE KEYS */;
 INSERT INTO `hol_keluhan` (`id_keluhan`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `keluhan`, `hapus`) VALUES
 	('KLH-171109205034117', 'STS-171109204227426', '1364916349016912', '1232454563456', 'meriang', '0'),
 	('KLH-171109205834252', 'STS-171109204232892', '1364916349016912', '1235198764912', 'meriang', '0'),
 	('KLH-171109210139840', 'STS-171109204239840', '1364916349016912', '1238754817235', 'meriang', '0'),
 	('KLH-171109210145004', 'STS-171109204245004', '1364916349016912', '1267831624891', 'meriang', '0'),
-	('KLH-171109210151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'meriang', '0'),
+	('KLH-171109210151706', 'STS-171109204251706', '1364916349016912', '1289012981248', 'meriang', '1'),
 	('KLH-171109210103255', 'STS-171109204303255', '1364916349016912', '1529759489124', 'meriang', '0'),
 	('KLH-171109210111522', 'STS-171109204311522', '1364916349016912', '1782349813204', 'meriang', '0'),
 	('KLH-171109210125297', 'STS-171109204325297', '1364916349016912', '1982637126378', 'meriang', '0'),
@@ -260,7 +300,22 @@ INSERT INTO `hol_keluhan` (`id_keluhan`, `id_registrasi`, `nik_tenaga_medis`, `n
 	('KLH-171115072809337', 'STS-171115072654735', '1364916349016912', '1232454563456', 'pusing', '0'),
 	('KLH-171115075946494', 'STS-171115075407028', '1364916349016912', '1235198764912', 'pusing', '0'),
 	('KLH-171115075946494', 'STS-171115075407028', '1364916349016912', '1235198764912', 'sakit kepala', '0'),
-	('KLH-171116080313770', 'STS-171116080144969', '1364916349016912', '1235198764912', 'pusing', '0');
+	('KLH-171116080313770', 'STS-171116080144969', '1364916349016912', '1235198764912', 'pusing', '0'),
+	('KLH-171121135431853', 'STS-171121135234901', '1364916349016912', '1238754817235', 'pusing', '0'),
+	('KLH-171129080616570', 'STS-171129080551364', '1364916349016912', '9023023782342', 'pusing', '0'),
+	('KLH-171130084317748', 'STS-171129080209337', '1364916349016912', '1235198764912', 'pusing', '0'),
+	('KLH-171205131028944', 'STS-171205124221536', '1364916349016912', '5091623796490', 'pusing', '0'),
+	('KLH-171205131028944', 'STS-171205124221536', '1364916349016912', '5091623796490', 'sakit kepala', '0'),
+	('KLH-171207111330770', 'STS-171207110859566', '1364916349016912', '1232454563456', 'pasien', '0'),
+	('KLH-171229091604101', 'STS-171229091539610', '1364916349016912', '1235198764912', 'pusing', '0'),
+	('KLH-171229103650177', 'STS-171229103604469', '1364916349016912', '1235198764912', 'pusing', '0'),
+	('KLH-180108192211529', 'STS-180108192130170', '1253417u26548125', '6512374519264', 'nyeri di gigi geraham kiri atas', '0'),
+	('KLH-180108192731494', 'STS-180108192122106', '1265381127618267', '6142987351876', 'nyeri sendi', '0'),
+	('KLH-180108192731494', 'STS-180108192122106', '1265381127618267', '6142987351876', 'panas', '0'),
+	('KLH-180108192833229', 'STS-180108192136268', '1364916349016912', '9023023782342', 'nyeri lengan kiri', '0'),
+	('KLH-180108195718480', 'STS-180108194213590', '1253417u26548125', '1235198764912', 'pusing kepala sebelah', '0'),
+	('KLH-180109110420944', 'STS-180109110345336', '1364916349016912', '1237176235677', 'sakit pinggang', '0'),
+	('KLH-180109113333996', 'STS-180109113303419', '1265381127618267', '1238754817235', 'pusing', '0');
 /*!40000 ALTER TABLE `hol_keluhan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_resep_obat
@@ -277,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `hol_resep_obat` (
   CONSTRAINT `FK_hol_resep_obat_0` FOREIGN KEY (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) REFERENCES `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_resep_obat: ~18 rows (approximately)
+-- Dumping data for table sia.hol_resep_obat: ~17 rows (approximately)
 /*!40000 ALTER TABLE `hol_resep_obat` DISABLE KEYS */;
 INSERT INTO `hol_resep_obat` (`id_resep_obat`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `jenis_pasien`, `hapus`) VALUES
 	('RSP-171109213246984', 'STS-171109204418215', '1364916349016912', '5142735871254', '1', '1'),
@@ -286,7 +341,7 @@ INSERT INTO `hol_resep_obat` (`id_resep_obat`, `id_registrasi`, `nik_tenaga_medi
 	('RSP-171109220059552', 'STS-171109204232892', '1364916349016912', '1235198764912', '1', '0'),
 	('RSP-171109220141769', 'STS-171109204239840', '1364916349016912', '1238754817235', '1', '0'),
 	('RSP-171109220151614', 'STS-171109204245004', '1364916349016912', '1267831624891', '1', '0'),
-	('RSP-171109220157799', 'STS-171109204251706', '1364916349016912', '1289012981248', '1', '0'),
+	('RSP-171109220157799', 'STS-171109204251706', '1364916349016912', '1289012981248', '1', '1'),
 	('RSP-171109220223737', 'STS-171109204303255', '1364916349016912', '1529759489124', '1', '0'),
 	('RSP-171109231017489', 'STS-171109204311522', '1364916349016912', '1782349813204', '1', '0'),
 	('RSP-171109231023768', 'STS-171109204325297', '1364916349016912', '1982637126378', '1', '0'),
@@ -298,7 +353,18 @@ INSERT INTO `hol_resep_obat` (`id_resep_obat`, `id_registrasi`, `nik_tenaga_medi
 	('RSP-171109231108493', 'STS-171109204920031', '1364916349016912', '8098781246098', '1', '0'),
 	('RSP-171109231122614', 'STS-171109204418215', '1364916349016912', '5142735871254', '1', '0'),
 	('RSP-171115072852720', 'STS-171115072654735', '1364916349016912', '1232454563456', '1', '0'),
-	('RSP-171116080709414', 'STS-171116080144969', '1364916349016912', '1235198764912', '1', '0');
+	('RSP-171116080709414', 'STS-171116080144969', '1364916349016912', '1235198764912', '1', '0'),
+	('RSP-171121141016689', 'STS-171121135234901', '1364916349016912', '1238754817235', '1', '0'),
+	('RSP-171129081725803', 'STS-171129080551364', '1364916349016912', '9023023782342', '1', '0'),
+	('RSP-171205132120328', 'STS-171205124221536', '1364916349016912', '5091623796490', '1', '0'),
+	('RSP-171207111449200', 'STS-171207110859566', '1364916349016912', '1232454563456', '1', '0'),
+	('RSP-171229091705246', 'STS-171229091539610', '1364916349016912', '1235198764912', '1', '0'),
+	('RSP-171229103753751', 'STS-171229103604469', '1364916349016912', '1235198764912', '1', '0'),
+	('RSP-180108193134360', 'STS-180108192130170', '1253417u26548125', '6512374519264', '1', '0'),
+	('RSP-180108193146322', 'STS-180108192136268', '1364916349016912', '9023023782342', '1', '0'),
+	('RSP-180108195811599', 'STS-180108194213590', '1253417u26548125', '1235198764912', '1', '0'),
+	('RSP-180109110516228', 'STS-180109110345336', '1364916349016912', '1237176235677', '1', '0'),
+	('RSP-180109114302205', 'STS-180109113303419', '1265381127618267', '1238754817235', '1', '0');
 /*!40000 ALTER TABLE `hol_resep_obat` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_rujukan
@@ -318,6 +384,9 @@ CREATE TABLE IF NOT EXISTS `hol_rujukan` (
 
 -- Dumping data for table sia.hol_rujukan: ~0 rows (approximately)
 /*!40000 ALTER TABLE `hol_rujukan` DISABLE KEYS */;
+INSERT INTO `hol_rujukan` (`id_rujukan`, `id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `jenis_rujukan`, `rs`, `hapus`) VALUES
+	('RJK-180108193100818', 'STS-180108192122106', '1265381127618267', '6142987351876', '2', 'rumah sakit dr. soepraon', '0'),
+	('RJK-180109114209003', 'STS-180109113303419', '1265381127618267', '1238754817235', '1', 'rs dr. soepraon', '1');
 /*!40000 ALTER TABLE `hol_rujukan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.hol_status
@@ -342,14 +411,14 @@ CREATE TABLE IF NOT EXISTS `hol_status` (
   CONSTRAINT `FK_hol_status_1` FOREIGN KEY (`no_bpjs`) REFERENCES `pas_identitas` (`no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.hol_status: ~20 rows (approximately)
+-- Dumping data for table sia.hol_status: ~34 rows (approximately)
 /*!40000 ALTER TABLE `hol_status` DISABLE KEYS */;
 INSERT INTO `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `tgl_periksa`, `alergi_obat`, `alergi_makanan`, `td`, `rr`, `nadi`, `suhu`, `status`, `hapus`) VALUES
 	('STS-171109204227426', '1364916349016912', '1232454563456', '2017-11-11 20:42:27', '-', '-', '80/90', '60', '80', '23', 'intervensi', '0'),
 	('STS-171109204232892', '1364916349016912', '1235198764912', '2017-11-11 20:42:32', '-', '-', '80/100', '75', '83', '20', 'intervensi', '0'),
 	('STS-171109204239840', '1364916349016912', '1238754817235', '2017-11-11 20:42:39', '-', '-', '90/100', '65', '90', '23', 'intervensi', '0'),
 	('STS-171109204245004', '1364916349016912', '1267831624891', '2017-11-11 20:42:45', '-', '-', '70/80', '70', '100', '26', 'intervensi', '0'),
-	('STS-171109204251706', '1364916349016912', '1289012981248', '2017-11-11 20:42:51', '-', '-', '90/90', '55', '82', '27', 'intervensi', '0'),
+	('STS-171109204251706', '1364916349016912', '1289012981248', '2017-11-11 20:42:51', '-', '-', '90/90', '55', '82', '27', 'intervensi', '1'),
 	('STS-171109204303255', '1364916349016912', '1529759489124', '2017-11-11 20:43:03', '-', '-', '100/90', '75', '75', '25', 'intervensi', '0'),
 	('STS-171109204311522', '1364916349016912', '1782349813204', '2017-11-11 20:43:11', '-', '-', '80/90', '70', '92', '20', 'intervensi', '0'),
 	('STS-171109204325297', '1364916349016912', '1982637126378', '2017-11-11 20:43:25', '-', '-', '80/90', '55', '94', '21', 'intervensi', '0'),
@@ -364,7 +433,21 @@ INSERT INTO `hol_status` (`id_registrasi`, `nik_tenaga_medis`, `no_bpjs`, `tgl_p
 	('STS-171113172825676', '1364916349016912', '5142735871254', '2017-11-13 17:28:25', '-', '-', '110/80', '40', '80', '23', 'anamnesis', '0'),
 	('STS-171115072654735', '1364916349016912', '1232454563456', '2017-11-15 07:26:54', '-', '-', '80/90', '90', '90', '23', 'intervensi', '0'),
 	('STS-171115075407028', '1364916349016912', '1235198764912', '2017-11-15 07:54:07', '-', '-', '80/90', '120', '90', '23', 'anamnesis', '0'),
-	('STS-171116080144969', '1364916349016912', '1235198764912', '2017-11-16 08:01:44', '-', '-', '80/90', '80', '23', '23', 'intervensi', '0');
+	('STS-171116080144969', '1364916349016912', '1235198764912', '2017-11-16 08:01:44', '-', '-', '80/90', '80', '23', '23', 'intervensi', '0'),
+	('STS-171121135234901', '1364916349016912', '1238754817235', '2017-11-21 13:52:34', '-', '-', '80/90', '60', '60', '23', 'intervensi', '0'),
+	('STS-171129080209337', '1364916349016912', '1235198764912', '2017-11-30 08:02:09', '-', '-', '80/90', '40', '23', '23', 'anamnesis', '0'),
+	('STS-171129080551364', '1364916349016912', '9023023782342', '2017-11-30 08:05:51', '-', '-', '80/90', '40', '60', '23', 'intervensi', '0'),
+	('STS-171205124118845', '1364916349016912', '5091623796490', '2017-12-05 12:41:18', NULL, NULL, NULL, NULL, NULL, NULL, 'terdaftar', '1'),
+	('STS-171205124221536', '1364916349016912', '5091623796490', '2017-12-05 12:42:21', '-', '-', '80/90', '40', '80', '23', 'intervensi', '0'),
+	('STS-171207110859566', '1364916349016912', '1232454563456', '2017-12-07 11:08:59', '-', '-', '80/90', '40', '60', '24', 'intervensi', '0'),
+	('STS-171229091539610', '1364916349016912', '1235198764912', '2017-12-29 09:15:39', '-', '-', '80/90', '40', '80', '23', 'intervensi', '0'),
+	('STS-171229103604469', '1364916349016912', '1235198764912', '2017-12-29 10:36:04', '-', '-', '80/90', '40', '80', '23', 'intervensi', '0'),
+	('STS-180108192122106', '1265381127618267', '6142987351876', '2018-01-08 19:21:22', '-', '-', '90/100', '24', '50', '23', 'intervensi', '0'),
+	('STS-180108192130170', '1253417u26548125', '6512374519264', '2018-01-08 19:21:30', '-', '-', '80/90', '40', '80', '23', 'intervensi', '0'),
+	('STS-180108192136268', '1364916349016912', '9023023782342', '2018-01-08 19:21:36', '-', '-', '100/100', '40', '60', '22', 'intervensi', '0'),
+	('STS-180108194213590', '1253417u26548125', '1235198764912', '2018-01-08 19:42:13', '-', '-', '90/100', '40', '60', '23', 'intervensi', '0'),
+	('STS-180109110345336', '1364916349016912', '1237176235677', '2018-01-09 11:03:45', '-', '-', '80/90', '40', '60', '23', 'intervensi', '0'),
+	('STS-180109113303419', '1265381127618267', '1238754817235', '2018-01-09 11:33:03', '-', '-', '90/100', '20', '80', '23', 'intervensi', '0');
 /*!40000 ALTER TABLE `hol_status` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_anggota_keluarga
@@ -381,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `kk_anggota_keluarga` (
   CONSTRAINT `FK_kk_anggota_keluarga_1` FOREIGN KEY (`no_bpjs`) REFERENCES `pas_identitas` (`no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_anggota_keluarga: ~11 rows (approximately)
+-- Dumping data for table sia.kk_anggota_keluarga: ~17 rows (approximately)
 /*!40000 ALTER TABLE `kk_anggota_keluarga` DISABLE KEYS */;
 INSERT INTO `kk_anggota_keluarga` (`id_kk`, `no_bpjs`, `domisili_serumah`, `hubungan_keluarga`, `perkawinan_ke`, `hapus`) VALUES
 	('KK-171017123412765', '1238754817235', '1', '3', 1, '0'),
@@ -397,7 +480,12 @@ INSERT INTO `kk_anggota_keluarga` (`id_kk`, `no_bpjs`, `domisili_serumah`, `hubu
 	('KK-171017175000970', '6142987351876', '1', '3', 1, '0'),
 	('KK-171017175000970', '8098781246098', '1', '2', NULL, '0'),
 	('KK-171021123844685', '1782349813204', '1', '2', NULL, '0'),
-	('KK-171021123844685', '5123497187923', '1', '1', NULL, '0');
+	('KK-171021123844685', '5123497187923', '1', '1', NULL, '0'),
+	('KK-171205071456793', '1237176235677', '1', '3', 1, '0'),
+	('KK-171205071456793', '1243234123123', '1', '3', 1, '0'),
+	('KK-171205071456793', '1261092462174', '1', '2', NULL, '0'),
+	('KK-171205071456793', '5091623796490', '2', '3', 1, '0'),
+	('KK-171205071456793', '9023023782342', '1', '1', NULL, '0');
 /*!40000 ALTER TABLE `kk_anggota_keluarga` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_data_perkawinan
@@ -423,7 +511,8 @@ INSERT INTO `kk_data_perkawinan` (`id_data_perkawinan`, `id_kk`, `no_bpjs`, `per
 	('KWN-171017123412963', 'KK-171017123412765', '6512374519264', 1, 19, '1', '0'),
 	('KWN-171017151802467', 'KK-171017151802831', '1232454563456', 1, 18, '1', '0'),
 	('KWN-171017175000356', 'KK-171017175000970', '8098781246098', 1, 19, '1', '0'),
-	('KWN-171021123844094', 'KK-171021123844685', '1782349813204', 1, 23, '1', '0');
+	('KWN-171021123844094', 'KK-171021123844685', '1782349813204', 1, 23, '1', '0'),
+	('KWN-171205071456445', 'KK-171205071456793', '1261092462174', 1, 19, '1', '0');
 /*!40000 ALTER TABLE `kk_data_perkawinan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_ekonomi
@@ -446,7 +535,8 @@ INSERT INTO `kk_ekonomi` (`id_kk`, `luas_bangunan`, `luas_lahan`, `kepemilikan_r
 	('KK-171017123412765', 110, 120, '1', 900, '0', '1', '0'),
 	('KK-171017151802831', 180, 210, '1', 1300, '0', '1', '0'),
 	('KK-171017175000970', 210, 250, '3', 1300, '0', '2', '0'),
-	('KK-171021123844685', 200, 250, '3', 1300, '1', '1', '0');
+	('KK-171021123844685', 200, 300, '3', 1300, '1', '1', '0'),
+	('KK-171205071456793', 120, 130, '1', 900, '1', '1', '0');
 /*!40000 ALTER TABLE `kk_ekonomi` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_gejala_stres
@@ -475,14 +565,19 @@ CREATE TABLE IF NOT EXISTS `kk_gejala_stres` (
   CONSTRAINT `FK_kk_gejala_stres_0` FOREIGN KEY (`id_kk`) REFERENCES `pas_kk` (`id_kk`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_gejala_stres: ~4 rows (approximately)
+-- Dumping data for table sia.kk_gejala_stres: ~9 rows (approximately)
 /*!40000 ALTER TABLE `kk_gejala_stres` DISABLE KEYS */;
 INSERT INTO `kk_gejala_stres` (`id_kk`, `id_gejala_stres`, `tgl_isi`, `tingkat_stres`, `no_01`, `no_02`, `no_03`, `no_04`, `no_05`, `no_06`, `no_07`, `no_08`, `no_09`, `no_10`, `no_11`, `no_12`, `no_13`, `no_14`, `no_15`, `hapus`) VALUES
 	('KK-171017123412765', 'ST-171017151546372', '2017-10-17 15:15:46', 51, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 3, '0'),
 	('KK-171017151802831', 'ST-171017172748487', '2017-10-17 17:27:48', 60, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, '0'),
 	('KK-171017151802831', 'ST-171017174803178', '2017-10-17 17:48:03', 49, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, '0'),
 	('KK-171017175000970', 'ST-171017175211246', '2017-10-17 17:52:11', 14, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '0'),
-	('KK-171021123844685', 'ST-171021130758634', '2017-10-21 13:07:58', 12, 1, 1, 2, 0, 2, 1, 0, 0, 0, 0, 1, 1, 0, 1, 2, '0');
+	('KK-171021123844685', 'ST-171021130758634', '2017-10-21 13:07:58', 12, 1, 1, 2, 0, 2, 1, 0, 0, 0, 0, 1, 1, 0, 1, 2, '0'),
+	('KK-171205071456793', 'ST-171205072424688', '2017-12-05 07:24:24', 5, 0, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, '1'),
+	('KK-171205071456793', 'ST-171205102032252', '2017-12-05 10:20:32', 45, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, '1'),
+	('KK-171205071456793', 'ST-171206060205723', '2017-12-06 06:02:05', 39, 2, 2, 2, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 3, '1'),
+	('KK-171205071456793', 'ST-171206142437533', '2017-12-06 14:24:37', 46, 4, 3, 4, 4, 4, 3, 4, 3, 3, 4, 3, 4, 2, 1, 0, '0'),
+	('KK-171205071456793', 'ST-171206142459555', '2017-12-06 14:24:59', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 /*!40000 ALTER TABLE `kk_gejala_stres` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_perilaku_kes
@@ -508,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `kk_perilaku_kes` (
   CONSTRAINT `FK_kk_perilaku_kes_0` FOREIGN KEY (`id_kk`) REFERENCES `pas_kk` (`id_kk`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_perilaku_kes: ~6 rows (approximately)
+-- Dumping data for table sia.kk_perilaku_kes: ~8 rows (approximately)
 /*!40000 ALTER TABLE `kk_perilaku_kes` DISABLE KEYS */;
 INSERT INTO `kk_perilaku_kes` (`id_kk`, `id_perilaku_kes`, `layanan_balita`, `pemeliharaan_kes_kel`, `layanan_pengobatan_diri`, `jamkes_pri_kel`, `sumber_air`, `sumber_air_lain`, `mck_km`, `mck_wc`, `mck_cuci`, `spal`, `kasur_busa`, `kosmetik_obat_luar`, `tgl_isi`, `hapus`) VALUES
 	('KK-171017123412765', 'PKSH-171017123918344', '1', '1', '1', '1', '3', '', '1', '1', '1', 'tertutup', '1', '0', '2017-10-17 12:39:18', '0'),
@@ -516,7 +611,9 @@ INSERT INTO `kk_perilaku_kes` (`id_kk`, `id_perilaku_kes`, `layanan_balita`, `pe
 	('KK-171017175000970', 'PKSH-171017175117122', '1', '1', '1', '1', '1', '', '1', '1', '1', 'tertutup', '0', '0', '2017-10-17 17:51:17', '1'),
 	('KK-171021123844685', 'PKSH-171021130501722', '1', '1', '1', '1', '1', '', '1', '1', '1', 'tertutup', '0', '0', '2017-10-21 13:05:01', '1'),
 	('KK-171021123844685', 'PKSH-171021130657355', '2', '2', '1', '2', '1', '', '1', '1', '1', 'tertutup', '1', '0', '2017-10-21 13:06:57', '1'),
-	('KK-171021123844685', 'PKSH-171021133258791', '1', '1', '1', '1', '1', '', '1', '1', '1', 'tertutup', '1', '0', '2017-10-21 13:32:58', '0');
+	('KK-171021123844685', 'PKSH-171021133258791', '1', '1', '1', '1', '1', '', '1', '1', '1', 'tertutup', '1', '0', '2017-10-21 13:32:58', '0'),
+	('KK-171205071456793', 'PKSH-171205071925150', '1', '1', '2', '2', '1', '', '1', '1', '1', 'tertutup', '0', '0', '2017-12-05 07:19:25', '1'),
+	('KK-171205071456793', 'PKSH-171205105513940', '2', '2', '2', '1', '2', '', '1', '1', '1', 'tertutup', '0', '0', '2017-12-05 10:55:13', '0');
 /*!40000 ALTER TABLE `kk_perilaku_kes` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_perilaku_keselamatan
@@ -532,7 +629,7 @@ CREATE TABLE IF NOT EXISTS `kk_perilaku_keselamatan` (
   CONSTRAINT `FK_kk_perilaku_keselamatan_0` FOREIGN KEY (`id_kk`) REFERENCES `pas_kk` (`id_kk`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_perilaku_keselamatan: ~6 rows (approximately)
+-- Dumping data for table sia.kk_perilaku_keselamatan: ~8 rows (approximately)
 /*!40000 ALTER TABLE `kk_perilaku_keselamatan` DISABLE KEYS */;
 INSERT INTO `kk_perilaku_keselamatan` (`id_kk`, `id_perilaku_keselamatan`, `pengguna_sepeda_motor`, `manula_sendirian`, `tgl_isi`, `hapus`) VALUES
 	('KK-171017123412765', 'PKSL-171017123918370', '1', '0', '2017-10-17 12:39:18', '0'),
@@ -540,7 +637,9 @@ INSERT INTO `kk_perilaku_keselamatan` (`id_kk`, `id_perilaku_keselamatan`, `peng
 	('KK-171017175000970', 'PKSL-171017175117144', '1', '0', '2017-10-17 17:51:17', '1'),
 	('KK-171021123844685', 'PKSL-171021130501742', '0', '0', '2017-10-21 13:05:01', '1'),
 	('KK-171021123844685', 'PKSL-171021130657390', '1', '0', '2017-10-21 13:06:57', '1'),
-	('KK-171021123844685', 'PKSL-171021133258819', '1', '0', '2017-10-21 13:32:58', '0');
+	('KK-171021123844685', 'PKSL-171021133258819', '1', '0', '2017-10-21 13:32:58', '0'),
+	('KK-171205071456793', 'PKSL-171205071925189', '1', '0', '2017-12-05 07:19:25', '1'),
+	('KK-171205071456793', 'PKSL-171205105513977', '1', '0', '2017-12-05 10:55:13', '0');
 /*!40000 ALTER TABLE `kk_perilaku_keselamatan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_riwayat_1bulan
@@ -644,16 +743,25 @@ CREATE TABLE IF NOT EXISTS `kk_riwayat_kes_kel` (
   CONSTRAINT `FK_kk_riwayat_kes_kel_0` FOREIGN KEY (`id_kk`, `no_bpjs`) REFERENCES `pas_kk` (`id_kk`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_riwayat_kes_kel: ~7 rows (approximately)
+-- Dumping data for table sia.kk_riwayat_kes_kel: ~14 rows (approximately)
 /*!40000 ALTER TABLE `kk_riwayat_kes_kel` DISABLE KEYS */;
 INSERT INTO `kk_riwayat_kes_kel` (`id_kk`, `id_riwayat_kes_kel`, `no_bpjs`, `batuk`, `asma`, `masalah_kesehatan`, `masalah_keturunan`, `sakit_keras`, `kecelakaan_kerja`, `merokok`, `jamu`, `alkohol`, `kopi`, `obat`, `m_dingin`, `peliharaan`, `olahraga`, `tgl_isi`, `tingkat_risiko_penyakit`, `hapus`) VALUES
 	('KK-171017123412765', 'KSKL-171017151449519', '3142312354123', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 15:14:49', 50.666666666667, '0'),
+	('KK-171017123412765', 'KSKL-171206061840735', '3142312354123', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-06 06:18:40', 18, '1'),
+	('KK-171017123412765', 'KSKL-171206061908699', '3142312354123', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-06 06:19:08', 18, '1'),
+	('KK-171017123412765', 'KSKL-171206140609538', '3142312354123', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-06 14:06:09', 18, '0'),
+	('KK-171017123412765', 'KSKL-171207110942478', '3142312354123', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-07 11:09:42', 18, '0'),
 	('KK-171017151802831', 'KSKL-171017152438874', '5142735871254', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 15:24:38', 41.333333333333, '1'),
 	('KK-171017151802831', 'KSKL-171017154541198', '5142735871254', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 15:45:41', 49.333333333333, '0'),
 	('KK-171017151802831', 'KSKL-171017173402668', '5142735871254', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 17:34:02', 18, '1'),
 	('KK-171017175000970', 'KSKL-171017175131001', '1235198764912', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 17:51:31', 6, '0'),
 	('KK-171017175000970', 'KSKL-171017180611234', '1235198764912', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-17 18:06:11', 3.3333333333333, '0'),
-	('KK-171021123844685', 'KSKL-171021130734491', '5123497187923', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-21 13:07:34', 12, '0');
+	('KK-171021123844685', 'KSKL-171021130734491', '5123497187923', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-10-21 13:07:34', 12, '0'),
+	('KK-171205071456793', 'KSKL-171205072027321', '9023023782342', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '2017-12-05 07:20:27', 6, '1'),
+	('KK-171205071456793', 'KSKL-171205102018119', '9023023782342', '0', '0', '0', '1', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '2017-12-05 10:20:18', 12, '1'),
+	('KK-171205071456793', 'KSKL-171205122021949', '9023023782342', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-05 12:20:21', 6, '1'),
+	('KK-171205071456793', 'KSKL-171206061811428', '9023023782342', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-06 06:18:11', 6, '1'),
+	('KK-171205071456793', 'KSKL-171206140452091', '9023023782342', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-12-06 14:04:52', 6, '0');
 /*!40000 ALTER TABLE `kk_riwayat_kes_kel` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_r_alkohol
@@ -755,8 +863,11 @@ CREATE TABLE IF NOT EXISTS `kk_r_kopi` (
   CONSTRAINT `FK_kk_r_kopi_0` FOREIGN KEY (`id_kk`, `id_riwayat_kes_kel`) REFERENCES `kk_riwayat_kes_kel` (`id_kk`, `id_riwayat_kes_kel`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_r_kopi: ~1 rows (approximately)
+-- Dumping data for table sia.kk_r_kopi: ~2 rows (approximately)
 /*!40000 ALTER TABLE `kk_r_kopi` DISABLE KEYS */;
+INSERT INTO `kk_r_kopi` (`id_kk`, `id_kopi`, `id_riwayat_kes_kel`, `gelas_per_hari`, `hapus`) VALUES
+	('KK-171205071456793', 'KOP-171205072027657', 'KSKL-171205072027321', 1, '0'),
+	('KK-171205071456793', 'KOP-171205102018046', 'KSKL-171205102018119', 1, '0');
 /*!40000 ALTER TABLE `kk_r_kopi` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_r_masalah_kes
@@ -793,7 +904,7 @@ CREATE TABLE IF NOT EXISTS `kk_r_masalah_keturunan` (
   CONSTRAINT `FK_kk_r_masalah_keturunan_1` FOREIGN KEY (`id_kk`, `no_bpjs`) REFERENCES `kk_anggota_keluarga` (`id_kk`, `no_bpjs`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.kk_r_masalah_keturunan: ~7 rows (approximately)
+-- Dumping data for table sia.kk_r_masalah_keturunan: ~9 rows (approximately)
 /*!40000 ALTER TABLE `kk_r_masalah_keturunan` DISABLE KEYS */;
 INSERT INTO `kk_r_masalah_keturunan` (`id_kk`, `id_masalah_keturunan`, `id_riwayat_kes_kel`, `no_bpjs`, `jenis_masalah_keturunan`, `hapus`) VALUES
 	('KK-171017123412765', 'MKET-171017151449769', 'KSKL-171017151449519', '3142312354123', '1', '0'),
@@ -802,7 +913,9 @@ INSERT INTO `kk_r_masalah_keturunan` (`id_kk`, `id_masalah_keturunan`, `id_riway
 	('KK-171017151802831', 'MKET-171017152438859', 'KSKL-171017152438874', '5142735871254', '1', '0'),
 	('KK-171017151802831', 'MKET-171017154541664', 'KSKL-171017154541198', '1232454563456', '1', '0'),
 	('KK-171017151802831', 'MKET-171017154541680', 'KSKL-171017154541198', '1232454563456', '4', '0'),
-	('KK-171017151802831', 'MKET-171017154541954', 'KSKL-171017154541198', '1232454563456', '6', '0');
+	('KK-171017151802831', 'MKET-171017154541954', 'KSKL-171017154541198', '1232454563456', '6', '0'),
+	('KK-171205071456793', 'MKET-171205102018034', 'KSKL-171205102018119', '1243234123123', '1', '0'),
+	('KK-171205071456793', 'MKET-171205102018470', 'KSKL-171205102018119', '1261092462174', '1', '0');
 /*!40000 ALTER TABLE `kk_r_masalah_keturunan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.kk_r_merokok
@@ -899,25 +1012,31 @@ CREATE TABLE IF NOT EXISTS `pas_identitas` (
   CONSTRAINT `FK_pas_identitas_0` FOREIGN KEY (`id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`) REFERENCES `sys_kelurahan` (`id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.pas_identitas: ~10 rows (approximately)
+-- Dumping data for table sia.pas_identitas: ~20 rows (approximately)
 /*!40000 ALTER TABLE `pas_identitas` DISABLE KEYS */;
 INSERT INTO `pas_identitas` (`no_bpjs`, `nama`, `jenis_kelamin`, `tgl_lahir`, `suku_bangsa`, `pendidikan_terakhir`, `kelas_bpjs`, `status_tagihan_bpjs`, `agama`, `id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`, `alamat`, `hidup`, `hapus`) VALUES
 	('1232454563456', 'rinda lestjanto', 'p', '1979-01-01', 'jawa', 'sarjana', '1', '0', 'kristen', '35', '3507', '3507010', '3507010001', 'jalan melati no 1', '1', '0'),
 	('1235198764912', 'heri susanto', 'l', '1970-01-01', 'jawa', 'doktor', '1', '0', 'hindu', '35', '3507', '3507010', '3507010001', 'jalan lili no 1', '1', '0'),
+	('1237176235677', 'gusti rahman', 'l', '1994-12-07', 'jawa', 'sarjana', '1', '0', 'islam', '35', '3573', '3573010', '3573010002', 'jalan mawar no 1', '1', '0'),
 	('1238754817235', 'nino jayadi', 'l', '1995-01-01', 'jawa', 'sma', '1', '0', 'budha', '35', '3507', '3507010', '3507010001', 'jalan mawar no 1', '1', '0'),
+	('1243234123123', 'dinda salsabila nisa', 'p', '1995-01-01', 'jawa', 'sarjana', '1', '0', 'islam', '35', '3507', '3507050', '3507050004', 'jalan melati no 3', '1', '0'),
+	('1261092462174', 'ira chusnul chotimah', 'p', '1979-07-17', 'jawa', 'magister', '1', '0', 'islam', '35', '3573', '3573050', '3573050002', 'jalan melati no 3', '1', '0'),
 	('1267831624891', 'danar lestjanto', 'l', '1996-01-01', 'jawa', 'sma', '1', '0', 'kristen', '35', '3507', '3507010', '3507010001', 'jalan melati no 1', '1', '0'),
 	('1289012981248', 'lintang lestjanto', 'p', '1994-01-01', 'jawa', 'sarjana', '1', '0', 'kristen', '35', '3507', '3507010', '3507010001', 'jalan melati no 1', '1', '0'),
 	('1529759489124', 'rachel mcadams', 'p', '1985-12-21', 'betawi', 'sarjana', '1', '0', 'katolik', '35', '3573', '3573020', '3573020001', 'jalan anggrek bulan no 1', '1', '0'),
 	('1782349813204', 'Titi Mustafa', 'p', '1980-07-11', 'jawa', 'sarjana', '1', '0', 'islam', '35', '3507', '3507010', '3507010001', 'jalan anggrek no 1', '1', '0'),
 	('1982637126378', 'damar lestjanto', 'l', '1990-01-01', 'jawa', 'sarjana', '1', '0', 'kristen', '35', '3507', '3507010', '3507010001', 'jalan melati no 1', '1', '0'),
 	('3142312354123', 'lalu jayadi', 'l', '1978-01-01', 'jawa', 'sarjana', '1', '0', 'budha', '35', '3507', '3507010', '3507010001', 'jalan mawar no 1', '1', '0'),
-	('5123497187923', 'Adrian Mustafa', 'l', '1970-10-05', 'jawa', 'sarjana', '1', '0', 'islam', '35', '3573', '3573010', '3573010001', 'jalan anggrek no 1', '1', '0'),
+	('5091623796490', 'dandy alhakam addintusy', 'l', '2008-07-16', 'jawa', 'sd', '1', '0', 'islam', '35', '3573', '3573030', '3573030004', 'jalan melati no 3', '1', '0'),
+	('5123497187923', 'Adrian Mustafa', 'l', '1970-10-05', 'sunda', 'sarjana', '1', '0', 'islam', '35', '3573', '3573010', '3573010001', 'jalan anggrek no 1', '1', '0'),
 	('5142735871254', 'nanang lestjanto', 'l', '1973-01-01', 'jawa', 'sarjana', '1', '0', 'kristen', '35', '3507', '3507010', '3507010001', 'jalan melati no 1', '1', '0'),
 	('5169734174619', 'harrison ford', 'l', '1957-10-21', 'sunda', 'sarjana', '1', '0', 'katolik', '35', '3573', '3573020', '3573020001', 'jalan anggrek bulan no 1', '1', '0'),
 	('5612784167248', 'adrian susanto', 'l', '1990-01-01', 'jawa', 'sarjana', '1', '0', 'hindu', '35', '3507', '3507010', '3507010001', 'jalan lili no 1', '1', '0'),
 	('6142987351876', 'yessa susanto', 'p', '1997-01-01', 'jawa', 'sma', '1', '0', 'hindu', '35', '3507', '3507010', '3507010001', 'jalan lili no 1', '1', '0'),
 	('6512374519264', 'herni jayadi', 'p', '1980-01-01', 'jawa', 'sarjana', '1', '0', 'budha', '35', '3507', '3507010', '3507010001', 'jalan mawar no 1', '1', '0'),
-	('8098781246098', 'listia susanto', 'p', '1973-01-01', 'jawa', 'sarjana', '1', '0', 'hindu', '35', '3507', '3507010', '3507010001', 'jalan lili no 1', '1', '0');
+	('7629083682134', 'damar lintang arby', 'l', '2000-01-30', 'jawa', 'sd', '1', '0', 'islam', '35', '3573', '3573050', '3573050005', 'jalan melati no 3', '1', '0'),
+	('8098781246098', 'listia susanto', 'p', '1973-01-01', 'jawa', 'sarjana', '1', '0', 'hindu', '35', '3507', '3507010', '3507010001', 'jalan lili no 1', '1', '0'),
+	('9023023782342', 'syamsul maarif', 'l', '1982-06-09', 'jawa', 'sma', '2', '0', 'islam', '35', '3507', '3507010', '3507010001', 'jalan mawar no 3', '1', '0');
 /*!40000 ALTER TABLE `pas_identitas` ENABLE KEYS */;
 
 -- Dumping structure for table sia.pas_kk
@@ -938,7 +1057,8 @@ INSERT INTO `pas_kk` (`id_kk`, `no_bpjs`, `no_telp`, `hapus`) VALUES
 	('KK-171017123412765', '3142312354123', '085790697466', '0'),
 	('KK-171017151802831', '5142735871254', '085695783826', '0'),
 	('KK-171017175000970', '1235198764912', '085682348746', '0'),
-	('KK-171021123844685', '5123497187923', '085598761234', '0');
+	('KK-171021123844685', '5123497187923', '085598761221', '0'),
+	('KK-171205071456793', '9023023782342', '081287560987', '0');
 /*!40000 ALTER TABLE `pas_kk` ENABLE KEYS */;
 
 -- Dumping structure for table sia.pas_riwayat_pekerjaan
@@ -967,7 +1087,8 @@ INSERT INTO `pas_riwayat_pekerjaan` (`id_riwayat_pekerjaan`, `no_bpjs`, `pekerja
 	('RPK-171017151715578', '5142735871254', 'buruh pabrik', 'produksi', '', 'produksi rokok', 2006, '3', 2017, '1', '0'),
 	('RPK-171021123810842', '5123497187923', 'petugas audit', 'quality as', '', 'audit internal perusahaan', 1999, '3', 2017, '1', '0'),
 	('RPK-171025203615651', '5169734174619', 'aktor', 'tidak ada', '', 'seni peran', 1977, '3', 2017, '1', '0'),
-	('RPK-171025203640032', '1529759489124', 'aktris', 'tidak ada', '', 'seni peran', 1999, '3', 2017, '1', '0');
+	('RPK-171025203640032', '1529759489124', 'aktris', 'tidak ada', '', 'seni peran', 1999, '3', 2017, '1', '0'),
+	('RPK-171205071248471', '1261092462174', 'guru', 'pendidikan', '', 'mengajar', 2006, '3', 2017, '1', '0');
 /*!40000 ALTER TABLE `pas_riwayat_pekerjaan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.poli_obat
@@ -987,9 +1108,11 @@ CREATE TABLE IF NOT EXISTS `poli_obat` (
 -- Dumping data for table sia.poli_obat: ~3 rows (approximately)
 /*!40000 ALTER TABLE `poli_obat` DISABLE KEYS */;
 INSERT INTO `poli_obat` (`id_obat`, `nama`, `bpjs`, `jumlah`, `jenis`, `satuan`, `harga`, `hapus`) VALUES
-	('OBT-171109200223441', 'amoxilin', '1', 100, '2', '1', 8500, '0'),
-	('OBT-171109200223724', 'paracetamol', '1', 50, '2', '1', 9000, '0'),
-	('OBT-171109200855138', 'rhinos sh', '0', 130, '1', '1', 150000, '0');
+	('OBT-171109200223441', 'amoxilin', '1', 40, '2', '1', 8500, '0'),
+	('OBT-171109200223724', 'paracetamol', '1', 10, '2', '1', 9000, '0'),
+	('OBT-171109200855138', 'rhinos sh', '0', 130, '1', '1', 150000, '0'),
+	('OBT-171129080430780', 'aspirin', '0', 90, '2', '1', 10000, '0'),
+	('OBT-171205133616049', 'caffein', '0', 120, '1', '1', 12000, '0');
 /*!40000 ALTER TABLE `poli_obat` ENABLE KEYS */;
 
 -- Dumping structure for table sia.poli_obat_keluar
@@ -1010,7 +1133,7 @@ CREATE TABLE IF NOT EXISTS `poli_obat_keluar` (
   CONSTRAINT `FK_poli_obat_keluar_1` FOREIGN KEY (`id_obat`) REFERENCES `poli_obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.poli_obat_keluar: ~7 rows (approximately)
+-- Dumping data for table sia.poli_obat_keluar: ~19 rows (approximately)
 /*!40000 ALTER TABLE `poli_obat_keluar` DISABLE KEYS */;
 INSERT INTO `poli_obat_keluar` (`id_obat_keluar`, `id_resep_obat`, `jumlah_keluar`, `id_obat`, `a_signa`, `b_signa`, `tgl_keluar`, `hapus`) VALUES
 	('OBK-171110205022322', 'RSP-171109220041562', 5, 'OBT-171109200223724', 3, 1, '2017-11-10', '0'),
@@ -1019,7 +1142,23 @@ INSERT INTO `poli_obat_keluar` (`id_obat_keluar`, `id_resep_obat`, `jumlah_kelua
 	('OBK-171115072941499', 'RSP-171115072852720', 10, 'OBT-171109200223724', 3, 1, '2017-11-15', '0'),
 	('OBK-171115072941675', 'RSP-171115072852720', 15, 'OBT-171109200223441', 2, 1, '2017-11-15', '0'),
 	('OBK-171116080759706', 'RSP-171116080709414', 10, 'OBT-171109200223724', 3, 1, '2017-11-16', '0'),
-	('OBK-171116080759921', 'RSP-171116080709414', 15, 'OBT-171109200223441', 2, 1, '2017-11-16', '0');
+	('OBK-171116080759921', 'RSP-171116080709414', 15, 'OBT-171109200223441', 2, 1, '2017-11-16', '0'),
+	('OBK-171121141534477', 'RSP-171121141016689', 15, 'OBT-171109200223441', 2, 1, '2017-11-21', '0'),
+	('OBK-171121141534786', 'RSP-171121141016689', 15, 'OBT-171109200223724', 3, 1, '2017-11-21', '0'),
+	('OBK-171129082046109', 'RSP-171129081725803', 16, 'OBT-171129080430780', 3, 1, '2017-11-29', '1'),
+	('OBK-171129082207398', 'RSP-171129081725803', 150, 'OBT-171129080430780', 3, 1, '2017-11-29', '1'),
+	('OBK-171129082646151', 'RSP-171129081725803', 160, 'OBT-171109200855138', 3, 1, '2017-11-29', '1'),
+	('OBK-171129082726484', 'RSP-171129081725803', 150, 'OBT-171129080430780', 3, 1, '2017-11-29', '1'),
+	('OBK-171205133758158', 'RSP-171205132120328', 5, 'OBT-171109200223724', 3, 1, '2017-12-05', '0'),
+	('OBK-171207111609291', 'RSP-171207111449200', 15, 'OBT-171109200223441', 3, 1, '2017-12-07', '0'),
+	('OBK-171207111609647', 'RSP-171207111449200', 10, 'OBT-171109200223724', 3, 1, '2017-12-07', '0'),
+	('OBK-171229091829254', 'RSP-171229091705246', 5, 'OBT-171109200223724', 3, 1, '2017-12-29', '0'),
+	('OBK-171229091829289', 'RSP-171229091705246', 10, 'OBT-171109200223441', 2, 1, '2017-12-29', '0'),
+	('OBK-171229103826965', 'RSP-171229103753751', 10, 'OBT-171109200223441', 3, 1, '2017-12-29', '0'),
+	('OBK-180108194450900', 'RSP-180108193146322', 15, 'OBT-171129080430780', 2, 1, '2018-01-08', '0'),
+	('OBK-180108194817211', 'RSP-180108193134360', 15, 'OBT-171129080430780', 2, 1, '2018-01-08', '0'),
+	('OBK-180108195826683', 'RSP-180108195811599', 5, 'OBT-171109200223724', 2, 1, '2018-01-08', '0'),
+	('OBK-180109110536444', 'RSP-180109110516228', 10, 'OBT-171109200223441', 3, 1, '2018-01-09', '0');
 /*!40000 ALTER TABLE `poli_obat_keluar` ENABLE KEYS */;
 
 -- Dumping structure for table sia.poli_obat_keluar_bulan
@@ -1035,12 +1174,19 @@ CREATE TABLE IF NOT EXISTS `poli_obat_keluar_bulan` (
   CONSTRAINT `FK_poli_obat_keluar_bulanan_0` FOREIGN KEY (`id_obat`) REFERENCES `poli_obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.poli_obat_keluar_bulan: ~4 rows (approximately)
+-- Dumping data for table sia.poli_obat_keluar_bulan: ~9 rows (approximately)
 /*!40000 ALTER TABLE `poli_obat_keluar_bulan` DISABLE KEYS */;
 INSERT INTO `poli_obat_keluar_bulan` (`id_obat`, `bulan`, `tahun`, `jml_masuk`, `jml_keluar`, `sisa`, `hapus`) VALUES
-	('OBT-171109200223441', '11', '2017', 135, 35, 100, '0'),
-	('OBT-171109200223724', '11', '2017', 75, 25, 50, '0'),
-	('OBT-171109200855138', '11', '2017', 145, 15, 130, '0');
+	('OBT-171109200223441', '01', '2018', 50, 10, 40, '0'),
+	('OBT-171109200223441', '11', '2017', 135, 50, 85, '0'),
+	('OBT-171109200223441', '12', '2017', 85, 35, 50, '0'),
+	('OBT-171109200223724', '01', '2018', 15, 5, 10, '0'),
+	('OBT-171109200223724', '11', '2017', 75, 40, 35, '0'),
+	('OBT-171109200223724', '12', '2017', 35, 20, 15, '0'),
+	('OBT-171109200855138', '11', '2017', 145, 15, 130, '0'),
+	('OBT-171129080430780', '01', '2018', 120, 30, 90, '0'),
+	('OBT-171129080430780', '11', '2017', 120, 0, 120, '0'),
+	('OBT-171205133616049', '12', '2017', 120, 0, 120, '0');
 /*!40000 ALTER TABLE `poli_obat_keluar_bulan` ENABLE KEYS */;
 
 -- Dumping structure for table sia.poli_obat_masuk
@@ -1075,7 +1221,10 @@ INSERT INTO `poli_obat_masuk` (`id_obat_masuk`, `jumlah_masuk`, `id_obat`, `tgl_
 	('OMSK-171110200030749', 10, 'OBT-171109200855138', '2017-12-01 00:00:00', '1'),
 	('OMSK-171113113304617', 100, 'OBT-171109200223441', '2017-11-13 11:33:04', '0'),
 	('OMSK-171113113304753', 100, 'OBT-171109200855138', '2017-11-13 11:33:04', '0'),
-	('OMSK-171113113304824', 55, 'OBT-171109200223724', '2017-11-13 11:33:04', '0');
+	('OMSK-171113113304824', 55, 'OBT-171109200223724', '2017-11-13 11:33:04', '0'),
+	('OMSK-171129080430884', 120, 'OBT-171129080430780', '2017-11-29 08:04:30', '0'),
+	('OMSK-171205133616093', 120, 'OBT-171205133616049', '2017-12-05 13:36:16', '0'),
+	('OMSK-171205133642904', 100, 'OBT-171109200223724', '2017-12-05 13:36:42', '1');
 /*!40000 ALTER TABLE `poli_obat_masuk` ENABLE KEYS */;
 
 -- Dumping structure for table sia.poli_pegawai
@@ -1100,10 +1249,12 @@ CREATE TABLE IF NOT EXISTS `poli_pegawai` (
   CONSTRAINT `FK_poli_pegawai_0` FOREIGN KEY (`id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`) REFERENCES `sys_kelurahan` (`id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table sia.poli_pegawai: ~4 rows (approximately)
+-- Dumping data for table sia.poli_pegawai: ~6 rows (approximately)
 /*!40000 ALTER TABLE `poli_pegawai` DISABLE KEYS */;
 INSERT INTO `poli_pegawai` (`nik`, `id_provinsi`, `id_kabupaten`, `id_kecamatan`, `id_kelurahan`, `nama`, `uname`, `pwd`, `tgl_lahir`, `alamat`, `jenis_kelamin`, `notelp`, `profesi`, `poli`) VALUES
+	('1253417u26548125', '35', '3507', '3507080', '3507080002', 'sari andarini', 'medis3', 'sandi', '1989-12-01', 'jalan ahmad yani 42', 'p', '085712566318', 'dokter', 'gigi'),
 	('126354876134', '35', '3507', '3507220', '3507220011', 'rikha solicha aisya', 'staf1', 'sandi', '1993-10-10', 'jalan staf administrasi 1', 'p', '085790698754', 'administrasi', NULL),
+	('1265381127618267', '35', '3507', '3507080', '3507080002', 'jack roebijoso', 'medis2', 'sandi', '1989-12-01', 'jalan ahmad yani 41', 'l', '081248579293', 'dokter', 'umum'),
 	('1364916349016912', '35', '3573', '3573040', '3573040009', 'nabillah hisyam', 'medis1', 'sandi', '1994-12-12', 'Jalan Kesatrian 40', 'p', '081230306547', 'dokter', 'umum'),
 	('57124812534149', '35', '3507', '3507220', '3507220011', 'gilang zepty maula', 'para1', 'sandi', '1993-10-10', 'jalan tenaga paramedis no 1', 'l', '085786748957', 'perawat', NULL),
 	('625412347615', '35', '3507', '3507220', '3507220011', 'anita prasetyawati', 'farmasi1', 'sandi', '1990-10-10', 'jalan tenaga kefarmasian no 1', 'p', '085797862534', 'kefarmasian', NULL);
@@ -1216,6 +1367,7 @@ INSERT INTO `sys_kelurahan` (`id_kelurahan`, `id_provinsi`, `id_kabupaten`, `id_
 	('3507010008', '35', '3507', '3507010', 'BANJARJO'),
 	('3507010009', '35', '3507', '3507010', 'TULUNGREJO'),
 	('3507010010', '35', '3507', '3507010', 'PURWODADI'),
+	('3507010325', '35', '3507', '3507010', 'KELURAHAN BARU'),
 	('3507020001', '35', '3507', '3507020', 'ARJOSARI'),
 	('3507020002', '35', '3507', '3507020', 'TUMPAKREJO'),
 	('3507020003', '35', '3507', '3507020', 'KALIASRI'),
