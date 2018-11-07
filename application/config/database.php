@@ -77,6 +77,7 @@ $the_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
 
 /**
  * Heroku config
+ * mysql://b35aaac3275d60:5e1bd792@us-cdbr-iron-east-01.cleardb.net/heroku_9dd0730b21fd5cf?reconnect=true
  */
 $db['default'] = array(
 	'dsn'	=> '',
