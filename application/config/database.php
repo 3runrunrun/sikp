@@ -81,10 +81,10 @@ $the_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
  */
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => $url["host"],
-	'username' => $url["user"],
-	'password' => $url["pass"],
-	'database' => substr($url["path"], 1),
+	'hostname' => $the_url["host"],
+	'username' => $the_url["user"],
+	'password' => $the_url["pass"],
+	'database' => substr($the_url["path"], 1),
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
