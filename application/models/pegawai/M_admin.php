@@ -12,6 +12,35 @@ class M_admin extends CI_Model
     date_default_timezone_set('Asia/Jakarta');
   }
 
+  public function select_pegawai()
+  {
+    $this->db->select('id, nama_depan, nama_belakang, email, password, posisi');
+    $this->db->from('pegawai');
+    $this->db->where('hapus', null);
+    $result = $this->db->get();
+    return $this->db->last_query();
+  }
+
+  public function select_pelanggan()
+  {
+    $this->db->select('id, nama_depan, nama_belakang, email, password, posisi');
+    $this->db->from('pelanggan');
+    $this->db->where('hapus', null);
+    $result = $this->db->get();
+    return $this->db->last_query();
+  }
+
+  public function get_user($uname, $pwd)
+  {
+    $a = $this->select_pegawai();
+    $b = $this->select_pelanggan();
+    $this->db->select('*');
+    $this->db->from("($a union $b) user", FALSE);
+    $this->db->where('email', null);
+    $this->db->where('password', null);
+    $result = $this->db->get();
+  }
+
   public function get_user_by_pwd($uname, $pwd)
   {
     $sql = 'SELECT * FROM (select nik, nama, uname, pwd, CASE profesi 
