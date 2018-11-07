@@ -59,8 +59,8 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 $autoload['libraries'] = array(
-  'sikp_error_handling' => 'eh', // sikp library
-  'sikp_data_checker' => 'dc', // sikp library
+  'SIKP_Error_Handling' => 'eh', // sikp library
+  'SIKP_Data_Checker' => 'dc', // sikp library
   'database',
   'form_validation',
   'parser',
