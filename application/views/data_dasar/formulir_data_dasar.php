@@ -1640,7 +1640,7 @@
   function get_ak(id_kk, ret_data){
     var ak = $.ajax({
       // url: './../../data_dasar/C_data_dasar/show_anggota_keluarga',
-      url: '<?php echo site_url(); ?>/data_dasar/C_data_dasar/show_anggota_keluarga',
+      url: '<?php echo base_url(); ?>/data_dasar/C_data_dasar/show_anggota_keluarga',
       type: 'POST',
       dataType: 'json',
       data: {id_kk: id_kk},
