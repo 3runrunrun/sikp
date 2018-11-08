@@ -440,7 +440,7 @@
             </div>
           </div>
           <form role="form" action="<?php echo base_url(); ?>simpan-anggota-keluarga" method="post">
-            <input type="text" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
+            <input type="hidden" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
             <div class="box-body">
               <div class="alert alert-warning alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -523,7 +523,7 @@
             </div>
           </div>
           <form class="form-horizontal" action="<?php echo base_url(); ?>simpan-ekonomi" method="post">
-            <input type="text" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
+            <input type="hidden" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
             <div class="box-body">
               <?php echo form_error('id_kk', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>'); ?>
               <div class="form-group">
@@ -622,7 +622,7 @@
           </div>
 
           <form action="<?php echo base_url(); ?>simpan-perilaku" method="post" class="form-horizontal">
-            <input type="text" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
+            <input type="hidden" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
             <div class="box-body">
               <?php echo form_error('sumber_air_lain', '<div class="alert alert-warning alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4>Kesalahan Pengisian Data</h4>', '</div>'); ?>
               <div class="form-group">
@@ -865,7 +865,7 @@
             </div>
           </div>
           <form role="form" action="<?php echo base_url(); ?>simpan-riwayat-kes" method="post">
-            <input type="text" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
+            <input type="hidden" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
             <div class="box-body">
               <?php echo form_error('sb_no_bpjs[]'); ?>
               <?php echo form_error('sb_jenis_penyakit[]'); ?>
@@ -1218,7 +1218,7 @@
           </div>
 
           <form role="form" action="<?php echo base_url(); ?>simpan-gejala-stres" method="post">
-            <input type="text" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
+            <input type="hidden" name="id_kk" value="<?php echo $id_kk['data'][0]['id_kk']; ?>" required>
             <div class="box-body table-responsive">
               <table class="table table-hover">
                 <tbody>
